@@ -1,17 +1,22 @@
 <?php
 
-use App\Livewire\Backend\Brand;
-use App\Livewire\Backend\Category;
-use App\Livewire\Backend\Product;
-use App\Livewire\Backend\Tag;
-use App\Livewire\Dashboard\Admin;
+use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Category\Index as CategoryIndex;
+use App\Livewire\Admin\Brand\Index as BrandIndex;
+use App\Livewire\Admin\Product\Index as ProductIndex;
 
-use App\Livewire\Frontend\Cart;
-use App\Livewire\Frontend\Checkout;
-use App\Livewire\Frontend\Order;
-use App\Livewire\Frontend\Shop;
-use App\Livewire\Frontend\SignalProduct;
+
+
+use App\Livewire\Frontend\Home;
+use App\Livewire\Frontend\ProductDetails;
+use App\Livewire\Frontend\CartPage;
+use App\Livewire\Frontend\CheckoutPage;
+use App\Livewire\Frontend\MyOrders;
+use App\Livewire\Frontend\InvoicePage;
+
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -22,15 +27,40 @@ Route::get('/', function () {
 
 
 
-Route::get('/dashboard', Admin::class);
-Route::get('/dashboard/product', Product::class);
-Route::get('/dashboard/category', Category::class);
-Route::get('/dashboard/tag', Tag::class);
-Route::get('/dashboard/brand', Brand::class);
+
+Route::prefix('admin')->group(function () {
+
+    Route::get('/dashboard', Dashboard::class)
+        ->name('admin.dashboard');
+
+    Route::get('/categories', CategoryIndex::class)
+        ->name('admin.categories');
+
+    Route::get('/brands', BrandIndex::class)
+        ->name('admin.brands');
 
 
-Route::get('/shop', Shop::class);
-Route::get('/order', Order::class);
-Route::get('/cart', Cart::class);
-Route::get('/checkout', Checkout::class);
-Route::get('/signal-product', SignalProduct::class);
+    Route::get('/products', ProductIndex::class)
+        ->name('admin.products');
+});
+
+
+
+
+Route::get('/', Home::class)->name('home');
+
+Route::get('/product/{slug}', ProductDetails::class)
+    ->name('product.details');
+
+Route::get('/cart', CartPage::class)
+    ->name('cart');
+
+Route::get('/checkout', CheckoutPage::class)
+    ->name('checkout');
+
+Route::get('/my-orders', MyOrders::class)
+    ->name('my.orders');
+
+
+Route::get('/invoice/{order}', InvoicePage::class)
+    ->name('invoice');
