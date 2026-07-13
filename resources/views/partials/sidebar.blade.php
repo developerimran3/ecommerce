@@ -1,83 +1,3 @@
-{{-- <div class="sidebar vh-100">
-
-    <h4 class="text-white text-center py-3 border-bottom">
-        E-Commerce
-    </h4>
-
-    <ul class="nav flex-column">
-
-        <li class="nav-item">
-            <a href="{{ route('admin.dashboard') }}" wire:navigate
-                class="nav-link text-white {{ request()->routeIs('admin.dashboard') ? 'bg-primary' : '' }}">
-                <i class="fa fa-home"></i>
-                Dashboard
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="{{ route('admin.categories') }}" wire:navigate
-                class="nav-link text-white {{ request()->routeIs('admin.categories') ? 'bg-primary' : '' }}">
-                <i class="fa fa-list mr-2"></i> Categories
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="{{ route('admin.brands') }}" wire:navigate
-                class="nav-link text-white {{ request()->routeIs('admin.brands') ? 'bg-primary' : '' }}">
-
-                <i class="fa fa-tags mr-2"></i> Brands
-            </a>
-        </li>
-
-        <li class="nav-item">
-
-            <a href="{{ route('admin.products') }}" wire:navigate
-                class="nav-link text-white {{ request()->routeIs('admin.products') ? 'bg-primary' : '' }}">
-
-                <i class="fa fa-box mr-2"></i>
-
-                Products
-
-            </a>
-
-        </li>
-
-        <li class="nav-item">
-
-            <a href="{{ route('admin.orders') }}" wire:navigate
-                class="nav-link text-white {{ request()->routeIs('admin.orders') ? 'bg-primary' : '' }}">
-
-                <i class="fa fa-shopping-bag mr-2"></i>
-
-                Orders
-
-            </a>
-
-        </li>
-
-        <li class="nav-item">
-
-
-
-            <a href="{{ route('admin.users') }}" wire:navigate
-                class="nav-link text-white {{ request()->routeIs('admin.users') ? 'bg-primary' : '' }}">
-
-                <i class="fa fa-users mr-2"></i>
-
-                Users
-
-            </a>
-
-        </li>
-
-
-
-    </ul>
-
-</div> --}}
-
-
-
 <!--navigation-->
 <ul class="metismenu" id="menu">
     <li>
@@ -120,8 +40,7 @@
             <li> <a href="{{ route('admin.products') }}" wire:navigate><i class="bx bx-right-arrow-alt"></i>All
                     Product</a>
             </li>
-            <li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Add New Product</a>
-            </li>
+
             <li> <a href="{{ route('admin.brands') }}" wire:navigate><i class="bx bx-right-arrow-alt"></i>Brands</a>
             </li>
             <li> <a href="{{ route('admin.categories') }}" wire:navigate><i

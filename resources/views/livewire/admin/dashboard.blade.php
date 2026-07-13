@@ -1,4 +1,4 @@
-<div class="page-content">
+<div>
 
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
         <div class="col">
@@ -7,7 +7,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0">Total Orders</p>
-                            <h5 class="mb-0">867</h5>
+                            <h5 class="mb-0">{{ $totalOrders }}</h5>
                         </div>
                         <div class="ms-auto"> <i class='bx bx-cart font-30'></i>
                         </div>
@@ -22,7 +22,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0">Total Income</p>
-                            <h5 class="mb-0">$52,945</h5>
+                            <h5 class="mb-0">৳ {{ $totalSales }}</h5>
                         </div>
                         <div class="ms-auto"> <i class='bx bx-wallet font-30'></i>
                         </div>
@@ -36,8 +36,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <p class="mb-0">Total Users</p>
-                            <h5 class="mb-0">24.5K</h5>
+                            <p class="mb-0">Total Customers</p>
+                            <h5 class="mb-0">{{ $totalCustomers }}</h5>
                         </div>
                         <div class="ms-auto"> <i class='bx bx-group font-30'></i>
                         </div>
@@ -51,8 +51,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <p class="mb-0">Comments</p>
-                            <h5 class="mb-0">869</h5>
+                            <p class="mb-0">Total Product</p>
+                            <h5 class="mb-0">{{ $totalProducts }}</h5>
                         </div>
                         <div class="ms-auto"> <i class='bx bx-chat font-30'></i>
                         </div>
@@ -61,8 +61,7 @@
                 <div class="" id="chart4"></div>
             </div>
         </div>
-    </div><!--end row-->
-
+    </div>
 
     <div class="row">
         <div class="col">
@@ -287,6 +286,7 @@
                 </div>
             </div>
         </div>
-    </div><!--end row-->
+    </div>
+    <!--end row-->
 
 </div>

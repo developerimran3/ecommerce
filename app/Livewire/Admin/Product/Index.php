@@ -309,6 +309,12 @@ class Index extends Component
     }
 
 
+
+
+
+
+
+
     public function removeGalleryImage($imageId)
     {
         $image = ProductImage::find($imageId);

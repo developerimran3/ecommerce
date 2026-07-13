@@ -19,12 +19,12 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('image')->nullable();
             $table->enum('role', [
-                'administrator',
+                'Administrator',
                 'Editor',
                 'Contributor',
                 'Shop Manager',
-                'customer',
-            ])->default('customer');
+                'Customer',
+            ])->default('Customer');
             $table->boolean('status')->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

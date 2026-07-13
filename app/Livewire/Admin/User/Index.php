@@ -14,62 +14,38 @@ class Index extends Component
     use WithPagination;
 
     public $user_id;
-
     public $name;
-
     public $email;
-
     public $phone;
-
     public $address;
+    public $status;
+    public $role;
 
     public $search = '';
 
 
 
-    protected function rules()
-    {
-        return [
-
-            'name' => 'required|string|max:255',
-
-            'email' => 'required|email|unique:users,email,' . $this->user_id,
-
-            'phone' => 'nullable|string|max:20',
-
-            'address' => 'nullable|string',
-        ];
-    }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
-
         $this->user_id = $user->id;
-
         $this->name = $user->name;
-
         $this->email = $user->email;
-
         $this->phone = $user->phone;
-
+        $this->status = $user->status;
+        $this->role = $user->role;
         $this->address = $user->address;
     }
 
 
     public function update()
     {
-        $this->validate();
 
         User::findOrFail($this->user_id)->update([
+            'status' => $this->status,
+            'role' => $this->role,
 
-            'name' => $this->name,
-
-            'email' => $this->email,
-
-            'phone' => $this->phone,
-
-            'address' => $this->address,
         ]);
 
         $this->dispatch(
@@ -78,11 +54,8 @@ class Index extends Component
         );
 
         $this->reset([
-            'user_id',
-            'name',
-            'email',
-            'phone',
-            'address',
+            'status',
+            'role',
         ]);
     }
 
@@ -109,13 +82,6 @@ class Index extends Component
             message: 'User deleted successfully.'
         );
     }
-
-
-
-
-
-
-
 
 
 

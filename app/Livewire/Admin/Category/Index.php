@@ -15,6 +15,7 @@ class Index extends Component
 
     public $name;
     public $image;
+    public $oldImage;
     public $status = true;
 
     public $category_id;
@@ -69,6 +70,7 @@ class Index extends Component
         $this->category_id = $category->id;
         $this->name = $category->name;
         $this->status = $category->status;
+        $this->oldImage = $category->image;
     }
 
     public function update()
