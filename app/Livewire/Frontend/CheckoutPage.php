@@ -5,7 +5,11 @@ namespace App\Livewire\Frontend;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 use Livewire\Component;
 
 class CheckoutPage extends Component
@@ -17,6 +21,8 @@ class CheckoutPage extends Component
     public $email;
 
     public $address;
+
+    public  $order;
 
     public $payment_method = 'cod';
 
@@ -51,13 +57,40 @@ class CheckoutPage extends Component
             return;
         }
 
-        DB::transaction(function () use ($cart) {
+        $userId = auth()->id();
+
+        if (!$userId) {
+
+            $user = User::where('email', $this->email)->first();
+
+            if (!$user) {
+
+                $user = User::create([
+
+                    'name' => $this->name,
+
+                    'email' => $this->email,
+
+                    'phone' => $this->phone,
+
+                    'address' => $this->address,
+
+                    'password' => Hash::make('12345678'),
+                ]);
+            }
+
+            Auth::login($user);
+
+            $userId = $user->id;
+        }
+
+        $order = DB::transaction(function () use ($cart, $userId) {
 
             $subtotal = $cart->items->sum('subtotal');
 
             $order = Order::create([
 
-                'user_id' => auth()->id(),
+                'user_id' => $userId,
 
                 'invoice_no' => $this->generateInvoice(),
 
@@ -109,16 +142,13 @@ class CheckoutPage extends Component
 
             $cart->delete();
 
-            session()->flash(
-                'success',
-                'Order placed successfully.'
-            );
-
-            $this->redirect(
-                route('home'),
-                navigate: true
-            );
+            return $order;
         });
+
+        return redirect()->route(
+            'order.success',
+            $order->id
+        );
     }
 
     private function generateInvoice()

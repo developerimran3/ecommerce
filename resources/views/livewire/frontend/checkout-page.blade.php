@@ -113,9 +113,7 @@
                     </h5>
 
                     <button class="btn btn-success btn-block mt-3" wire:click="placeOrder" wire:navigate>
-
                         Place Order
-
                     </button>
 
                 </div>

@@ -4,7 +4,8 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Category\Index as CategoryIndex;
 use App\Livewire\Admin\Brand\Index as BrandIndex;
 use App\Livewire\Admin\Product\Index as ProductIndex;
-
+use App\Livewire\Admin\Order\Index as OrderIndex;
+use App\Livewire\Admin\User\Index as UserIndex;
 
 
 use App\Livewire\Frontend\Home;
@@ -13,6 +14,7 @@ use App\Livewire\Frontend\CartPage;
 use App\Livewire\Frontend\CheckoutPage;
 use App\Livewire\Frontend\MyOrders;
 use App\Livewire\Frontend\InvoicePage;
+use App\Livewire\Frontend\OrderSuccess;
 
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +44,13 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/products', ProductIndex::class)
         ->name('admin.products');
+
+
+    Route::get('/orders', OrderIndex::class)
+        ->name('admin.orders');
+
+    Route::get('/users', UserIndex::class)
+        ->name('admin.users');
 });
 
 
@@ -64,3 +73,8 @@ Route::get('/my-orders', MyOrders::class)
 
 Route::get('/invoice/{order}', InvoicePage::class)
     ->name('invoice');
+
+
+
+Route::get('/order-success/{order}', OrderSuccess::class)
+    ->name('order.success');

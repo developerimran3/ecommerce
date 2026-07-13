@@ -41,9 +41,7 @@
                     <div class="card-footer bg-white">
 
                         <a href="{{ route('product.details', $product->slug) }}" class="btn btn-outline-primary btn-sm">
-
                             Details
-
                         </a>
 
                         <button class="btn btn-primary btn-sm" wire:click="addToCart({{ $product->id }})">
