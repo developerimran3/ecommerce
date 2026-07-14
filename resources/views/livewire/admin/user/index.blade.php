@@ -1,8 +1,15 @@
 <div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#newUserModal" wire:click="resetInput">
+            <i class="fa fa-plus"></i> Add New User </button>
+    </div>
+
     <div class="d-flex justify-content-between mb-3">
         <h4>All Users</h4>
         <input type="text" class="form-control w-25" placeholder="Search..." wire:model.live="search">
     </div>
+
 
     <div class="row">
         <div class="col">
@@ -94,36 +101,91 @@
 
 
 
-    <div wire:ignore.self class="modal fade" id="editUserModal">
-
+    {{-- Add New User Modal --}}
+    <div wire:ignore.self class="modal fade" id="newUserModal">
         <div class="modal-dialog">
-
             <div class="modal-content">
-
                 <div class="modal-header">
-
-                    <h5>Edit User</h5>
-
+                    <h5>Add User</h5>
                     <button type="button" class="close" data-dismiss="modal">
-
                         <span>&times;</span>
-
                     </button>
-
                 </div>
 
                 <div class="col">
-
                     <div class="card border-top border-0 border-4 border-danger">
                         <div class="card-body p-5">
-
                             <div class="col-12">
                                 <label for="inputLastName1" class="form-label">Name</label>
                                 <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                             class='bx bxs-user'></i></span>
                                     <input type="text" name="name" wire:model="name"
-                                        class="form-control border-start-0" id="inputLastName1" placeholder="Your Name"
-                                        readonly />
+                                        class="form-control border-start-0" id="inputLastName1"
+                                        placeholder="Your Name" />
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="inputEmailAddress" class="form-label">Email Address</label>
+                                <div class="input-group"> <span class="input-group-text bg-transparent"><i
+                                            class='bx bxs-message'></i></span>
+                                    <input type="text" name="email" wire:model="email"
+                                        class="form-control border-start-0" id="inputEmailAddress"
+                                        placeholder="Email Address" />
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3 mb-2">
+                                <label for="inputAddress3" class="form-label">Status</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" wire:model="status" id="gridCheck2">
+                                    <label class="form-check-label" for="gridCheck2">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="inputVendor" class="form-label">Role Change</label>
+                                <select class="form-select" wire:model.live="role">
+                                    <option value=""></option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Contributor">Contributor</option>
+                                    <option value="Shop Manager">Shop Manager</option>
+                                    <option value="Editor">Editor</option>
+                                    <option value="Administrator">Administrator</option>
+
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary" wire:click="create"> Create </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- edit Modal --}}
+    <div wire:ignore.self class="modal fade" id="editUserModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="col">
+                    <div class="card border-top border-0 border-4 border-danger">
+                        <div class="card-body p-5">
+                            <div class="col-12">
+                                <label for="inputLastName1" class="form-label">Name</label>
+                                <div class="input-group"> <span class="input-group-text bg-transparent"><i
+                                            class='bx bxs-user'></i></span>
+                                    <input type="text" name="name" wire:model="name"
+                                        class="form-control border-start-0" id="inputLastName1"
+                                        placeholder="Your Name" readonly />
                                 </div>
                             </div>
 
@@ -154,14 +216,15 @@
                             <div class="col-12 mt-3 mb-2">
                                 <label for="inputAddress3" class="form-label">Status</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" wire:model="status" id="gridCheck2">
+                                    <input class="form-check-input" type="checkbox" wire:model="status"
+                                        id="gridCheck2">
                                     <label class="form-check-label" for="gridCheck2">Active</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <label for="inputVendor" class="form-label">Role Change</label>
-                                <select class="form-select" wire:model="role">
-                                    <option></option>
+                                <select class="form-select" wire:model.live="role">
+                                    <option value=""></option>
                                     <option value="Customer">Customer</option>
                                     <option value="Contributor">Contributor</option>
                                     <option value="Shop Manager">Shop Manager</option>
@@ -176,9 +239,23 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
+
+
 </div>
+
+
+
+@script
+    <script>
+        $wire.on('close-modal', () => {
+
+            $('#editUserModal').modal('hide');
+
+            $('#newUserModal').modal('hide');
+
+        });
+    </script>
+@endscript

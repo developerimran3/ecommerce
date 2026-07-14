@@ -104,7 +104,7 @@
                             <label class="form-label">Brand Name</label>
                             <div class="input-group"> <span class="input-group-text bg-transparent"><i
                                         class='bx bxs-user'></i></span>
-                                <input type="text" name="brand_name" wire:model.live="name"
+                                <input type="text" name="brand" wire:model.live="name"
                                     class="form-control border-start-0" id="inputLastName1" placeholder="Brand Name" />
                             </div>
                             @error('name')

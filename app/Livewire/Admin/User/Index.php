@@ -24,6 +24,42 @@ class Index extends Component
     public $search = '';
 
 
+    public function create()
+    {
+        // $this->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email|unique:users,email',
+        //     'role' => 'required',
+        // ]);
+
+        User::create([
+
+            'name' => $this->name,
+
+            'email' => $this->email,
+
+            'status' => $this->status,
+
+            'role' => $this->role,
+
+            // 'password' => Hash::make('12345678'),
+        ]);
+
+        $this->reset([
+            'name',
+            'email',
+            'status',
+            'role',
+        ]);
+
+        $this->dispatch(
+            'success',
+            message: 'New user created successfully.'
+        );
+    }
+
+
+
 
 
     public function edit($id)
@@ -41,11 +77,9 @@ class Index extends Component
 
     public function update()
     {
-
         User::findOrFail($this->user_id)->update([
             'status' => $this->status,
             'role' => $this->role,
-
         ]);
 
         $this->dispatch(
@@ -53,10 +87,9 @@ class Index extends Component
             message: 'User updated successfully.'
         );
 
-        $this->reset([
-            'status',
-            'role',
-        ]);
+        $this->dispatch('close-modal');
+
+        $this->reset();
     }
 
 
