@@ -149,6 +149,7 @@ class Index extends Component
             'success',
             message: 'Product created successfully.'
         );
+        $this->dispatch('close-modal');
 
         $this->resetInput();
     }
@@ -264,7 +265,7 @@ class Index extends Component
                 'image' => $path,
             ]);
         }
-
+        $this->dispatch('close-modal');
         $this->dispatch(
             'success',
             message: 'Product updated successfully.'

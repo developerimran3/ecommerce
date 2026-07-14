@@ -1,7 +1,7 @@
 <div>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#newUserModal" wire:click="resetInput">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#newUserModal">
             <i class="fa fa-plus"></i> Add New User </button>
     </div>
 
@@ -43,7 +43,8 @@
                                                             class="img-thumbnail" alt="">
                                                     @else
                                                         <span class="text-muted">
-                                                            No Image
+                                                            <img src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg"
+                                                                alt="">
                                                         </span>
                                                     @endif
                                                 </div>
@@ -68,11 +69,12 @@
                                         <td class="text-capitalize"> {{ $user->role }} </td>
                                         <td> {{ $user->created_at->format('d M Y') }} </td>
                                         <td>
-                                            <div class="d-flex order-actions"> <a href="javascript:;"
-                                                    wire:click="delete({{ $user->id }})"
-                                                    onclick="confirm('Delete this user?')"
-                                                    class="text-danger bg-light-danger border-0"><i
-                                                        class='bx bxs-trash'></i></a>
+                                            <div class="d-flex order-actions">
+                                                <a href="javascript:;" wire:click="delete({{ $user->id }})"
+                                                    wire:confirm="Are you sure you want to delete this user?"
+                                                    class="text-danger bg-light-danger border-0">
+                                                    <i class="bx bxs-trash"></i>
+                                                </a>
 
                                                 <a href="javascript:;"wire:click="edit({{ $user->id }})"
                                                     data-toggle="modal" data-target="#editUserModal"
@@ -115,48 +117,68 @@
                 <div class="col">
                     <div class="card border-top border-0 border-4 border-danger">
                         <div class="card-body p-5">
-                            <div class="col-12">
-                                <label for="inputLastName1" class="form-label">Name</label>
-                                <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                            class='bx bxs-user'></i></span>
-                                    <input type="text" name="name" wire:model="name"
-                                        class="form-control border-start-0" id="inputLastName1"
-                                        placeholder="Your Name" />
+                            <form wire:submit.prevent="create">
+                                <div class="col-12">
+                                    <label for="inputLastName1" class="form-label">Name</label>
+                                    <div class="input-group"> <span class="input-group-text bg-transparent"><i
+                                                class='bx bxs-user'></i></span>
+                                        <input type="text" name="name" wire:model="name"
+                                            class="form-control border-start-0" id="inputLastName1"
+                                            placeholder="Your Name" />
+                                    </div>
+                                    @error('name')
+                                        <small class="text-danger">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
                                 </div>
-                            </div>
 
-                            <div class="col-12">
-                                <label for="inputEmailAddress" class="form-label">Email Address</label>
-                                <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                            class='bx bxs-message'></i></span>
-                                    <input type="text" name="email" wire:model="email"
-                                        class="form-control border-start-0" id="inputEmailAddress"
-                                        placeholder="Email Address" />
+
+                                <div class="col-12">
+                                    <label for="inputEmailAddress" class="form-label">Email Address</label>
+                                    <div class="input-group"> <span class="input-group-text bg-transparent"><i
+                                                class='bx bxs-message'></i></span>
+                                        <input type="text" name="email" wire:model="email"
+                                            class="form-control border-start-0" id="inputEmailAddress"
+                                            placeholder="Email Address" />
+                                    </div>
+                                    @error('email')
+                                        <small class="text-danger">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
                                 </div>
-                            </div>
 
-                            <div class="col-12 mt-3 mb-2">
-                                <label for="inputAddress3" class="form-label">Status</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" wire:model="status" id="gridCheck2">
-                                    <label class="form-check-label" for="gridCheck2">Active</label>
+                                <div class="col-12 mt-3 mb-2">
+                                    <label for="inputAddress3" class="form-label">Status</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" wire:model="status"
+                                            id="gridCheck2">
+                                        <label class="form-check-label" for="gridCheck2">Active</label>
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <label for="inputVendor" class="form-label">Role Change</label>
-                                <select class="form-select" wire:model.live="role">
-                                    <option value=""></option>
-                                    <option value="Customer">Customer</option>
-                                    <option value="Contributor">Contributor</option>
-                                    <option value="Shop Manager">Shop Manager</option>
-                                    <option value="Editor">Editor</option>
-                                    <option value="Administrator">Administrator</option>
-
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary" wire:click="create"> Create </button>
-                            </div>
+                                <div class="col-12">
+                                    <label for="inputVendor" class="form-label">Role Change</label>
+                                    <select class="form-select" wire:model.live="role">
+                                        <option value=""></option>
+                                        <option value="Customer">Customer</option>
+                                        <option value="Contributor">Contributor</option>
+                                        <option value="Shop Manager">Shop Manager</option>
+                                        <option value="Editor">Editor</option>
+                                        <option value="Administrator">Administrator</option>
+                                    </select>
+                                    @error('role')
+                                        <small class="text-danger">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary"> Create
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -245,17 +267,3 @@
 
 
 </div>
-
-
-
-@script
-    <script>
-        $wire.on('close-modal', () => {
-
-            $('#editUserModal').modal('hide');
-
-            $('#newUserModal').modal('hide');
-
-        });
-    </script>
-@endscript

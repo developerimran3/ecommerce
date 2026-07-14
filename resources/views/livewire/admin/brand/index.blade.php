@@ -63,7 +63,7 @@
 
                                                 <a href="javascript:;"wire:click="edit({{ $brand->id }})"
                                                     data-toggle="modal" data-target="#brandModal"
-                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                    class="ms-2 text-primary bg-light-primary border-0"><i
                                                         class='bx bxs-edit'></i></a>
                                             </div>
                                         </td>

@@ -59,7 +59,7 @@ class Index extends Component
         ]);
 
         $this->dispatch('success', message: 'Category created successfully.');
-
+        $this->dispatch('close-modal');
         $this->resetInput();
     }
 
@@ -90,7 +90,7 @@ class Index extends Component
         $category->update($data);
 
         $this->dispatch('success', message: 'Category updated successfully.');
-
+        $this->dispatch('close-modal');
         $this->resetInput();
     }
 

@@ -139,8 +139,8 @@
     </div>
     <!--end wrapper-->
 
-    <!-- Bootstrap JS -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+
+
     <!--plugins-->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
@@ -157,6 +157,13 @@
     <script src="{{ asset('assets/js/index2.js') }}"></script>
     <!--app JS-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <!-- Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         new PerfectScrollbar('.customers-list');
         new PerfectScrollbar('.store-metrics');
@@ -166,26 +173,38 @@
 
 
 
-
-
-
-    {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
     <script>
-        window.addEventListener('success', event => {
-            toastr.success(event.detail.message);
-        });
+        document.addEventListener('livewire:init', () => {
 
-        window.addEventListener('error', event => {
-            toastr.error(event.detail.message);
+            Livewire.on('success', (event) => {
+                toastr.success(event.message);
+            });
+
+            Livewire.on('error', (event) => {
+                toastr.error(event.message);
+            });
+
         });
     </script>
 
 
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('close-modal', () => {
+
+                $('#newUserModal').modal('hide');
+                $('#editUserModal').modal('hide');
+
+                $('#brandModal').modal('hide');
+                $('#categoryModal').modal('hide');
+                $('#productModal').modal('hide');
+
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+            });
+
+        });
+    </script>
 
 
     @livewireScripts

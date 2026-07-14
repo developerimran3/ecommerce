@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -26,23 +27,19 @@ class Index extends Component
 
     public function create()
     {
-        // $this->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|email|unique:users,email',
-        //     'role' => 'required',
-        // ]);
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required',
+        ]);
 
         User::create([
-
             'name' => $this->name,
-
             'email' => $this->email,
-
             'status' => $this->status,
-
             'role' => $this->role,
 
-            // 'password' => Hash::make('12345678'),
+            'password' => Hash::make('12345678'),
         ]);
 
         $this->reset([
@@ -51,6 +48,8 @@ class Index extends Component
             'status',
             'role',
         ]);
+
+        $this->dispatch('close-modal');
 
         $this->dispatch(
             'success',

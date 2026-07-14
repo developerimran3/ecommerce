@@ -60,7 +60,7 @@ class Index extends Component
             'success',
             message: 'Brand created successfully.'
         );
-
+        $this->dispatch('close-modal');
         $this->resetInput();
     }
 
@@ -93,7 +93,7 @@ class Index extends Component
             'success',
             message: 'Brand updated successfully.'
         );
-
+        $this->dispatch('close-modal');
         $this->resetInput();
     }
 
