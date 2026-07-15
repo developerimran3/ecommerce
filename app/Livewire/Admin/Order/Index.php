@@ -88,7 +88,7 @@ class Index extends Component
 
             ->latest()
 
-            ->paginate(10);
+            ->paginate(3);
 
         return view(
             'livewire.admin.order.index',
