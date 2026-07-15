@@ -1,38 +1,3 @@
-{{-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-
-    <a class="navbar-brand" href="#">
-        Admin Panel
-    </a>
-
-    <div class="ml-auto">
-
-        <div class="dropdown">
-
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-
-                {{ auth()->user()->name ?? 'Admin' }}
-
-            </button>
-
-            <div class="dropdown-menu dropdown-menu-right">
-
-                <a href="#" class="dropdown-item">
-                    Profile
-                </a>
-
-                <a href="#" class="dropdown-item">
-                    Logout
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</nav> --}}
-
-
 <!--start header Topbar -->
 <header>
     <div class="topbar d-flex align-items-center">
@@ -408,16 +373,29 @@
             </div>
             <div class="user-box dropdown">
                 <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
-                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('assets/images/avatars/avatar-2.png') }}" class="user-img" alt="user avatar">
+                    role="button" data-toggle="dropdown" aria-expanded="false">
+                    @if (Auth::user()->image)
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}" class="user-img" alt="user avatar">
+                    @else
+                        <span class="text-muted">
+                            <img src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg"
+                                class="user-img" alt="user avatar">
+                        </span>
+                    @endif
                     <div class="user-info ps-3">
-                        <p class="user-name mb-0">Pauline Seitz</p>
-                        <p class="designattion mb-0">Web Designer</p>
+                        <p class="user-name mb-0">{{ Auth::user()->name }}</p>
+                        <p class="designattion mb-0">{{ Auth::user()->role }}</p>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="javascript:;"><i
-                                class="bx bx-user"></i><span>Profile</span></a>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('profile') }}">
+
+                            <i class="bx bx-user"></i>
+
+                            <span>Profile</span>
+
+                        </a>
                     </li>
                     <li><a class="dropdown-item" href="javascript:;"><i
                                 class="bx bx-cog"></i><span>Settings</span></a>
@@ -434,7 +412,7 @@
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i
+                    <li><a class="dropdown-item" href="{{ route('logout') }}""><i
                                 class='bx bx-log-out-circle'></i><span>Logout</span></a>
                     </li>
                 </ul>
