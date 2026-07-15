@@ -89,12 +89,19 @@
     </li>
 
 
-
     <li>
         <a href="{{ route('admin.users') }}" wire:navigate>
             <div class="parent-icon"><i class='bx bx-user-pin'></i>
             </div>
-            <div class="menu-title">User Profile</div>
+            <div class="menu-title">All Users</div>
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ route('profile') }}" wire:navigate>
+            <div class="parent-icon"><i class='bx bx-user-pin'></i>
+            </div>
+            <div class="menu-title">Profile</div>
         </a>
     </li>
 

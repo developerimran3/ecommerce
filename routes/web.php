@@ -1,21 +1,29 @@
 <?php
 
-use App\Livewire\Admin\Dashboard;
-use App\Livewire\Admin\Category\Index as CategoryIndex;
+
+
 use App\Livewire\Admin\Brand\Index as BrandIndex;
-use App\Livewire\Admin\Product\Index as ProductIndex;
+use App\Livewire\Admin\Category\Index as CategoryIndex;
+use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Order\Index as OrderIndex;
+use App\Livewire\Admin\Product\Index as ProductIndex;
 use App\Livewire\Admin\User\Index as UserIndex;
+use App\Livewire\Admin\Profile;
 
 
-use App\Livewire\Frontend\Home;
-use App\Livewire\Frontend\ProductDetails;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+
+
 use App\Livewire\Frontend\CartPage;
 use App\Livewire\Frontend\CheckoutPage;
-use App\Livewire\Frontend\MyOrders;
+use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\InvoicePage;
+use App\Livewire\Frontend\MyOrders;
 use App\Livewire\Frontend\OrderSuccess;
+use App\Livewire\Frontend\ProductDetails;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +33,52 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->group(function () {
+
+        Route::get(
+            '/dashboard',
+            Dashboard::class
+        )->name('admin.dashboard');
+    });
+
+
+
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/profile', Profile::class)
+        ->name('profile');
+});
+
+
+
+Route::middleware('guest')->group(function () {
+
+    Route::get('/login', Login::class)
+        ->name('login');
+
+    Route::get('/register', Register::class)
+        ->name('register');
+});
+
+Route::get('/logout', function () {
+
+    Auth::logout();
+
+    request()->session()->invalidate();
+
+    request()->session()->regenerateToken();
+
+    return redirect('/login');
+})->name('logout');
+
+
 
 
 
