@@ -1,0 +1,892 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #f5f7fb;
+    overflow-x: hidden;
+    font-size: 14px;
+}
+
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =======================
+   Sticky Header
+======================= */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 16px 25px;
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* =======================
+   Sidebar
+======================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    background: #fff;
+    border-right: 1px solid #eee;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #7c3aed;
+}
+
+.logo {
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo-icon {
+    width: 34px;
+    height: 34px;
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logo h4 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.sidebar .nav-link i:first-child {
+    width: 30px;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background: #f3e8ff;
+    color: #7c3aed;
+}
+
+/* =======================
+   Submenu
+======================= */
+
+.submenu {
+    list-style: none;
+    padding-left: 45px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.submenu.open {
+    max-height: 300px;
+}
+
+.submenu li {
+    position: relative;
+}
+
+.submenu li a {
+    display: block;
+    position: relative;
+
+    padding: 10px 14px;
+
+    color: #6b7280;
+    font-size: 13px;
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    transition: all 0.25s ease;
+}
+
+.submenu li a:hover,
+.submenu li a.active {
+    color: #7c3aed !important;
+    text-decoration: underline;
+}
+
+.submenu li a.active::before {
+    content: "";
+    position: absolute;
+
+    left: -10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 4px;
+    height: 18px;
+
+    background: #7c3aed;
+    border-radius: 10px;
+}
+
+/* =======================
+   Main
+======================= */
+
+.main {
+    flex: 1;
+    min-width: 0;
+    margin-left: 260px;
+}
+
+.topbar {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 16px 25px;
+}
+
+.menu-btn {
+    display: none;
+}
+
+/* =======================
+   Buttons
+======================= */
+
+.btn-purple {
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 16px;
+}
+
+.btn-purple:hover {
+    background: #6d28d9;
+    color: #fff;
+}
+
+/* =======================
+   User
+======================= */
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #ede9fe;
+    color: #7c3aed;
+    font-weight: bold;
+}
+
+/* =======================
+   Cards
+======================= */
+
+.stat-card {
+    padding: 26px;
+    border-radius: 20px;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.stat-card h2 {
+    font-size: 34px;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.stat-card p {
+    margin: 0;
+}
+
+.card-purple {
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+}
+
+.card-green {
+    background: linear-gradient(135deg, #10b981, #14b8a6);
+}
+
+.card-blue {
+    background: linear-gradient(135deg, #38bdf8, #06b6d4);
+}
+
+.card-orange {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+}
+
+.icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =======================
+   Tables
+======================= */
+
+.table-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.table-header-purple {
+    background: linear-gradient(90deg, #7c3aed, #5b21b6);
+    color: #fff;
+    padding: 18px 22px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.table-header-blue {
+    background: linear-gradient(90deg, #0ea5e9, #2563eb);
+    color: #fff;
+    padding: 18px 22px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.table th {
+    background: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.table td {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.product-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.badge-status {
+    background: #d1fae5;
+    color: #059669;
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 12px;
+}
+
+/* =======================
+   Admin dropdown
+======================= */
+
+.admin-dropdown {
+    position: relative;
+}
+
+.admin-menu {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 220px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+
+    transition: 0.25s;
+}
+
+.admin-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.admin-menu a {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #374151;
+}
+
+.admin-menu a:hover {
+    background: #f3f4f6;
+}
+
+/* =======================
+   Overlay
+======================= */
+
+#overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    z-index: 9998;
+}
+
+#overlay.show {
+    display: block;
+}
+
+/* =======================
+   Mobile
+======================= */
+
+@media (max-width: 767px) {
+    .sidebar {
+        left: -280px;
+        margin-left: 0;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .topbar {
+        padding: 15px;
+    }
+    .wrapper {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        z-index: 9999;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 10px;
+        background: #7c3aed;
+        color: #fff;
+    }
+
+    .topbar {
+        padding: 15px;
+    }
+
+    .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .topbar-buttons .btn {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .topbar-buttons .btn-text {
+        display: none;
+    }
+
+    .topbar-buttons i {
+        margin: 0 !important;
+    }
+
+    .container-fluid {
+        padding: 15px !important;
+    }
+
+    .col-md-6.col-lg-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+    .stat-card h2 {
+        font-size: 22px;
+    }
+
+    .stat-card p {
+        font-size: 11px;
+    }
+
+    .icon-box {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icon-box i {
+        font-size: 14px !important;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+}
+/* =========================
+   PAGE HEADER All Product Page Start
+========================= */
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.btn-primary {
+    background: #7c3aed;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #6d28d9;
+}
+
+/* =========================
+   FILTER CARD
+========================= */
+
+.card {
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.form-control {
+    height: 46px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: none !important;
+}
+
+.form-control:focus {
+    border-color: #7c3aed;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.table-header-purple {
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    color: #fff;
+    padding: 18px 24px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    border: none;
+    padding: 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+    background: #f9fafb;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    border-top: 1px solid #f3f4f6;
+    padding: 16px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.table tbody tr:hover {
+    background: #faf5ff;
+}
+
+/* =========================
+   PRODUCT IMAGE
+========================= */
+
+.product-img {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.badge-status {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-inactive {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* =========================
+   ACTION BUTTON
+========================= */
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.bg-success-light {
+    background: #ecfdf5;
+    color: #059669;
+    border-radius: 8px;
+    padding: 7px 12px;
+}
+
+.bg-danger-light {
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 8px;
+    padding: 7px 12px;
+}
+
+.bg-success-light:hover {
+    background: #d1fae5;
+}
+
+.bg-danger-light:hover {
+    background: #fee2e2;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #7c3aed;
+    color: #fff;
+    border: none;
+    padding: 18px 24px;
+}
+
+.modal-header h5 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-footer {
+    border: none;
+    padding: 20px 25px;
+}
+
+.modal-body label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+textarea.form-control {
+    height: auto;
+}
+
+.img-thumbnail {
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+    justify-content: end;
+    margin-top: 20px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+    .card-body {
+        padding: 15px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .table thead th,
+    .table tbody td {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .product-img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* =========================
+   Catagory Page
+========================= */
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.category-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.category-placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: #f3f4f6;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #9ca3af;
+}
+
+.btn-edit {
+    background: #ecfdf5;
+    color: #10b981;
+    border: none;
+}
+
+.btn-delete {
+    background: #fef2f2;
+    color: #ef4444;
+    border: none;
+}
+
+.btn-edit:hover {
+    background: #10b981;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+.badge-status {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge-inactive {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.table-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #ececec;
+}
+
+.table-header-purple {
+    background: linear-gradient(90deg, #7c3aed, #5b21b6);
+    color: white;
+    padding: 16px 20px;
+    font-weight: 600;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+    padding: 14px;
+}
+
+/* proguct Add */
+
+.product-modal {
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.product-modal .modal-body {
+    background: #f5f7fb;
+}
+
+.wc-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid #ececec;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    height: 46px;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+}
+
+textarea.form-control {
+    height: auto;
+}
+
+.preview-image {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.modal-header {
+    padding: 22px 30px;
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    background: #fff;
+}

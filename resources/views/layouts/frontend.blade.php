@@ -35,6 +35,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        @if (session()->has('success'))
+            toastr.success("{{ session('success') }}");
+        @endif
+
+        @if (session()->has('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
+    </script>
     @livewireScripts
 
 </body>

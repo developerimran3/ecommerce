@@ -1,217 +1,131 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-
-    <title>{{ $title ?? 'Admin Panel' }}</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-    @livewireStyles
-</head>
-
-<body>
-
-    @include('partials.navbar')
-
-    <div class="container-fluid">
-        <div class="row">
-
-            <div class="col-md-2 bg-dark p-0">
-                @include('partials.sidebar')
-            </div>
-
-            <div class="col-md-10 p-4">
-                {{ $slot ?? '' }}
-
-                @yield('content')
-            </div>
-
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <script>
-        window.addEventListener('success', event => {
-            toastr.success(event.detail.message);
-        });
-
-        window.addEventListener('error', event => {
-            toastr.error(event.detail.message);
-        });
-    </script>
-
-    @livewireScripts
-
-</body>
-
-</html> --}}
-
-
 <!doctype html>
 <html lang="en">
 
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--favicon-->
-    <link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
-    <!--plugins-->
-    <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/highcharts/css/highcharts.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
-    <!-- loader-->
-    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
-    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
-    <!-- Bootstrap CSS -->
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
-    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
-    <!-- Theme Style CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
-    <title>{{ $title ?? 'Admin Panel' }}</title>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{{ $title ?? 'Dashboard' }}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @livewireStyles
+
 </head>
 
 <body>
-    <!--wrapper-->
     <div class="wrapper">
+        <!-- Sidebar -->
 
-        <!--sidebar wrapper -->
-        <div class="sidebar-wrapper" data-simplebar="true">
-            <div class="sidebar-header">
-                <div>
-                    <img src="{{ asset('assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
-                </div>
-                <div>
-                    <h4 class="logo-text">Synadmin</h4>
-                </div>
-                <div class="toggle-icon ms-auto"><i class='bx bx-first-page'></i>
-                </div>
-            </div>
+        @include('partials.sidebar')
 
-            @include('partials.sidebar')
+        <!-- Main -->
 
-        </div>
-        <!--end sidebar wrapper -->
+        <main class="main">
+            <!-- Topbar -->
+            @include('partials.navbar')
 
-        @include('partials.navbar')
-        <!--start page wrapper -->
-        <div class="page-wrapper">
-            <div class="page-content">
+            <!-- Content -->
+            <div class="container-fluid p-5">
+
                 {{ $slot ?? '' }}
-
                 @yield('content')
-
             </div>
-        </div>
-        <!--end page wrapper -->
-
-        <!--start overlay-->
-        <div class="overlay toggle-icon"></div>
-        <!--end overlay-->
-        <!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i
-                class='bx bxs-up-arrow-alt'></i></a>
-        <!--End Back To Top Button-->
-        <footer class="page-footer">
-            <p class="mb-0">Copyright © 2021. All right reserved.</p>
-        </footer>
+        </main>
     </div>
-    <!--end wrapper-->
-
-
-
-    <!--plugins-->
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
-    <script src="{{ asset('assets/plugins/highcharts/js/highcharts.js') }}"></script>
-    <script src="{{ asset('assets/plugins/highcharts/js/exporting.js') }}"></script>
-    <script src="{{ asset('assets/plugins/highcharts/js/variable-pie.js') }}"></script>
-    <script src="{{ asset('assets/plugins/highcharts/js/export-data.js') }}"></script>
-    <script src="{{ asset('assets/plugins/highcharts/js/accessibility.js') }}"></script>
-    <script src="{{ asset('assets/plugins/apexcharts-bundle/js/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/js/index2.js') }}"></script>
-    <!--app JS-->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <!-- Bootstrap JS -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script>
-        new PerfectScrollbar('.customers-list');
-        new PerfectScrollbar('.store-metrics');
-        new PerfectScrollbar('.product-list');
-    </script>
-
-
-
+    <div id="overlay"></div>
 
     <script>
-        document.addEventListener('livewire:init', () => {
+        function initDashboard() {
 
-            Livewire.on('success', (event) => {
-                toastr.success(event.message);
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("overlay");
+
+            const adminToggle = document.querySelector(".admin-toggle");
+            const adminMenu = document.querySelector(".admin-menu");
+
+            window.toggleMenu = function() {
+                sidebar.classList.toggle("show");
+                overlay.classList.toggle("show");
+            };
+
+            overlay.onclick = function() {
+                sidebar.classList.remove("show");
+                overlay.classList.remove("show");
+
+                if (adminMenu) {
+                    adminMenu.classList.remove("show");
+                }
+            };
+
+            // Sidebar submenu
+
+            document.querySelectorAll(".menu-toggle").forEach(function(menu) {
+
+                menu.onclick = function() {
+
+                    const current = this.nextElementSibling;
+
+                    document.querySelectorAll(".submenu").forEach(function(sub) {
+
+                        if (sub !== current) {
+                            sub.classList.remove("open");
+                        }
+
+                    });
+
+                    document.querySelectorAll(".arrow").forEach(function(icon) {
+
+                        if (icon !== menu.querySelector(".arrow")) {
+                            icon.classList.remove("rotate");
+                        }
+
+                    });
+
+                    current.classList.toggle("open");
+
+                    menu.querySelector(".arrow").classList.toggle("rotate");
+                };
             });
 
-            Livewire.on('error', (event) => {
-                toastr.error(event.message);
-            });
+            // Admin dropdown
 
-        });
+            if (adminToggle && adminMenu) {
+
+                adminToggle.onclick = function(e) {
+
+                    e.stopPropagation();
+
+                    adminMenu.classList.toggle("show");
+                    adminToggle.classList.toggle("active");
+                };
+
+                document.onclick = function() {
+
+                    adminMenu.classList.remove("show");
+                    adminToggle.classList.remove("active");
+                };
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", initDashboard);
+
+        document.addEventListener("livewire:navigated", initDashboard);
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('close-modal', () => {
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 
-                $('#newUserModal').modal('hide');
-                $('#editUserModal').modal('hide');
-
-                $('#brandModal').modal('hide');
-                $('#categoryModal').modal('hide');
-                $('#productModal').modal('hide');
-
-                $('.modal-backdrop').remove();
-                $('body').removeClass('modal-open');
-            });
-
-        });
-    </script>
-
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @livewireScripts
-
-
-
 </body>
-
 
 </html>

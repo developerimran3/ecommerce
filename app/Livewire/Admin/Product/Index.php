@@ -309,13 +309,6 @@ class Index extends Component
         );
     }
 
-
-
-
-
-
-
-
     public function removeGalleryImage($imageId)
     {
         $image = ProductImage::find($imageId);
@@ -380,6 +373,18 @@ class Index extends Component
         $this->resetPage();
     }
 
+
+    public function changeStatus($id)
+    {
+        $products = Product::findOrFail($id);
+        $products->update([
+            'status' => !$products->status,
+        ]);
+        $this->dispatch(
+            'success',
+            message: 'Products status updated successfully.'
+        );
+    }
 
     public function render()
     {

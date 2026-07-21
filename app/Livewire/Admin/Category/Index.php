@@ -12,12 +12,13 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithFileUploads, WithPagination;
+    protected string $paginationTheme = 'bootstrap';
 
     public $name;
     public $image;
     public $oldImage;
     public $status = true;
-
+    public $search = '';
     public $category_id;
 
     protected $rules = [
@@ -33,9 +34,10 @@ class Index extends Component
     public function resetInput()
     {
         $this->reset([
+            'category_id',
             'name',
             'image',
-            'category_id',
+            'oldImage',
         ]);
 
         $this->status = true;
@@ -69,7 +71,6 @@ class Index extends Component
 
         $this->category_id = $category->id;
         $this->name = $category->name;
-        $this->status = $category->status;
         $this->oldImage = $category->image;
     }
 
@@ -80,7 +81,6 @@ class Index extends Component
         $data = [
             'name' => $this->name,
             'slug' => Str::slug($this->name),
-            'status' => $this->status,
         ];
 
         if ($this->image) {
@@ -102,11 +102,46 @@ class Index extends Component
     }
 
 
+    public function changeStatus($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->update([
+            'status' => !$category->status,
+        ]);
+        $this->dispatch(
+            'success',
+            message: 'Category status updated successfully.'
+        );
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
-        return view('livewire.admin.category.index', [
-            'categories' => Category::latest()->paginate(10),
-        ])->layout('layouts.admin');
+        $categories = Category::query()
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where(
+                        'name',
+                        'like',
+                        '%' . $this->search . '%'
+                    )
+                        ->orWhere(
+                            'slug',
+                            'like',
+                            '%' . $this->search . '%'
+                        );
+                });
+            })
+            ->latest()
+            ->paginate(5);
+
+        return view(
+            'livewire.admin.category.index',
+            compact('categories')
+        )->layout('layouts.admin');
     }
 }

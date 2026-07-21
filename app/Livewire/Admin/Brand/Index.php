@@ -11,14 +11,13 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithFileUploads, WithPagination;
+    protected string $paginationTheme = 'bootstrap';
 
     public $brand_id;
-
     public $name;
-
     public $logo;
-
-    public $status = true;
+    public $status = false;
+    public $search = '';
 
     protected function rules()
     {
@@ -42,13 +41,10 @@ class Index extends Component
     public function store()
     {
         $this->validate();
-
         $logo = null;
-
         if ($this->logo) {
             $logo = $this->logo->store('brands', 'public');
         }
-
         Brand::create([
             'name' => $this->name,
             'slug' => Str::slug($this->name),
@@ -67,28 +63,22 @@ class Index extends Component
     public function edit($id)
     {
         $brand = Brand::findOrFail($id);
-
         $this->brand_id = $brand->id;
         $this->name = $brand->name;
-        $this->status = $brand->status;
     }
 
     public function update()
     {
         $brand = Brand::findOrFail($this->brand_id);
-
         $data = [
             'name' => $this->name,
             'slug' => Str::slug($this->name),
-            'status' => $this->status,
         ];
 
         if ($this->logo) {
             $data['logo'] = $this->logo->store('brands', 'public');
         }
-
         $brand->update($data);
-
         $this->dispatch(
             'success',
             message: 'Brand updated successfully.'
@@ -97,20 +87,59 @@ class Index extends Component
         $this->resetInput();
     }
 
+
+
+    public function changeStatus($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->update([
+            'status' => !$brand->status,
+        ]);
+        $this->dispatch(
+            'success',
+            message: 'Brand status updated successfully.'
+        );
+    }
+
+
     public function delete($id)
     {
         Brand::findOrFail($id)->delete();
-
         $this->dispatch(
             'success',
             message: 'Brand deleted successfully.'
         );
     }
 
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        return view('livewire.admin.brand.index', [
-            'brands' => Brand::latest()->paginate(3),
-        ])->layout('layouts.admin');
+        $brands = Brand::query()
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where(
+                        'name',
+                        'like',
+                        '%' . $this->search . '%'
+                    )
+                        ->orWhere(
+                            'slug',
+                            'like',
+                            '%' . $this->search . '%'
+                        );
+                });
+            })
+            ->latest()
+            ->paginate(5);
+
+        return view(
+            'livewire.admin.brand.index',
+            compact('brands')
+        )->layout('layouts.admin');
     }
 }

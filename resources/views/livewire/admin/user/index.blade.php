@@ -1,269 +1,207 @@
-<div>
+<div class="content container-fluid">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#newUserModal">
-            <i class="fa fa-plus"></i> Add New User </button>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">List of Users</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    {{-- <li class="breadcrumb-item"><a href="javascript:(0);">Users</a></li> --}}
+                    <li class="breadcrumb-item active">Users</li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-    <div class="d-flex justify-content-between mb-3">
-        <h4>All Users</h4>
-        <input type="text" class="form-control w-25" placeholder="Search..." wire:model.live="search">
-    </div>
-
+    <!-- /Page Header -->
 
     <div class="row">
-        <div class="col">
-            <div class="card radius-10 mb-0">
+        <div class="col-md-12">
+
+            <!-- Recent Orders -->
+            <div class="card card-table">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between mb-3">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#userModal"
+                            wire:click="resetInput">
+                            <i class="fa fa-plus"></i> Add New User </button>
+                        <input type="text" class="form-control w-25" placeholder="Search..."
+                            wire:model.live="search">
+                    </div>
+                </div>
                 <div class="card-body">
-                    <div class="table-responsive mt-3">
-                        <table class="table align-middle table-bordered mb-0 ">
-                            <thead class="text-primary">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-center mb-0">
+                            <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    <th>Status</th>
+                                    <th>Status Change</th>
                                     <th>Role</th>
                                     <th>Joined</th>
-                                    <th>Actions</th>
+                                    <th>Status</th>
+                                    <th style="width: 20px">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $user)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="recent-product-img">
-                                                    @if ($user->image)
-                                                        <img src="{{ asset('storage/' . $user->image) }}"
-                                                            class="img-thumbnail" alt="">
-                                                    @else
-                                                        <span class="text-muted">
-                                                            <img src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg"
-                                                                alt="">
-                                                        </span>
-                                                    @endif
+
+                                @foreach ($users as $user)
+                                    @if ($user->role != 'Administrator')
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a class="avatar avatar-sm mr-2">
+
+                                                        @if ($user->image)
+                                                            <img class="avatar-img rounded-circle"
+                                                                src="{{ asset('storage/' . $user->image) }}"
+                                                                alt="User Image">
+                                                        @else
+                                                            <img class="avatar-img rounded-circle"
+                                                                src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg"
+                                                                alt="User Image">
+                                                        @endif
+                                                    </a>
+                                                    <a class="text-capitalize">{{ $user->name }}</a>
+                                                </h2>
+                                            </td>
+                                            <td> {{ $user->email }} </td>
+                                            <td> {{ $user->phone }} </td>
+                                            <td> {{ $user->address }} </td>
+
+                                            <td>
+                                                <div class="status-toggle">
+                                                    <input type="checkbox" id="status_{{ $user->id }}"
+                                                        class="check" {{ $user->status ? 'checked' : '' }}
+                                                        wire:change="changeStatus({{ $user->id }})">
+
+                                                    <label for="status_{{ $user->id }}" class="checktoggle">
+                                                    </label>
                                                 </div>
+                                            </td>
 
-                                            </div>
-                                        </td>
-                                        <td> {{ $user->name }} </td>
-                                        <td> {{ $user->email }} </td>
-                                        <td> {{ $user->phone }} </td>
-                                        <td> {{ $user->address }} </td>
-                                        <td>
-                                            @if ($user->status)
-                                                <span class="badge bg-light-success text-success w-80">
-                                                    Active
-                                                </span>
-                                            @else
-                                                <span class="badge bg-light-danger text-danger w-80">
-                                                    Inactive
-                                                </span>
-                                            @endif
-                                        </td>
-                                        <td class="text-capitalize"> {{ $user->role }} </td>
-                                        <td> {{ $user->created_at->format('d M Y') }} </td>
-                                        <td>
-                                            <div class="d-flex order-actions">
-                                                <a href="javascript:;" wire:click="delete({{ $user->id }})"
-                                                    wire:confirm="Are you sure you want to delete this user?"
-                                                    class="text-danger bg-light-danger border-0">
-                                                    <i class="bx bxs-trash"></i>
-                                                </a>
+                                            <td> {{ $user->role }} </td>
+                                            <td> {{ $user->created_at->format('d M Y') }} </td>
 
-                                                <a href="javascript:;"wire:click="edit({{ $user->id }})"
-                                                    data-toggle="modal" data-target="#editUserModal"
-                                                    class="ms-2 text-primary bg-light-primary border-0"><i
-                                                        class='bx bxs-edit'></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">
-                                            No Data Found
-                                        </td>
-                                    </tr>
-                                @endforelse
+                                            <td>
+                                                <span
+                                                    class="badge badge-pill {{ $user->status ? 'bg-success' : 'bg-danger' }} inv-badge">
+                                                    {{ $user->status ? 'Active' : 'Inactive' }}
+                                                </span>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="actions">
+                                                    <a href="#" data-toggle="modal" data-target="#userModal"
+                                                        wire:click="edit({{ $user->id }})"
+                                                        class="btn btn-sm bg-success-light mr-2">
+                                                        <i class="fe fe-pencil"></i> Edit
+                                                    </a>
+                                                    <a class="btn btn-sm bg-danger-light"
+                                                        wire:click="delete({{ $user->id }})"
+                                                        wire:confirm="Are you sure? Document Delete?">
+                                                        <i class="fe fe-trash"></i> Delete
+                                                    </a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-3">
+
+                    <div>
                         {{ $users->links() }}
                     </div>
                 </div>
             </div>
+            <!-- /Recent Orders -->
+
         </div>
     </div>
 
-
-
-    {{-- Add New User Modal --}}
-    <div wire:ignore.self class="modal fade" id="newUserModal">
-        <div class="modal-dialog">
+    <!-- Edit User Modal -->
+    <div wire:ignore.self class="modal fade" id="userModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>Add User</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
+                    <h5 class="modal-title">
+                        {{ $user_id ? 'Edit User' : 'Add Users' }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
-                <div class="col">
-                    <div class="card border-top border-0 border-4 border-danger">
-                        <div class="card-body p-5">
-                            <form wire:submit.prevent="create">
-                                <div class="col-12">
-                                    <label for="inputLastName1" class="form-label">Name</label>
-                                    <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                                class='bx bxs-user'></i></span>
-                                        <input type="text" name="name" wire:model="name"
-                                            class="form-control border-start-0" id="inputLastName1"
-                                            placeholder="Your Name" />
-                                    </div>
-                                    @error('name')
-                                        <small class="text-danger">
-                                            {{ $message }}
-                                        </small>
-                                    @enderror
+                <div class="modal-body">
+                    <form wire:submit.prevent="{{ $user_id ? 'update' : 'create' }}">
+                        <div class="row form-row">
+                            <div class="col-12 ">
+                                <div class="form-group">
+                                    <label>User Name</label>
+                                    <input type="text" class="form-control text-capitalize" name="name"
+                                        wire:model="name" required @if ($user_id) readonly @endif>
                                 </div>
-
-
-                                <div class="col-12">
-                                    <label for="inputEmailAddress" class="form-label">Email Address</label>
-                                    <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                                class='bx bxs-message'></i></span>
-                                        <input type="text" name="email" wire:model="email"
-                                            class="form-control border-start-0" id="inputEmailAddress"
-                                            placeholder="Email Address" />
-                                    </div>
-                                    @error('email')
-                                        <small class="text-danger">
-                                            {{ $message }}
-                                        </small>
-                                    @enderror
+                            </div>
+                            <div class="col-12">
+                                <div class="">
+                                    <label>Email ID</label>
+                                    <input type="text" class="form-control" name="email" wire:model="email"
+                                        required @if ($user_id) readonly @endif>
                                 </div>
+                                @error('email')
+                                    <small class="text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
+                            </div>
+                            <div class="col-12 {{ $user_id ? 'd-none' : '' }}">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control" name="phone" wire:model="phone">
+                                </div>
+                            </div>
 
-                                <div class="col-12 mt-3 mb-2">
-                                    <label for="inputAddress3" class="form-label">Status</label>
+                            <div class="col-12 ">
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <select class="select form-control" wire:model="role">
+                                        <option>Select</option>
+                                        <option value="Customer"> Customer</option>
+                                        <option value="Shop Manager"> Shop Manager</option>
+                                        <option value="Contributor"> Contributor</option>
+                                        <option value="Editor"> Editor</option>
+                                        <option value="Administrator"> Administrator </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 {{ $user_id ? 'd-none' : '' }}">
+                                <div class="form-group">
+                                    <label>Status</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" wire:model="status"
-                                            id="gridCheck2">
-                                        <label class="form-check-label" for="gridCheck2">Active</label>
+                                            id="invalidCheck">
+                                        <label class="form-check-label" for="invalidCheck"> Active </label>
                                     </div>
-
                                 </div>
-                                <div class="col-12">
-                                    <label for="inputVendor" class="form-label">Role Change</label>
-                                    <select class="form-select" wire:model.live="role">
-                                        <option value=""></option>
-                                        <option value="Customer">Customer</option>
-                                        <option value="Contributor">Contributor</option>
-                                        <option value="Shop Manager">Shop Manager</option>
-                                        <option value="Editor">Editor</option>
-                                        <option value="Administrator">Administrator</option>
-                                    </select>
-                                    @error('role')
-                                        <small class="text-danger">
-                                            {{ $message }}
-                                        </small>
-                                    @enderror
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary"> Create
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                        @if ($user_id)
+                            <button type="submit" class="btn btn-success"> Update </button>
+                        @else
+                            <button type="submit" class="btn btn-primary"> Save </button>
+                        @endif
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- /Edit User Modal -->
 
-
-    {{-- edit Modal --}}
-    <div wire:ignore.self class="modal fade" id="editUserModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Edit User</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-
-                <div class="col">
-                    <div class="card border-top border-0 border-4 border-danger">
-                        <div class="card-body p-5">
-                            <div class="col-12">
-                                <label for="inputLastName1" class="form-label">Name</label>
-                                <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                            class='bx bxs-user'></i></span>
-                                    <input type="text" name="name" wire:model="name"
-                                        class="form-control border-start-0" id="inputLastName1"
-                                        placeholder="Your Name" readonly />
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <label for="inputPhoneNo" class="form-label">Phone No</label>
-                                <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                            class='bx bxs-microphone'></i></span>
-                                    <input type="text" name="phone" wire:model="phone"
-                                        class="form-control border-start-0" id="inputPhoneNo" placeholder="Phone No"
-                                        readonly />
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label for="inputEmailAddress" class="form-label">Email Address</label>
-                                <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                            class='bx bxs-message'></i></span>
-                                    <input type="text" name="email" wire:model="email"
-                                        class="form-control border-start-0" id="inputEmailAddress"
-                                        placeholder="Email Address" readonly />
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <label for="inputAddress3" class="form-label">Address</label>
-                                <textarea class="form-control" name="address" wire:model="address" id="inputAddress3" placeholder="Enter Address"
-                                    rows="3" readonly></textarea>
-                            </div>
-                            <div class="col-12 mt-3 mb-2">
-                                <label for="inputAddress3" class="form-label">Status</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" wire:model="status"
-                                        id="gridCheck2">
-                                    <label class="form-check-label" for="gridCheck2">Active</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label for="inputVendor" class="form-label">Role Change</label>
-                                <select class="form-select" wire:model.live="role">
-                                    <option value=""></option>
-                                    <option value="Customer">Customer</option>
-                                    <option value="Contributor">Contributor</option>
-                                    <option value="Shop Manager">Shop Manager</option>
-                                    <option value="Editor">Editor</option>
-                                    <option value="Administrator">Administrator</option>
-
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary" wire:click="update"> Update </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </div>

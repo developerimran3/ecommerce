@@ -1,84 +1,107 @@
-<div>
-    <div class="d-flex justify-content-between mb-3">
-        <h4>Brands</h4>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#brandModal" wire:click="resetInput">
-            <i class="fa fa-plus"></i> Add Brand </button>
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">List of Brands</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Brands</li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-
+    <!-- /Page Header -->
     <div class="row">
-        <div class="col">
-            <div class="card radius-10 mb-0">
+        <div class="col-md-12">
+            <div class="card card-table">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between mb-3">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#brandModal"
+                            wire:click="resetInput">
+                            <i class="fa fa-plus"></i> Add New Brand </button>
+                        <input type="text" class="form-control w-25" placeholder="Search..."
+                            wire:model.live="search">
+                    </div>
+                </div>
                 <div class="card-body">
-                    <div class="table-responsive mt-3">
-                        <table class="table align-middle table-bordered mb-0">
-                            <thead class="text-primary">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-center mb-0">
+                            <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Slug</th>
-                                    <th>Status</th>
+                                    <th>Status change</th>
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <th>Status</th>
+                                    <th style="width: 20px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($brands as $brand)
+                                @foreach ($brands as $brand)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="recent-product-img ">
+                                            <h2 class="table-avatar">
+                                                <a class="avatar avatar-sm mr-2">
+
+
                                                     @if ($brand->logo)
-                                                        <img src="{{ asset('storage/' . $brand->logo) }}"
-                                                            class="img-thumbnail" alt="">
+                                                        <img class="avatar-img rounded-circle"
+                                                            src="{{ asset('storage/' . $brand->logo) }}"
+                                                            alt="User Image">
+                                                    @else
+                                                        <img class="avatar-img rounded-circle"
+                                                            src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg"
+                                                            alt="User Image">
                                                     @endif
-                                                </div>
-                                                <div class="ms-2">
-                                                    <h6 class="mb-1 font-14">{{ $brand->name }}</h6>
-                                                </div>
-                                            </div>
+                                                </a>
+                                                <a class="text-capitalize">{{ $brand->name }}</a>
+                                            </h2>
                                         </td>
+                                        <td> {{ $brand->slug }} </td>
 
-                                        <td>{{ $brand->slug }}</td>
-
-                                        <td class="">
-                                            @if ($brand->status)
-                                                <span class="badge bg-light-success text-success w-50">
-                                                    Active
-                                                </span>
-                                            @else
-                                                <span class="badge bg-light-danger text-danger w-50">
-                                                    Inactive
-                                                </span>
-                                            @endif
-                                        </td>
-                                        <td> {{ $brand->created_at->format('d M Y') }}</td>
                                         <td>
-                                            <div class="d-flex order-actions"> <a href="javascript:;"
-                                                    wire:click="delete({{ $brand->id }})"
-                                                    onclick="confirm('Delete this brand?')"
-                                                    class="text-danger bg-light-danger border-0"><i
-                                                        class='bx bxs-trash'></i></a>
+                                            <div class="status-toggle">
+                                                <input type="checkbox" id="status_{{ $brand->id }}" class="check"
+                                                    {{ $brand->status ? 'checked' : '' }}
+                                                    wire:change="changeStatus({{ $brand->id }})">
 
-                                                <a href="javascript:;"wire:click="edit({{ $brand->id }})"
-                                                    data-toggle="modal" data-target="#brandModal"
-                                                    class="ms-2 text-primary bg-light-primary border-0"><i
-                                                        class='bx bxs-edit'></i></a>
+                                                <label for="status_{{ $brand->id }}" class="checktoggle">
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td> {{ $brand->created_at->format('d M Y') }}</td>
+
+                                        <td>
+                                            <span
+                                                class="badge badge-pill {{ $brand->status ? 'bg-success' : 'bg-danger' }} inv-badge">
+                                                {{ $brand->status ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a href="#" data-toggle="modal" data-target="#brandModal"
+                                                    wire:click="edit({{ $brand->id }})"
+                                                    class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fe fe-pencil"></i> Edit
+                                                </a>
+                                                <a class="btn btn-sm bg-danger-light"
+                                                    wire:click="delete({{ $brand->id }})"
+                                                    wire:confirm="Are you sure? Brand Delete?">
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">
-                                            No Data Found
-                                        </td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-3">
+
+                    <div>
                         {{ $brands->links() }}
                     </div>
                 </div>
@@ -86,69 +109,63 @@
         </div>
     </div>
 
-
-    <div wire:ignore.self class="modal fade" id="brandModal">
-        <div class="modal-dialog">
+    <!-- Edit Brand Modal -->
+    <div wire:ignore.self class="modal fade" id="brandModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>
+                    <h5 class="modal-title">
                         {{ $brand_id ? 'Edit Brand' : 'Add Brand' }}
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="card border-top border-0 border-4 border-danger">
-                    <div class="card-body p-5">
-                        <div class="col-12">
-                            <label class="form-label">Brand Name</label>
-                            <div class="input-group"> <span class="input-group-text bg-transparent"><i
-                                        class='bx bxs-user'></i></span>
-                                <input type="text" name="brand" wire:model.live="name"
-                                    class="form-control border-start-0" id="inputLastName1" placeholder="Brand Name" />
+                <div class="modal-body">
+                    <form wire:submit.prevent="{{ $brand_id ? 'update' : 'store' }}">
+                        <div class="row form-row">
+                            <div class="col-12 ">
+                                <div class="form-group">
+                                    <label>Brand Name</label>
+                                    <input type="text" class="form-control text-capitalize" name="brand_name"
+                                        wire:model="name">
+                                </div>
                             </div>
-                            @error('name')
-                                <small class="text-danger">
-                                    {{ $message }}
-                                </small>
-                            @enderror
-                        </div>
+                            <div class="col-12 ">
+                                <div class="form-group">
+                                    <label>Logo</label>
+                                    <input type="file" class="form-control text-capitalize" wire:model="logo">
+                                </div>
+                                @if ($logo)
+                                    <img src="{{ $logo->temporaryUrl() }}" width="80" height="80"
+                                        class="img-thumbnail mb-2">
+                                @endif
+                            </div>
 
-                        <div class="col-12 mt-2">
-                            <label class="form-label">Logo</label>
-                            <div class="input-group">
-                                <input type="file" wire:model="logo" class="form-control border-start-0" />
+
+                            <div class="col-12 {{ $brand_id ? 'd-none' : '' }}">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" wire:model="status"
+                                            id="invalidCheck">
+                                        <label class="form-check-label" for="invalidCheck"> Active </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        @if ($logo)
-                            <div class="mt-3">
-                                <img src="{{ $logo->temporaryUrl() }}" width="80" height="80"
-                                    class="img-thumbnail">
-                            </div>
+                        @if ($brand_id)
+                            <button type="submit" class="btn btn-success"> Update </button>
+                        @else
+                            <button type="submit" class="btn btn-primary"> Save </button>
                         @endif
-
-                        {{-- @if ($oldImage && !$image)
-                            <img src="{{ asset('storage/' . $image) }}" width="80" class="img-thumbnail mb-2">
-                        @endif --}}
-
-                        <div class="col-12 mt-3 mb-2">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" wire:model="status" id="gridCheck2">
-                                <label class="form-check-label" for="gridCheck2">Active</label>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <button class="btn btn-secondary" data-dismiss="modal"> Close </button>
-                            @if ($brand_id)
-                                <button type="submit" class="btn btn-success" wire:click="update"> Update </button>
-                            @else
-                                <button type="submit" class="btn btn-primary" wire:click="store"> Save </button>
-                            @endif
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- /Edit Brand Modal -->
+
+
+
 </div>

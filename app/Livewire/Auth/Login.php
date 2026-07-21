@@ -16,7 +16,6 @@ class Login extends Component
     protected $rules = [
 
         'email' => 'required|email',
-
         'password' => 'required|min:6',
     ];
 
@@ -33,23 +32,22 @@ class Login extends Component
                 'email',
                 'Invalid email or password.'
             );
-
             return;
         }
 
         session()->regenerate();
-
+        session()->flash(
+            'success',
+            'Login successful.'
+        );
         $user = auth()->user();
-
         if ($user->role === 'Administrator') {
 
             return redirect()->route('admin.dashboard');
         }
-
-
-
         return redirect()->route('home');
     }
+
 
     public function render()
     {
