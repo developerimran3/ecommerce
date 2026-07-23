@@ -19,6 +19,58 @@ body {
 }
 
 /* =======================
+   Media
+======================= */
+
+.media-item {
+    position: relative;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.media-item:hover {
+    border-color: #0073aa;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.media-img {
+    height: 180px;
+    object-fit: cover;
+    width: 100%;
+}
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(220, 53, 69, 0.95);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.media-item:hover .delete-btn {
+    display: flex;
+}
+.tick-mark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #28a745;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.media-item.selected .tick-mark {
+    display: flex;
+}
+/* =======================
    Sticky Header
 ======================= */
 

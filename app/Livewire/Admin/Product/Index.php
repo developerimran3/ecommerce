@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 class Index extends Component
 {
     use WithFileUploads, WithPagination;
+    protected string $paginationTheme = 'bootstrap';
 
     public $search = '';
     public $filterCategory = '';
@@ -61,9 +62,28 @@ class Index extends Component
         $this->reset();
         $this->featured     = false;
         $this->status       = true;
+        $this->sizes = '';
+        $this->colors = '';
         $this->oldGallery   = [];
     }
 
+    public function updatedSizes($value)
+    {
+        $this->sizes = $value;
+    }
+
+    public function updatedColors($value)
+    {
+        $this->colors = $value;
+    }
+
+
+
+    public function mount()
+    {
+        $this->sizes = [];
+        $this->colors = [];
+    }
 
     public function store()
     {
@@ -121,6 +141,8 @@ class Index extends Component
         $this->brand_id = $product->brand_id;
         $this->name = $product->name;
         $this->sku = $product->sku;
+        $this->sizes = $product->sizes ? json_decode($product->sizes, true) : [];
+        $this->colors = $product->colors ? json_decode($product->colors, true) : [];
         $this->price = $product->price;
         $this->discount_price = $product->discount_price;
         $this->stock = $product->stock;

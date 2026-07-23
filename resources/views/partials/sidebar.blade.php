@@ -82,6 +82,15 @@
                 </a>
             </li>
 
+            {{-- Media --}}
+            <li class="nav-item">
+                <a href="{{ route('admin.media') }}" wire:navigate.hover
+                    class="nav-link {{ request()->routeIs('admin.media*') ? 'active' : '' }}">
+
+                    <i class="fas fa-photo-video"></i>
+                    <span>Media</span>
+                </a>
+            </li>
             {{-- Settings --}}
             <li class="nav-item">
                 <a href="{{ route('profile') }}" wire:navigate.hover

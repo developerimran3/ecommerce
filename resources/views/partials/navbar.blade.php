@@ -21,12 +21,18 @@
         <div class="dropdown admin-dropdown">
             <button class="btn p-0 bg-transparent admin-toggle d-flex align-items-center">
                 <div class="user-avatar d-flex align-items-center justify-content-center">
-                    A
+                    @if (Auth::user()?->image)
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}"
+                            class="category-img">
+                    @else
+                        <img src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg"
+                            alt="Default Avatar" class="category-img">
+                    @endif
                 </div>
 
                 <div class="ml-2 text-left">
-                    <div class="font-weight-bold">Admin</div>
-                    <small class="text-muted">Administrator</small>
+                    <div class="font-weight-bold">{{ Auth::user()?->name }}</div>
+                    <small class="text-muted">{{ Auth::user()?->role }}</small>
                 </div>
 
                 <i class="fas fa-chevron-down ml-3"></i>

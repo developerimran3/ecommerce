@@ -9,9 +9,9 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+    protected string $paginationTheme = 'bootstrap';
 
     public $search = '';
-
     public $status = '';
 
     public $selectedOrder = null;

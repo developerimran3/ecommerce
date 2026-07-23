@@ -62,6 +62,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     @livewireScripts
+    {{-- media --}}
+    <script>
+        function toggleSelect(el) {
+            el.classList.toggle('selected');
+        }
+
+        function deleteMedia(el) {
+            if (confirm("Delete this file?")) {
+                el.closest('.col-lg-3').remove();
+            }
+            event.stopImmediatePropagation();
+        }
+    </script>
+    {{-- media --}}
     <script>
         function initDashboard() {
 
@@ -158,6 +172,8 @@
             });
         });
     </script>
+
+
     <script>
         document.addEventListener('livewire:init', () => {
 
