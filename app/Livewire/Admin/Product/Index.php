@@ -17,131 +17,85 @@ class Index extends Component
 {
     use WithFileUploads, WithPagination;
 
-
-
     public $search = '';
-
     public $filterCategory = '';
-
     public $filterBrand = '';
-
     public $filterStatus = '';
-
     public $product_id;
-
     public $category_id;
-
     public $brand_id;
-
     public $name;
-
+    public $colors = [];
+    public $sizes = [];
     public $sku;
-
     public $thumbnail;
-
     public $gallery = [];
-
     public $price;
-
     public $discount_price;
-
     public $stock = 0;
-
+    public $stock_status;
     public $short_description;
-
     public $description;
-
     public $featured = false;
-
     public $status = true;
-
     public $oldThumbnail;
-
     public $oldGallery = [];
-
 
     protected function rules()
     {
         return [
-
-            'category_id' => 'required',
-
-            'brand_id' => 'nullable',
-
-            'name' => 'required|min:2',
-
-            'sku' => 'required|unique:products,sku,' . $this->product_id,
-
-            'thumbnail' => 'nullable|image|max:2048',
-
-            'gallery.*' => 'nullable|image|max:2048',
-
-            'price' => 'required|numeric',
-
-            'discount_price' => 'nullable|numeric',
-
-            'stock' => 'required|integer|min:0',
+            'category_id'       => 'required',
+            'brand_id'          => 'nullable',
+            'name'              => 'required|min:2',
+            'sku'               => 'required|unique:products,sku,' . $this->product_id,
+            'thumbnail'         => 'nullable|image|max:2048',
+            'gallery.*'         => 'nullable|image|max:2048',
+            'price'             => 'required|numeric',
+            'discount_price'    => 'nullable|numeric',
+            'stock'             => 'required|integer|min:0',
         ];
     }
 
     public function resetInput()
     {
         $this->reset();
-
-        $this->featured = false;
-
-        $this->status = true;
-
-        $this->oldGallery = [];
+        $this->featured     = false;
+        $this->status       = true;
+        $this->oldGallery   = [];
     }
 
 
     public function store()
     {
         $this->validate();
-
         $thumbnail = null;
-
         if ($this->thumbnail) {
             $thumbnail = $this->thumbnail->store('products', 'public');
         }
 
         $product = Product::create([
-
-            'category_id' => $this->category_id,
-
-            'brand_id' => $this->brand_id,
-
-            'name' => $this->name,
-
-            'slug' => Str::slug($this->name),
-
-            'sku' => $this->sku,
-
-            'thumbnail' => $thumbnail,
-
-            'price' => $this->price,
-
-            'discount_price' => $this->discount_price,
-
-            'stock' => $this->stock,
-
+            'category_id'       => $this->category_id,
+            'brand_id'          => $this->brand_id,
+            'name'              => $this->name,
+            'sizes'             => json_encode($this->sizes),
+            'colors'            => json_encode($this->colors),
+            'slug'              => Str::slug($this->name),
+            'sku'               => $this->sku,
+            'thumbnail'         => $thumbnail,
+            'price'             => $this->price,
+            'discount_price'    => $this->discount_price,
+            'stock'             => $this->stock,
+            'stock_status'      => $this->stock_status,
             'short_description' => $this->short_description,
-
-            'description' => $this->description,
-
-            'featured' => $this->featured,
-
-            'status' => $this->status,
+            'description'       => $this->description,
+            'featured'          => $this->featured,
+            'status'            => $this->status,
         ]);
 
         foreach ($this->gallery as $image) {
-
             ProductImage::create([
-
-                'product_id' => $product->id,
-
-                'image' => $image->store('products/gallery', 'public'),
+                'product_id'    => $product->id,
+                'image'         => $image->store('products/gallery', 'public'),
             ]);
         }
 
@@ -162,33 +116,19 @@ class Index extends Component
     public function edit($id)
     {
         $product = Product::with('images')->findOrFail($id);
-
         $this->product_id = $product->id;
-
         $this->category_id = $product->category_id;
-
         $this->brand_id = $product->brand_id;
-
         $this->name = $product->name;
-
         $this->sku = $product->sku;
-
         $this->price = $product->price;
-
         $this->discount_price = $product->discount_price;
-
         $this->stock = $product->stock;
-
         $this->short_description = $product->short_description;
-
         $this->description = $product->description;
-
         $this->featured = $product->featured;
-
         $this->status = $product->status;
-
         $this->oldThumbnail = $product->thumbnail;
-
         $this->oldGallery = $product->images;
     }
 
@@ -196,13 +136,13 @@ class Index extends Component
     public function update()
     {
         $this->validate([
-            'category_id' => 'required',
-            'name' => 'required|min:2',
-            'sku' => 'required|unique:products,sku,' . $this->product_id,
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'thumbnail' => 'nullable|image|max:2048',
-            'gallery.*' => 'nullable|image|max:2048',
+            'category_id'   => 'required',
+            'name'          => 'required|min:2',
+            'sku'           => 'required|unique:products,sku,' . $this->product_id,
+            'price'         => 'required|numeric',
+            'stock'         => 'required|integer',
+            'thumbnail'     => 'nullable|image|max:2048',
+            'gallery.*'     => 'nullable|image|max:2048',
         ]);
 
         $product = Product::findOrFail($this->product_id);
@@ -210,59 +150,43 @@ class Index extends Component
         $thumbnail = $product->thumbnail;
 
         if ($this->thumbnail) {
-
             if (
                 $thumbnail &&
                 Storage::disk('public')->exists($thumbnail)
             ) {
                 Storage::disk('public')->delete($thumbnail);
             }
-
             $thumbnail = $this->thumbnail
                 ->store('products', 'public');
         }
 
         $product->update([
-
-            'category_id' => $this->category_id,
-
-            'brand_id' => $this->brand_id,
-
-            'name' => $this->name,
-
-            'slug' => \Illuminate\Support\Str::slug($this->name),
-
-            'sku' => $this->sku,
-
-            'thumbnail' => $thumbnail,
-
-            'price' => $this->price,
-
-            'discount_price' => $this->discount_price,
-
-            'stock' => $this->stock,
-
+            'category_id'       => $this->category_id,
+            'brand_id'          => $this->brand_id,
+            'name'              => $this->name,
+            'sizes'             => json_encode($this->sizes),
+            'colors'            => json_encode($this->colors),
+            'slug'              => Str::slug($this->name),
+            'sku'               => $this->sku,
+            'thumbnail'         => $thumbnail,
+            'price'             => $this->price,
+            'discount_price'    => $this->discount_price,
+            'stock'             => $this->stock,
+            'stock_status'      => $this->stock_status,
             'short_description' => $this->short_description,
-
-            'description' => $this->description,
-
-            'featured' => $this->featured,
-
-            'status' => $this->status,
+            'description'       => $this->description,
+            'featured'          => $this->featured,
+            'status'            => $this->status,
         ]);
 
         foreach ($this->gallery as $image) {
-
             $path = $image->store(
                 'products/gallery',
                 'public'
             );
-
             ProductImage::create([
-
-                'product_id' => $product->id,
-
-                'image' => $path,
+                'product_id'    => $product->id,
+                'image'         => $path,
             ]);
         }
         $this->dispatch('close-modal');
@@ -272,6 +196,23 @@ class Index extends Component
         );
 
         $this->resetInput();
+    }
+
+    public function removeImage($id)
+    {
+        $image = ProductImage::find($id);
+
+        if ($image) {
+
+            Storage::disk('public')->delete($image->image);
+
+            $image->delete();
+
+            $this->oldGallery = ProductImage::where(
+                'product_id',
+                $this->product_id
+            )->get();
+        }
     }
 
 
@@ -297,10 +238,8 @@ class Index extends Component
                 Storage::disk('public')
                     ->delete($image->image);
             }
-
             $image->delete();
         }
-
         $product->delete();
 
         $this->dispatch(
@@ -431,13 +370,9 @@ class Index extends Component
             ->paginate(3);
 
         return view('livewire.admin.product.index', [
-
             'products' => $products,
-
             'categories' => Category::all(),
-
             'brands' => Brand::all(),
-
         ])
             ->layout('layouts.admin');
     }

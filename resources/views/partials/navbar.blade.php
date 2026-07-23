@@ -33,12 +33,12 @@
             </button>
 
             <div class="admin-menu">
-                <a href="#">
+                <a href="{{ route('admin.dashboard') }}">
                     <i class="fas fa-home mr-2"></i>
                     Dashboard
                 </a>
 
-                <a href="#">
+                <a href="{{ route('profile') }}">
                     <i class="fas fa-user mr-2"></i>
                     Profile
                 </a>

@@ -96,6 +96,9 @@ Route::prefix('admin')->group(function () {
         ->name('admin.brands');
 
 
+    Route::get('/products/create', ProductIndex::class)
+        ->name('admin.products.create');
+
     Route::get('/products', ProductIndex::class)
         ->name('admin.products');
 
@@ -103,8 +106,23 @@ Route::prefix('admin')->group(function () {
     Route::get('/orders', OrderIndex::class)
         ->name('admin.orders');
 
+    Route::get('/orders/pending', OrderIndex::class)
+        ->name('admin.orders.pending');
+
+    Route::get('/orders/cancelled', OrderIndex::class)
+        ->name('admin.orders.cancelled');
+
+    Route::get('/orders/completed', OrderIndex::class)
+        ->name('admin.orders.completed');
+
     Route::get('/users', UserIndex::class)
         ->name('admin.users');
+
+    Route::get('/reviews', UserIndex::class)
+        ->name('admin.reviews');
+
+    Route::get('/settings', UserIndex::class)
+        ->name('admin.settings');
 });
 
 

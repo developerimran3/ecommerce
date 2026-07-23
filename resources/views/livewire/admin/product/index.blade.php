@@ -1,21 +1,17 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="page-title">Products</h4>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#productdModal" wire:click="resetInput">
-            <i class="fa fa-plus"></i> Add Product </button>
+        <button class="btn btn-purple" data-toggle="modal" data-target="#productdModal" wire:click="resetInput">
+            <i class="fas fa-shopping-cart"></i> Add Product </button>
     </div>
 
 
     <div class="row">
         <div class="col-lg-12 mb-4">
             <div class="table-card">
-
                 <!-- Filter Area -->
-
                 <div class="p-4 border-bottom">
-
                     <div class="row">
-
                         <div class="col-md-3 mb-3">
                             <input type="text" class="form-control" placeholder="🔍 Search product..."
                                 wire:model.live="search">
@@ -185,194 +181,137 @@
 
                 <!-- Body -->
                 <div class="modal-body">
-
                     <div class="row">
-
                         <!-- LEFT -->
                         <div class="col-lg-8">
-
                             <div class="wc-card mb-4">
-
                                 <h5 class="section-title">
                                     Product Information
                                 </h5>
-
                                 <div class="form-group">
                                     <label>Product Name</label>
-
                                     <input type="text" class="form-control" wire:model.live="name">
                                 </div>
-
-
-
                                 <div class="row mt-3">
-
                                     <div class="col-md-4">
                                         <label>Product Code (SKU)</label>
-
                                         <input type="text" class="form-control" wire:model="sku">
                                     </div>
-
                                     <div class="col-md-4">
                                         <label>Stock</label>
-
                                         <input type="number" class="form-control" wire:model="stock">
                                     </div>
-
                                     <div class="col-md-4">
-                                        <label>Status</label>
-
-                                        <select class="form-control" wire:model="status">
-
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
-
+                                        <label>Stock Status</label>
+                                        <select id="stock_status" class="form-control" wire:model="stock_status">
+                                            <option value="1">In Stock</option>
+                                            <option value="0">Out of Stock</option>
                                         </select>
                                     </div>
-
                                 </div>
-
                             </div>
 
                             <div class="wc-card mb-4">
-
-                                <h5 class="section-title">
-                                    Pricing
-                                </h5>
-
+                                <h5 class="section-title"> Pricing </h5>
                                 <div class="row">
-
                                     <div class="col-md-6">
-
                                         <label>Regular Price</label>
-
                                         <input type="number" class="form-control" wire:model="price">
-
                                     </div>
-
                                     <div class="col-md-6">
-
                                         <label>Sale Price</label>
-
                                         <input type="number" class="form-control" wire:model="discount_price">
-
                                     </div>
-
                                 </div>
-
                             </div>
                             <div class="wc-card mb-4">
-
                                 <div class="row">
-
-                                    <div class="col-md-6">
-
-                                        <label>Product Size</label>
-
-                                        <input type="number" class="form-control" wire:model="price">
-
+                                    <div class="col-md-6" wire:ignore>
+                                        <label>Size</label>
+                                        <select id="sizes" class="form-control" wire:model="sizes" multiple>
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                        </select>
                                     </div>
-
-                                    <div class="col-md-6">
-
-                                        <label>Product Color</label>
-
-                                        <input type="number" class="form-control" wire:model="discount_price">
-
+                                    <div class="col-md-6" wire:ignore>
+                                        <label>Color</label>
+                                        <select id="colors" class="form-control" wire:model="colors" multiple>
+                                            <option value="Red">Red</option>
+                                            <option value="Blue">Blue</option>
+                                            <option value="Black">Black</option>
+                                            <option value="White">White</option>
+                                            <option value="Green">Green</option>
+                                        </select>
                                     </div>
-
                                 </div>
-
                             </div>
-
                             <div class="wc-card">
-
                                 <h5 class="section-title">
                                     Description
                                 </h5>
-
                                 <div class="form-group">
-
                                     <label>Short Description</label>
-
                                     <textarea class="form-control" rows="3" wire:model="short_description"></textarea>
-
                                 </div>
-
                                 <div class="form-group mb-0">
-
                                     <label>Description</label>
-
                                     <textarea class="form-control" rows="8" wire:model="description"></textarea>
-
                                 </div>
-
                             </div>
-
                         </div>
 
                         <!-- RIGHT -->
                         <div class="col-lg-4">
-
                             <div class="wc-card mb-4">
-
-                                <h5 class="section-title">
-                                    Product Thumbnail
-                                </h5>
-
+                                <h5 class="section-title"> Product Thumbnail </h5>
                                 <input type="file" class="form-control" wire:model="thumbnail">
-
                                 @if ($thumbnail)
                                     <img src="{{ $thumbnail->temporaryUrl() }}" class="preview-image mt-3">
                                 @endif
-
                                 @if ($oldThumbnail && !$thumbnail)
                                     <img src="{{ asset('storage/' . $oldThumbnail) }}" class="preview-image mt-3">
                                 @endif
-
                             </div>
 
                             <div class="wc-card mb-4">
-
-                                <h5 class="section-title">
-                                    Gallery
-                                </h5>
-
+                                <h5 class="section-title"> Gallery </h5>
                                 <input type="file" multiple class="form-control" wire:model="gallery">
-
                                 <div class="row mt-3">
 
+                                    {{-- পুরোনো image --}}
+                                    @foreach ($oldGallery as $image)
+                                        <div class="col-4 mb-2">
+                                            <img src="{{ asset('storage/' . $image->image) }}" class="gallery-image">
+                                            <button type="button" class="gallery-remove-btn"
+                                                wire:click="removeImage({{ $image->id }})">
+                                                <i class="fas fa-times"></i>
+
+                                            </button>
+                                        </div>
+                                    @endforeach
+
+                                    {{-- নতুন upload image --}}
                                     @foreach ($gallery as $image)
                                         <div class="col-4 mb-2">
                                             <img src="{{ $image->temporaryUrl() }}" class="gallery-image">
                                         </div>
                                     @endforeach
-
                                 </div>
-
                             </div>
-
                             <div class="wc-card mb-4">
-
-
-                                <div class="form-group">
-
+                                <div class="form-group mb-0 ">
                                     <label>Category</label>
-
                                     <select class="form-control" wire:model="category_id">
-
-                                        <option value="">
-                                            Select Category
-                                        </option>
-
+                                        <option value=""> Select Category </option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">
                                                 {{ $category->name }}
                                             </option>
                                         @endforeach
-
                                     </select>
-
                                 </div>
 
 
@@ -392,9 +331,7 @@
                                                 {{ $brand->name }}
                                             </option>
                                         @endforeach
-
                                     </select>
-
                                 </div>
 
                                 <div class="form-group mb-0">
@@ -406,70 +343,36 @@
 
 
                             <div class="wc-card">
-
-                                <h5 class="section-title">
-                                    Options
-                                </h5>
-
-                                <div class="custom-control custom-switch mb-3">
-
+                                <h5 class="section-title"> Options </h5>
+                                <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="featured"
                                         wire:model="featured">
-
-                                    <label class="custom-control-label" for="featured">
-
-                                        Featured Product
-
-                                    </label>
-
+                                    <label class="custom-control-label" for="featured"> Featured Product </label>
                                 </div>
-
                                 <div class="custom-control custom-switch">
-
                                     <input type="checkbox" class="custom-control-input" id="active"
                                         wire:model="status">
-
-                                    <label class="custom-control-label" for="active">
-
-                                        Active Product
-
-                                    </label>
-
+                                    <label class="custom-control-label" for="active"> Active Product </label>
                                 </div>
-
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="hot_deals"
+                                        wire:model="hot_deals">
+                                    <label class="custom-control-label" for="hot_deals"> Hot Deals </label>
+                                </div>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- Footer -->
                 <div class="modal-footer border-0">
-
-                    <button class="btn btn-light" data-dismiss="modal">
-
-                        Cancel
-
-                    </button>
-
+                    <button class="btn btn-light" data-dismiss="modal"> Cancel </button>
                     @if ($product_id)
-                        <button class="btn btn-success px-4" wire:click="update">
-
-                            Update Product
-
-                        </button>
+                        <button class="btn btn-success px-4" wire:click="update"> Update </button>
                     @else
-                        <button class="btn btn-primary px-4" wire:click="store">
-
-                            Publish Product
-
-                        </button>
+                        <button class="btn btn-purple px-4" wire:click="store"> Publish</button>
                     @endif
-
                 </div>
-
             </div>
         </div>
     </div>

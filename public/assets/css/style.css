@@ -512,7 +512,7 @@ body {
 
 .btn-primary {
     background: #7c3aed;
-    border: none;
+    border: none !important;
     border-radius: 10px;
     padding: 10px 18px;
     font-size: 14px;
@@ -889,4 +889,45 @@ textarea.form-control {
 .modal-footer {
     padding: 20px 30px;
     background: #fff;
+}
+.gallery-remove-btn {
+    position: absolute;
+    top: 2px;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-remove-btn:hover {
+    transform: scale(1.1);
+    background: #dc3545;
+}
+
+.select2-container--bootstrap4
+    .select2-selection--multiple
+    .select2-selection__choice {
+    color: #ffffff;
+    background-color: #7c3aed;
+    cursor: pointer;
+    margin-left: 2px;
+    border-radius: 5px;
+}
+
+.select2-container--bootstrap4
+    .select2-selection--multiple
+    .select2-selection__choice__remove {
+    float: none;
+    color: #ffffff !important;
+    background-color: #7c3aed;
+    border: none !important;
 }

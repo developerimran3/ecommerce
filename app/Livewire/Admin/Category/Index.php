@@ -24,6 +24,7 @@ class Index extends Component
     protected $rules = [
         'name' => 'required|min:2|max:255',
         'image' => 'nullable|image|max:2048',
+
     ];
 
     public function updatedName()
@@ -47,6 +48,15 @@ class Index extends Component
     {
         $this->validate();
 
+        // Check if slug already exists
+        $slug = Str::slug($this->name);
+
+        if (Category::where('slug', $slug)->exists()) {
+            $this->addError('name', 'This category name already exists. Please choose a different name.');
+            return;
+        }
+
+        // image 
         $imageName = null;
 
         if ($this->image) {
@@ -55,7 +65,7 @@ class Index extends Component
 
         Category::create([
             'name' => $this->name,
-            'slug' => Str::slug($this->name),
+            'slug' => $slug,
             'image' => $imageName,
             'status' => $this->status,
         ]);

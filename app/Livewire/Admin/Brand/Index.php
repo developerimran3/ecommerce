@@ -16,6 +16,7 @@ class Index extends Component
     public $brand_id;
     public $name;
     public $logo;
+    public $oldLogo;
     public $status = false;
     public $search = '';
 
@@ -33,6 +34,7 @@ class Index extends Component
             'brand_id',
             'name',
             'logo',
+            'oldLogo',
         ]);
 
         $this->status = true;
@@ -41,6 +43,16 @@ class Index extends Component
     public function store()
     {
         $this->validate();
+
+        // Check if slug already exists
+        $slug = Str::slug($this->name);
+
+        if (Brand::where('slug', $slug)->exists()) {
+            $this->addError('name', 'This Brand name already exists. Please choose a different name.');
+            return;
+        }
+
+        // image 
         $logo = null;
         if ($this->logo) {
             $logo = $this->logo->store('brands', 'public');
@@ -64,6 +76,7 @@ class Index extends Component
     {
         $brand = Brand::findOrFail($id);
         $this->brand_id = $brand->id;
+        $this->oldLogo = $brand->logo;
         $this->name = $brand->name;
     }
 
