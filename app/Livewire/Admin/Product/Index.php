@@ -26,8 +26,8 @@ class Index extends Component
     public $category_id;
     public $brand_id;
     public $name;
-    public $colors = [];
     public $sizes = [];
+    public $colors = [];
     public $sku;
     public $thumbnail;
     public $gallery = [];
@@ -57,14 +57,20 @@ class Index extends Component
         ];
     }
 
+
     public function resetInput()
     {
         $this->reset();
-        $this->featured     = false;
-        $this->status       = true;
-        $this->sizes = '';
-        $this->colors = '';
-        $this->oldGallery   = [];
+
+        $this->featured = false;
+        $this->status = true;
+
+        $this->sizes = [];
+        $this->colors = [];
+
+        $this->oldGallery = [];
+
+        $this->dispatch('resetSelect2');
     }
 
     public function updatedSizes($value)
@@ -76,6 +82,7 @@ class Index extends Component
     {
         $this->colors = $value;
     }
+
 
 
 
@@ -126,6 +133,7 @@ class Index extends Component
         $this->dispatch('close-modal');
 
         $this->resetInput();
+        $this->dispatch('resetSelect2');
     }
 
 
@@ -141,8 +149,6 @@ class Index extends Component
         $this->brand_id = $product->brand_id;
         $this->name = $product->name;
         $this->sku = $product->sku;
-        $this->sizes = $product->sizes ? json_decode($product->sizes, true) : [];
-        $this->colors = $product->colors ? json_decode($product->colors, true) : [];
         $this->price = $product->price;
         $this->discount_price = $product->discount_price;
         $this->stock = $product->stock;
@@ -152,6 +158,15 @@ class Index extends Component
         $this->status = $product->status;
         $this->oldThumbnail = $product->thumbnail;
         $this->oldGallery = $product->images;
+
+        $this->sizes = json_decode($product->sizes, true) ?? [];
+        $this->colors = json_decode($product->colors, true) ?? [];
+
+        $this->dispatch(
+            'fillSelect2',
+            sizes: $this->sizes,
+            colors: $this->colors
+        );
     }
 
 
@@ -218,6 +233,7 @@ class Index extends Component
         );
 
         $this->resetInput();
+        $this->dispatch('resetSelect2');
     }
 
     public function removeImage($id)

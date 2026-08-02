@@ -54,9 +54,7 @@
                     class="submenu {{ request()->routeIs('admin.products*') || request()->routeIs('admin.brands*') || request()->routeIs('admin.categories*') ? 'open' : '' }}">
                     <li><a href="{{ route('admin.products') }}" wire:navigate.hover
                             class="{{ request()->routeIs('admin.products') ? 'active' : '' }}">All Products</a></li>
-                    <li><a href="{{ route('admin.products.create') ?? '#' }}" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.products.create') ? 'active' : '' }}">Add Product</a>
-                    </li>
+
                     <li><a href="{{ route('admin.categories') }}" wire:navigate.hover
                             class="{{ request()->routeIs('admin.categories') ? 'active' : '' }}">Categories</a></li>
                     <li><a href="{{ route('admin.brands') }}" wire:navigate.hover

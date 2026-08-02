@@ -3,13 +3,13 @@
 namespace App\Livewire\Frontend;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
 use Livewire\Component;
 
 class CheckoutPage extends Component
@@ -26,6 +26,8 @@ class CheckoutPage extends Component
 
     public $payment_method = 'cod';
 
+
+
     protected $rules = [
 
         'name' => 'required',
@@ -38,6 +40,53 @@ class CheckoutPage extends Component
 
         'payment_method' => 'required',
     ];
+
+
+
+    public function increaseQty($id)
+    {
+        $item = CartItem::findOrFail($id);
+
+        $item->qty++;
+        $item->subtotal = $item->qty * $item->price;
+        $item->save();
+
+        $this->dispatch('cartUpdated');
+    }
+
+
+    public function decreaseQty($id)
+    {
+        $item = CartItem::findOrFail($id);
+
+        if ($item->qty > 1) {
+
+            $item->decrement('qty');
+
+            $item->update([
+                'subtotal' => $item->qty * $item->price
+            ]);
+        }
+
+        $this->dispatch('cartUpdated');
+    }
+
+    public function removeItem($id)
+    {
+        CartItem::findOrFail($id)->delete();
+
+        $this->dispatch('cartUpdated');
+
+        $this->dispatch(
+            'success',
+            message: 'Item removed from cart.'
+        );
+    }
+
+
+
+
+
 
     public function placeOrder()
     {
@@ -66,15 +115,10 @@ class CheckoutPage extends Component
             if (!$user) {
 
                 $user = User::create([
-
                     'name' => $this->name,
-
                     'email' => $this->email,
-
                     'phone' => $this->phone,
-
                     'address' => $this->address,
-
                     'password' => Hash::make('12345678'),
                 ]);
             }
@@ -89,46 +133,28 @@ class CheckoutPage extends Component
             $subtotal = $cart->items->sum('subtotal');
 
             $order = Order::create([
-
                 'user_id' => $userId,
-
                 'invoice_no' => $this->generateInvoice(),
-
                 'name' => $this->name,
-
                 'phone' => $this->phone,
-
                 'email' => $this->email,
-
                 'address' => $this->address,
-
                 'subtotal' => $subtotal,
-
                 'shipping' => 0,
-
                 'discount' => 0,
-
                 'grand_total' => $subtotal,
-
                 'payment_method' => $this->payment_method,
-
                 'payment_status' => 'pending',
-
                 'order_status' => 'pending',
             ]);
 
             foreach ($cart->items as $item) {
 
                 OrderItem::create([
-
                     'order_id' => $order->id,
-
                     'product_id' => $item->product_id,
-
                     'qty' => $item->qty,
-
                     'price' => $item->price,
-
                     'subtotal' => $item->subtotal,
                 ]);
 
@@ -153,7 +179,7 @@ class CheckoutPage extends Component
 
     private function generateInvoice()
     {
-        return 'INV-' . now()->format('Ymd') . '-' . str_pad(
+        return 'INV-' . str_pad(
             Order::count() + 1,
             5,
             '0',

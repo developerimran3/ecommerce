@@ -20,7 +20,7 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @livewireStyles
@@ -61,6 +61,20 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        document.addEventListener('livewire:init', () => {
+
+            Livewire.on('success', (event) => {
+                toastr.success(event.message);
+            });
+
+            Livewire.on('error', (event) => {
+                toastr.error(event.message);
+            });
+
+        });
+    </script>
     @livewireScripts
     {{-- media --}}
     <script>
@@ -174,6 +188,8 @@
     </script>
 
 
+
+
     <script>
         document.addEventListener('livewire:init', () => {
 
@@ -186,6 +202,9 @@
 
                 $('.modal-backdrop').remove();
                 $('body').removeClass('modal-open');
+
+                $('#sizes').val([]).trigger('change.select2');
+                $('#colors').val([]).trigger('change.select2');
             });
 
         });

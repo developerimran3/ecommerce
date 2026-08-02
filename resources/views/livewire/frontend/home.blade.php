@@ -1,68 +1,241 @@
-<div class="container py-5">
+<div>
 
-    <h2 class="mb-4">
+    <!--=========================
+    HERO
+    ==========================-->
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3">
+                    <div class="category-menu">
+                        <ul>
 
-        Latest Products
+                            <li>👩 নারী ও মেয়েদের ফ্যাশন</li>
 
-    </h2>
+                            <li>👨 পুরুষ ফ্যাশন</li>
 
-    <div class="row">
+                            <li>👶 বেবি</li>
 
-        @foreach ($products as $product)
-            <div class="col-md-3 mb-4">
+                            <li>🛏 হোম ডেকোর</li>
 
-                <div class="card h-100 shadow-sm">
+                            <li>🍔 ফুড</li>
 
-                    <img src="{{ asset('storage/' . $product->thumbnail) }}" class="card-img-top"
-                        style="height: 220px; object-fit: cover;">
+                            <li>🧴 কসমেটিকস</li>
 
-                    <div class="card-body">
+                            <li>💊 স্বাস্থ্য</li>
 
-                        <h5>
+                            <li>🎁 গিফট</li>
 
-                            {{ $product->name }}
+                            <li>📱 ইলেকট্রনিক্স</li>
 
-                        </h5>
+                            <li>🏠 হোম অ্যাপ্লায়েন্স</li>
 
-                        <p class="text-muted">
-
-                            {{ $product->category?->name }}
-
-                        </p>
-
-                        <h5>
-
-                            ৳ {{ number_format($product->final_price, 2) }}
-
-                        </h5>
+                        </ul>
 
                     </div>
 
-                    <div class="card-footer bg-white">
+                </div>
 
-                        <a href="{{ route('product.details', $product->slug) }}" class="btn btn-outline-primary btn-sm">
-                            Details
+                <!-- Slider -->
+
+                <div class="col-lg-9">
+
+                    <div id="slider" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+
+                                <img src="https://v3.nexlifyo.com/public/uploads/banner/17507500035%20(2).png">
+
+                            </div>
+
+                            <div class="carousel-item">
+
+                                <img src="https://v3.nexlifyo.com/public/uploads/banner/17507500185%20(3).png">
+
+                            </div>
+
+                            <div class="carousel-item">
+
+                                <img src="https://v3.nexlifyo.com/public/uploads/banner/17507500035%20(2).png">
+
+                            </div>
+
+                        </div>
+
+                        <a class="carousel-control-prev" href="#slider" data-slide="prev">
+
+                            <span class="carousel-control-prev-icon"></span>
+
                         </a>
 
-                        <button class="btn btn-primary btn-sm" wire:click="addToCart({{ $product->id }})">
+                        <a class="carousel-control-next" href="#slider" data-slide="next">
 
-                            Add To Cart
+                            <span class="carousel-control-next-icon"></span>
 
-                        </button>
+                        </a>
 
                     </div>
 
                 </div>
 
             </div>
-        @endforeach
 
-    </div>
+        </div>
 
-    <div class="mt-4">
+    </section>
 
-        {{ $products->links() }}
+    <!--=========================
+    PROMO
+    ==========================-->
 
-    </div>
+    <section class="promo">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-lg-4">
+
+                    <img src="https://v3.nexlifyo.com/public/uploads/banner/17507500185%20(3).png">
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <img src="https://v3.nexlifyo.com/public/uploads/banner/17507500035%20(2).png">
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <img src="https://v3.nexlifyo.com/public/uploads/banner/17507500035%20(2).png">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!--=========================
+    CATEGORIES
+    ==========================-->
+
+    <section class="category-section py-4">
+
+        <div class="container">
+
+            <h5 class="section-title mb-3">
+                Categories
+            </h5>
+
+            <div class="row">
+
+                <div class="col-lg-2 col-md-3 col-6 mb-3">
+                    <div class="category-card">
+                        <img
+                            src="https://v3.nexlifyo.com/public/uploads/product/1750753430-photo_2025-06-24_14-22-07.jpg">
+                        <span>নারী ফ্যাশন</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-6 mb-3">
+                    <div class="category-card">
+                        <img src="images/c2.png">
+                        <span>বেডশীট</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-6 mb-3">
+                    <div class="category-card">
+                        <img src="images/c3.png">
+                        <span>কুশন</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-6 mb-3">
+                    <div class="category-card">
+                        <img src="images/c4.png">
+                        <span>ফুড</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-6 mb-3">
+                    <div class="category-card">
+                        <img src="images/c5.png">
+                        <span>স্বাস্থ্য</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-6 mb-3">
+                    <div class="category-card">
+                        <img src="images/c6.png">
+                        <span>হোম ডেকোর</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--=========================
+    HOT DEAL
+    ==========================-->
+
+    <section class="products">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Hot Deal</h4>
+                <a href="#" class="btn btn-success btn-sm">
+                    View More
+                </a>
+            </div>
+
+            <div class="row">
+
+                <!-- PRODUCT -->
+                @foreach ($products as $product)
+                    <div class="col-lg-2-5 p-1">
+                        <div class="product-card">
+                            <div class="discount">
+                                {{ round((($product->price - $product->discount_price) / $product->price) * 100) }}%
+                                <br>
+                                ছাড়
+                            </div>
+
+                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}">
+
+                            <div class="product-body">
+
+                                <a href="{{ route('product.details', $product->slug) }}">
+                                    {{ Str::limit($product->name, 28) }}
+
+                                </a>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <div class="price">
+                                    <del>৳ {{ $product->price }}</del>
+                                    <span>৳ {{ $product->discount_price }}</span>
+                                </div>
+                                <button wire:click="addToCart({{ $product->id }})">
+                                    অর্ডার করুন
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
 
 </div>

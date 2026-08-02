@@ -1,111 +1,123 @@
-<div class="container py-5">
+<div class="order-success-page">
 
-    <div class="row justify-content-center">
+    <div class="success-card">
+        <!-- Logo -->
+        <div class="success-logo">
+            <img src="{{ asset('assets/img/order-success.png') }}" alt="Congratulations">
+        </div>
+        <!-- Message -->
+        <h3>
+            আপনার অর্ডারটি আমাদের কাছে সফলভাবে পৌঁছেছে,
+            <br>
+            কিছুক্ষণের মধ্যে আমাদের একজন প্রতিনিধি আপনার নম্বরে কল করবেন।
+        </h3>
+        <!-- Order Details -->
 
-        <div class="col-md-8">
+        <h5 class="my-2">Your Order Details</h5>
+        <div class="box">
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <td> Invoice ID <br>
+                        <b> {{ $order->invoice_no }}</b>
+                    </td>
 
-            <div class="card shadow border-0">
+                    <td> Date <br>
+                        <b> {{ $order->created_at->format('d-m-y') }}</b>
+                    </td>
 
-                <div class="card-body text-center p-5">
+                    <td> Phone <br>
+                        <b> {{ $order->phone }}</b>
+                    </td>
 
-                    <i class="fa fa-check-circle text-success" style="font-size: 80px;"></i>
-
-                    <h2 class="mt-4">
-
-                        Order Placed Successfully!
-
-                    </h2>
-
-                    <p class="text-muted">
-
-                        Thank you for your order.
-
-                    </p>
-
-                    <hr>
-
-                    <div class="row text-left">
-
-                        <div class="col-md-6">
-
-                            <p>
-
-                                <strong>Invoice:</strong>
-
-                                {{ $order->invoice_no }}
-
-                            </p>
-
-                            <p>
-
-                                <strong>Customer:</strong>
-
-                                {{ $order->name }}
-
-                            </p>
-
-                            <p>
-
-                                <strong>Phone:</strong>
-
-                                {{ $order->phone }}
-
-                            </p>
-
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <p>
-
-                                <strong>Payment:</strong>
-
-                                {{ ucfirst($order->payment_method) }}
-
-                            </p>
-
-                            <p>
-
-                                <strong>Status:</strong>
-
-                                {{ ucfirst($order->order_status) }}
-
-                            </p>
-
-                            <p>
-
-                                <strong>Total:</strong>
-
-                                ৳ {{ number_format($order->grand_total, 2) }}
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="mt-4">
-
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-
-                            Continue Shopping
-
-                        </a>
-
-                        <a href="{{ route('invoice', $order->id) }}" class="btn btn-success">
-
-                            View Invoice
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+                    <td> Total <br>
+                        <b>৳ {{ number_format($order->grand_total, 2) }}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"> Payment Method <br>
+                        <b> {{ ucfirst($order->payment_method) }}</b>
+                    </td>
+                </tr>
+            </table>
         </div>
 
-    </div>
+        <p class="mt-3"> Pay with cash upon delivery </p>
+        <!-- Product -->
+        <div class="box">
+            <h6> Order Delivery </h6>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Product
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($order->items as $item)
+                        <tr>
+                            <td>
+                                {{ $item->product->name }}
+                                × {{ $item->qty }}
+                            </td>
+                            <td>
+                                ৳ {{ number_format($item->subtotal, 2) }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td class="text-right">
+                            Net Total
+                        </td>
+                        <td>
+                            ৳550
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            Discount
+                        </td>
+                        <td>
+                            ৳200
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            Shipping Cost
+                        </td>
+                        <td>
+                            ৳150
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <b>Grand Total</b>
+                        </td>
+                        <td>
+                            <b>৳ {{ number_format($order->grand_total, 2) }}</b>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <td>
+                        <h5 class="my-3">Billing Address</h5>
+                        {{ $order->name }} <br>
+                        {{ $order->phone }} <br>
+                        {{ $order->address }}
+                    </td>
+                </tr>
+            </table>
+        </div>
 
+        <!-- Button -->
+        <div class="action-btn">
+            <a href="#" class="btn btn-primary btn-sm"> Go To Home </a>
+            <a href="#" class="btn btn-success btn-sm"> <i class="fa fa-save"></i> Save PDF </a>
+        </div>
+    </div>
 </div>

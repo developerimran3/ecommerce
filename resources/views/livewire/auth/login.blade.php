@@ -1,60 +1,62 @@
-<div class="login-right-wrap">
-    <h1>Login</h1>
-    <p class="account-subtitle">
-        Access to our dashboard
-    </p>
+<div class="login-card">
 
-    <!-- Form -->
-    <div class="form-group">
-        <input class="form-control" type="text" placeholder="Email" wire:model="email" />
-        @error('email')
-            <small class="text-danger">
-                {{ $message }}
-            </small>
-        @enderror
-    </div>
-    <div class="form-group">
-        <input class="form-control" type="password" placeholder="Password" wire:model="password" />
-        @error('password')
-            <small class="text-danger">
-                {{ $message }}
-            </small>
-        @enderror
+    <div class="login-logo">
+        <i class="fas fa-user"></i>
     </div>
 
-    <div class="form-group">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" wire:model="remember" id="invalidCheck2" required>
-            <label class="form-check-label" for="invalidCheck2">
-                Agree to terms and conditions
-            </label>
+    <h3>Welcome Back</h3>
+    <p class="subtitle">Please login to your account</p>
+
+    <form wire:submit.prevent="login">
+
+        <!-- Email Field -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-envelope"></i>
+                </span>
+            </div>
+            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                placeholder="Enter your email" wire:model.defer="email">
         </div>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary btn-block" wire:click="login" wire:navigate>
-            Login
+        @error('email')
+            <div class="text-danger small mb-3">{{ $message }}</div>
+        @enderror
+
+
+        <!-- Password Field -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </div>
+            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                placeholder="Enter your password" wire:model.defer="password">
+        </div>
+        @error('password')
+            <div class="text-danger small mb-3">{{ $message }}</div>
+        @enderror
+
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember" wire:model="remember">
+                <label class="form-check-label" for="remember">Remember Me</label>
+            </div>
+
+            <a href="#" class="forgot">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-login" wire:loading.attr="disabled">
+            <span wire:loading.remove>
+                <i class="fa fa-sign-in"></i> Login
+            </span>
+            <span wire:loading>
+                <i class="fa fa-spinner fa-spin"></i> Logging in...
+            </span>
         </button>
-    </div>
-    <!-- /Form -->
 
-    <div class="text-center forgotpass">
-        <a href="forgot-password.html">Forgot Password?</a>
-    </div>
-    <div class="login-or">
-        <span class="or-line"></span>
-        <span class="span-or">or</span>
-    </div>
-
-    <!-- Social Login -->
-    <div class="social-login">
-        <span>Login with</span>
-        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a><a href="#" class="google"><i
-                class="fa fa-google"></i></a>
-    </div>
-    <!-- /Social Login -->
-
-    <div class="text-center dont-have">
-        Don’t have an account?
-        <a href="register.html">Register</a>
-    </div>
+    </form>
+    <a href="{{ route('home') }}" class="btn btn-sm btn-primary">Back</a>
 </div>

@@ -18,6 +18,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>Status Change</th>
                         <th>Role</th>
                         <th>Status</th>
                         <th>Date</th>
@@ -50,6 +51,16 @@
                                 </td>
                                 <td>
                                     <span class="text-muted">{{ $user->phone ?? 'N/A' }}</span>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch d-inline-block"
+                                        style="transform: scale(1.4); transform-origin: left center;">
+                                        <input type="checkbox" class="custom-control-input"
+                                            id="status{{ $user->id }}" {{ $user->status ? 'checked' : '' }}
+                                            wire:click="changeStatus({{ $user->id }})">
+
+                                        <label class="custom-control-label" for="status{{ $user->id }}"></label>
+                                    </div>
                                 </td>
                                 <td>
                                     <span class="badge badge-info p-1 px-2">{{ $user->role }}</span>
@@ -139,6 +150,7 @@
                                 <option value="Shop Manager">Shop Manager</option>
                                 <option value="Contributor">Contributor</option>
                                 <option value="Editor">Editor</option>
+                                <option value="Administrator">Administrator</option>
                             </select>
                         </div>
 

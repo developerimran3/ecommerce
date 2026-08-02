@@ -160,6 +160,7 @@
         </div>
     </div>
 
+
     <!-- Modal -->
     <div class="modal fade" id="productdModal" wire:ignore.self>
         <div class="modal-dialog modal-xl">
@@ -190,16 +191,17 @@
                                 </h5>
                                 <div class="form-group">
                                     <label>Product Name</label>
-                                    <input type="text" class="form-control" wire:model.live="name">
+                                    <input type="text" name="product_name" class="form-control"
+                                        wire:model.live="name">
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-4">
                                         <label>Product Code (SKU)</label>
-                                        <input type="text" class="form-control" wire:model="sku">
+                                        <input type="text" name="sku" class="form-control" wire:model="sku">
                                     </div>
                                     <div class="col-md-4">
                                         <label>Stock</label>
-                                        <input type="number" class="form-control" wire:model="stock">
+                                        <input type="number" name="stock" class="form-control" wire:model="stock">
                                     </div>
                                     <div class="col-md-4">
                                         <label>Stock Status</label>
@@ -216,11 +218,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Regular Price</label>
-                                        <input type="number" class="form-control" wire:model="price">
+                                        <input type="number" name="price" class="form-control" wire:model="price">
                                     </div>
                                     <div class="col-md-6">
                                         <label>Sale Price</label>
-                                        <input type="number" class="form-control" wire:model="discount_price">
+                                        <input type="number" name="price" class="form-control"
+                                            wire:model="discount_price">
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +231,8 @@
                                 <div class="row">
                                     <div class="col-md-6" wire:ignore>
                                         <label>Size</label>
-                                        <select id="sizes" class="form-control" wire:model="sizes" multiple>
+
+                                        <select id="sizes" class="form-control" multiple>
                                             <option value="S">S</option>
                                             <option value="M">M</option>
                                             <option value="L">L</option>
@@ -236,9 +240,11 @@
                                             <option value="XXL">XXL</option>
                                         </select>
                                     </div>
+
                                     <div class="col-md-6" wire:ignore>
                                         <label>Color</label>
-                                        <select id="colors" class="form-control" wire:model="colors" multiple>
+
+                                        <select id="colors" class="form-control" multiple>
                                             <option value="Red">Red</option>
                                             <option value="Blue">Blue</option>
                                             <option value="Black">Black</option>
@@ -254,11 +260,11 @@
                                 </h5>
                                 <div class="form-group">
                                     <label>Short Description</label>
-                                    <textarea class="form-control" rows="3" wire:model="short_description"></textarea>
+                                    <textarea class="form-control" name="short_description" rows="3" wire:model="short_description"></textarea>
                                 </div>
                                 <div class="form-group mb-0">
                                     <label>Description</label>
-                                    <textarea class="form-control" rows="8" wire:model="description"></textarea>
+                                    <textarea class="form-control" name="description" rows="8" wire:model="description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -378,3 +384,36 @@
     </div>
 
 </div>
+@script
+    <script>
+        function initSelect2() {
+
+            $('#sizes').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                placeholder: 'Select Size'
+            });
+
+            $('#colors').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                placeholder: 'Select Color'
+            });
+
+            $('#sizes').off('change').on('change', function() {
+                $wire.set('sizes', $(this).val());
+            });
+
+            $('#colors').off('change').on('change', function() {
+                $wire.set('colors', $(this).val());
+            });
+        }
+
+        initSelect2();
+
+        Livewire.on('setSelect2Values', (data) => {
+            $('#sizes').val(data.sizes).trigger('change.select2');
+            $('#colors').val(data.colors).trigger('change.select2');
+        });
+    </script>
+@endscript

@@ -92,9 +92,6 @@ Route::prefix('admin')->group(function () {
         ->name('admin.brands');
 
 
-    Route::get('/products/create', ProductIndex::class)
-        ->name('admin.products.create');
-
     Route::get('/products', ProductIndex::class)
         ->name('admin.products');
 
@@ -132,8 +129,8 @@ Route::get('/', Home::class)->name('home');
 Route::get('/product/{slug}', ProductDetails::class)
     ->name('product.details');
 
-Route::get('/cart', CartPage::class)
-    ->name('cart');
+// Route::get('/cart', CartPage::class)
+//     ->name('cart');
 
 Route::get('/checkout', CheckoutPage::class)
     ->name('checkout');

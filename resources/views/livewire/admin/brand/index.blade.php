@@ -15,8 +15,9 @@
                         <th>Image</th>
                         <th>Brand Name</th>
                         <th>Slug</th>
-                        <th>Status</th>
+                        <th>Status Change</th>
                         <th>Date</th>
+                        <th>Status </th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -50,15 +51,26 @@
                                 </span>
                             </td>
                             <td>
+                                <div class="custom-control custom-switch d-inline-block"
+                                    style="transform: scale(1.4); transform-origin: left center;">
+                                    <input type="checkbox" class="custom-control-input" id="status{{ $brand->id }}"
+                                        {{ $brand->status ? 'checked' : '' }}
+                                        wire:click="changeStatus({{ $brand->id }})">
+
+                                    <label class="custom-control-label" for="status{{ $brand->id }}"></label>
+                                </div>
+                            </td>
+                            <td>
+                                {{ $brand->created_at->format('d M Y') }}
+                            </td>
+                            <td>
                                 @if ($brand->status)
                                     <span class="badge-status"> Active </span>
                                 @else
                                     <span class="badge-inactive"> Inactive </span>
                                 @endif
                             </td>
-                            <td>
-                                {{ $brand->created_at->format('d M Y') }}
-                            </td>
+
                             <td>
                                 <div class="d-flex">
                                     <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"

@@ -1,55 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>{{ $title ?? 'E-Commerce' }}</title>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-    @livewireStyles
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHPX Shop</title>
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/frontend.css') }}">
 
 </head>
 
 <body>
 
+    <!-- TOP HEADER  -->
+
     @include('partials.frontend-navbar')
-
-    <main>
-
-        {{ $slot }}
-
-    </main>
-
+    {{ $slot }}
     @include('partials.frontend-footer')
 
+    <div class="copyright">
+        Copyright © 2026 PHPX SHOP | All Rights Reserved
+    </div>
+    <!-- WhatsApp -->
+    <a href="#" class="whatsapp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <!-- Scroll -->
+    <button id="topBtn">
+        <i class="fa fa-arrow-up"></i>
+    </button>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
     <script>
-        @if (session()->has('success'))
-            toastr.success("{{ session('success') }}");
-        @endif
+        document.addEventListener('livewire:init', () => {
 
-        @if (session()->has('error'))
-            toastr.error("{{ session('error') }}");
-        @endif
+            Livewire.on('success', (event) => {
+                toastr.success(event.message);
+            });
+
+            Livewire.on('error', (event) => {
+                toastr.error(event.message);
+            });
+        });
     </script>
-    @livewireScripts
-
 </body>
 
 </html>

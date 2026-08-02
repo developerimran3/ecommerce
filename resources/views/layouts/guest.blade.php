@@ -1,86 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
-    <title>{{ $title ?? 'User Login' }}</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    @livewireStyles
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #4f46e5, #2563eb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
+        }
+
+        .login-logo {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #4f46e5;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            text-align: center;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group-text {
+            background: #f8f9fa;
+            border-right: none;
+        }
+
+        .form-control {
+            border-left: none;
+            height: 45px;
+            box-shadow: none !important;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-login {
+            background: #4f46e5;
+            color: #fff;
+            border-radius: 30px;
+            height: 45px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .btn-login:hover {
+            background: #4338ca;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .forgot {
+            font-size: 14px;
+            color: #4f46e5;
+        }
+
+        .forgot:hover {
+            text-decoration: none;
+        }
+
+        .form-check-label {
+            font-size: 14px;
+        }
+
+        @media(max-width:576px) {
+            .login-card {
+                margin: 20px;
+                padding: 30px;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
-    <!-- Main Wrapper -->
-    <div class="main-wrapper login-body">
-        <div class="login-wrapper">
-            <div class="container">
-                <div class="loginbox">
-                    <div class="login-left">
-                        <img class="img-fluid" src="assets/img/logo-white.png" alt="Logo" />
-                    </div>
-                    <div class="login-right">
+    {{ $slot ?? '' }}
+    @yield('content')
 
-                        {{ $slot ?? '' }}
-                        @yield('content')
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Main Wrapper -->
-
-    <!-- jQuery -->
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
-
-    <!-- Bootstrap Core JS -->
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-
-    <!-- Custom JS -->
-    <script src="assets/js/script.js"></script>
-    {{-- <script>
-        $(document).ready(function() {
-            $("#show_hide_password a").on('click', function(event) {
-                event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("bx-hide");
-                    $('#show_hide_password i').removeClass("bx-show");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("bx-hide");
-                    $('#show_hide_password i').addClass("bx-show");
-                }
-            });
-        });
-    </script> --}}
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <script>
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('success', (event) => {
-                toastr.success(event.message);
-            });
-            Livewire.on('error', (event) => {
-                toastr.error(event.message);
-            });
-        });
-    </script>
-    @livewireScripts
 </body>
 
 </html>

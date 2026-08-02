@@ -11,16 +11,10 @@ use App\Models\CartItem;
 
 class Home extends Component
 {
-
-
-
-
-
-
-
     public function addToCart($productId)
     {
-        $product = Product::findOrFail($productId);
+        $product = Product::select('id', 'price', 'discount_price')
+            ->findOrFail($productId);
 
         $cart = Cart::firstOrCreate([
             'session_id' => session()->getId(),
@@ -32,11 +26,11 @@ class Home extends Component
 
         if ($item) {
 
-            $item->increment('qty');
+            $item->qty++;
 
-            $item->update([
-                'subtotal' => $item->qty * $item->price,
-            ]);
+            $item->subtotal = $item->qty * $item->price;
+
+            $item->save();
         } else {
 
             CartItem::create([
