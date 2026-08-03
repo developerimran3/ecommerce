@@ -231,7 +231,7 @@
                     <tbody style="background:#f1f9f8">
                         <tr>
                             <td><strong>SubTotal</strong></td>
-                            <td><strong>৳ {{ number_format($item->subtotal, 2) }}</strong></td>
+                            <td><strong>৳ {{ number_format($order->grand_total, 2) }}</strong></td>
                         </tr>
                         <tr>
                             <td><strong>Shipping(+)</strong></td>

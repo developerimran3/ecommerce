@@ -68,8 +68,8 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href=""><img
-                        src="https://v3.nexlifyo.com/public/uploads/settings/1750754465-025b4b.webp" alt=""></a>
+                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/logo.webp') }}"
+                        alt=""></a>
             </div>
             <div class="menu-bag">
                 <p class="margin-shopping">
@@ -81,15 +81,15 @@
     </div>
 
     <div class="mobile-search">
-        <form action="">
+        <form action="" wire:submit.prevent="search">
             <input type="text" placeholder="Search Product ... " value="" class="msearch_keyword msearch_click"
                 name="keyword">
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="feather feather-search">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+
+
                 </svg>
             </button>
         </form>
@@ -104,12 +104,11 @@
                     <div class="col-sm-12">
                         <div class="logo-header">
                             <div class="main-logo">
-                                <a href="https://v3.nexlifyo.com"><img
-                                        src="https://v3.nexlifyo.com/public/uploads/settings/1750754465-025b4b.webp"
-                                        alt=""></a>
+                                <a href="{{ route('home') }}" wire:navigate><img
+                                        src="{{ asset('assets/img/logo.webp') }}" alt=""></a>
                             </div>
                             <div class="main-search">
-                                <form action="https://v3.nexlifyo.com/search">
+                                <form action="#">
                                     <input type="text" placeholder="Search Product..."
                                         class="search_keyword search_click" name="keyword">
                                     <button>
@@ -127,25 +126,11 @@
                             <div class="header-list-items">
                                 <ul>
                                     <li class="track_btn">
-                                        <a href="https://v3.nexlifyo.com/customer/order-track"> <i
+                                        <a href="{{ route('order.track') }}" wire:navigate> <i
                                                 class="fa fa-truck"></i>Track Order</a>
                                     </li>
-
-
                                     <li class="cart-dialog" id="cart-qty">
-                                        <a href="https://v3.nexlifyo.com/customer/checkout">
-                                            <p class="margin-shopping">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                                <span>0</span>
-                                            </p>
-                                        </a>
-                                        <div class="cshort-summary">
-                                            <ul>
-                                            </ul>
-                                            <p><strong>সর্বমোট : ৳0.00</strong></p>
-                                            <a href="https://v3.nexlifyo.com/customer/checkout" class="go_cart"> অর্ডার
-                                                করুন </a>
-                                        </div>
+                                        <livewire:frontend.cart-count />
                                     </li>
                                 </ul>
                             </div>
@@ -160,37 +145,39 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="catagory_menu">
-                            <ul class="heder__category">
-                                <div>
-                                    <li class="all__category__list">
-                                        <a href="#">ALL CATEGORIES <i class="fa-solid fa-list"></i>
-                                        </a>
-                                        <div></div>
-                                    </li>
-                                </div>
-
-
-                                <div>
-                                    <li><a href="https://v3.nexlifyo.com">Home</a></li>
-                                </div>
-                                <div>
-                                    <li><a href="https://v3.nexlifyo.com/hot-deals">Offers</a></li>
-                                </div>
-
-                                <div class="contact__menu">
-                                    <li><a href="https://v3.nexlifyo.com/site/contact-us">Contact</a></li>
-                                </div>
-                                <div class="right__menu__top">
-                                    <li class="for_order">
-                                        <p>
-                                            <a href="https://v3.nexlifyo.com/customer/login">
-                                                <i class="fa-regular fa-user"></i>
-                                                Login / Sign Up
+                            <div class="mobile-menu">
+                                <ul class="heder__category">
+                                    <div>
+                                        <li class="all__category__list">
+                                            <a href="#">ALL CATEGORIES <i class="fa-solid fa-list"></i>
                                             </a>
-                                        </p>
-                                    </li>
-                                </div>
-                            </ul>
+                                            <div></div>
+                                        </li>
+                                    </div>
+
+
+                                    <div>
+                                        <li><a href="{{ route('home') }}" wire:navigate>Home</a></li>
+                                    </div>
+                                    <div>
+                                        <li><a href="#" wire:navigate>Offers</a></li>
+                                    </div>
+
+                                    <div class="contact__menu">
+                                        <li><a href="#" wire:navigate>Contact</a></li>
+                                    </div>
+                                    <div class="right__menu__top">
+                                        <li class="for_order">
+                                            <p>
+                                                <a href="" wire:navigate>
+                                                    <i class="fa-regular fa-user"></i>
+                                                    Login / Sign Up
+                                                </a>
+                                            </p>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -199,3 +186,15 @@
     </div>
     <!-- main-header end -->
 </header>
+<script>
+    $(document).ready(function() {
+
+        $('.toggle').click(function() {
+
+            $('.mobile-menu').toggleClass('active');
+
+        });
+
+
+    });
+</script>

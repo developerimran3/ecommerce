@@ -405,7 +405,7 @@ class Index extends Component
 
             ->latest()
 
-            ->paginate(3);
+            ->paginate(10);
 
         return view('livewire.admin.product.index', [
             'products' => $products,

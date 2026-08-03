@@ -120,73 +120,27 @@
         </div>
 
     </section>
-    <!--=========================
-    CATEGORIES
-    ==========================-->
 
+    <!--Categories-->
     <section class="category-section py-4">
-
         <div class="container">
-
             <h5 class="section-title mb-3">
                 Categories
             </h5>
-
             <div class="row">
-
-                <div class="col-lg-2 col-md-3 col-6 mb-3">
-                    <div class="category-card">
-                        <img
-                            src="https://v3.nexlifyo.com/public/uploads/product/1750753430-photo_2025-06-24_14-22-07.jpg">
-                        <span>নারী ফ্যাশন</span>
+                @foreach ($categories as $category)
+                    <div class="col-lg-2 col-md-3 col-6 mb-3">
+                        <div class="category-card">
+                            <img src="{{ asset('storage/' . $category->image) }}">
+                            <span>{{ $category->name }}</span>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 col-6 mb-3">
-                    <div class="category-card">
-                        <img src="images/c2.png">
-                        <span>বেডশীট</span>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 col-6 mb-3">
-                    <div class="category-card">
-                        <img src="images/c3.png">
-                        <span>কুশন</span>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 col-6 mb-3">
-                    <div class="category-card">
-                        <img src="images/c4.png">
-                        <span>ফুড</span>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 col-6 mb-3">
-                    <div class="category-card">
-                        <img src="images/c5.png">
-                        <span>স্বাস্থ্য</span>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 col-6 mb-3">
-                    <div class="category-card">
-                        <img src="images/c6.png">
-                        <span>হোম ডেকোর</span>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
-
         </div>
-
     </section>
 
-    <!--=========================
-    HOT DEAL
-    ==========================-->
-
+    <!--Hot Deals-->
     <section class="products">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -208,12 +162,13 @@
                                 ছাড়
                             </div>
 
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}">
+                            <a href="{{ route('product.details', $product->slug) }}">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}">
+                            </a>
 
                             <div class="product-body">
-
                                 <a href="{{ route('product.details', $product->slug) }}">
-                                    {{ Str::limit($product->name, 28) }}
+                                    {{ Str::limit($product->name, 25) }}
 
                                 </a>
                                 <div class="rating">

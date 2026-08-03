@@ -73,7 +73,7 @@
                             Net Total
                         </td>
                         <td>
-                            ৳550
+                            ৳ {{ number_format($order->grand_total, 2) }}
                         </td>
                     </tr>
                     <tr>
@@ -116,8 +116,9 @@
 
         <!-- Button -->
         <div class="action-btn">
-            <a href="#" class="btn btn-primary btn-sm"> Go To Home </a>
-            <a href="#" class="btn btn-success btn-sm"> <i class="fa fa-save"></i> Save PDF </a>
+            <a href="{{ route('home') }}" class="btn btn-primary btn-sm"> Go To Home </a>
+            <a href="{{ route('invoice', $order->id) }}" class="btn btn-success btn-sm"> <i class="fa fa-save"></i>
+                Save PDF </a>
         </div>
     </div>
 </div>

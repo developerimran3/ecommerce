@@ -2,12 +2,11 @@
 
 namespace App\Livewire\Frontend;
 
-use App\Models\Product;
-use Livewire\Component;
-
-
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Category;
+use App\Models\Product;
+use Livewire\Component;
 
 class Home extends Component
 {
@@ -66,6 +65,8 @@ class Home extends Component
             'products' => Product::where('status', true)
                 ->latest()
                 ->paginate(12),
+
+            'categories' => Category::where('status', true)->get(),
 
         ])->layout('layouts.frontend');
     }

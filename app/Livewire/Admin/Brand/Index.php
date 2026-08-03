@@ -148,11 +148,11 @@ class Index extends Component
                 });
             })
             ->latest()
-            ->paginate(5);
+            ->paginate(10);
 
         return view(
             'livewire.admin.brand.index',
             compact('brands')
-        )->layout('layouts.admin', aminul);
+        )->layout('layouts.admin');
     }
 }
