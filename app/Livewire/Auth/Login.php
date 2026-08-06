@@ -8,44 +8,60 @@ use Livewire\Component;
 class Login extends Component
 {
     public $email = '';
-
     public $password = '';
-
     public $remember = false;
 
     protected $rules = [
-
-        'email' => 'required|email',
-        'password' => 'required|min:6',
+        'email'     => 'required|email',
+        'password'  => 'required|min:6',
     ];
 
     public function login()
     {
         $this->validate();
-
         if (! Auth::attempt([
-            'email' => $this->email,
-            'password' => $this->password,
+            'email'     => $this->email,
+            'password'  => $this->password,
         ], $this->remember)) {
-
             $this->addError(
                 'email',
-                'Invalid email or password.'
+                'Invalid user email or password.'
             );
             return;
         }
 
         session()->regenerate();
+
+        // Inactive User Check
+        $user = auth()->user();
+        if ($user->status == 0) {
+            Auth::logout();
+
+            session()->invalidate();
+            session()->regenerateToken();
+
+            $this->addError(
+                'email',
+                'Your account is Inactive. Please contact Administrator.'
+            );
+
+            // session()->flash(
+            //     'error',
+            //     'Your account is inactive. Please contact administrator.'
+            // );
+            return;
+        }
+
         session()->flash(
             'success',
             'Login successful.'
         );
-        $user = auth()->user();
-        if ($user->role === 'Administrator') {
 
-            return redirect()->route('admin.dashboard');
+
+        if ($user->role === 'Customer') {
+            return redirect()->route('home');
         }
-        return redirect()->route('home');
+        return redirect()->route('admin.dashboard');
     }
 
 

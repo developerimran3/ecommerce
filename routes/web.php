@@ -16,6 +16,7 @@ use App\Livewire\Frontend\CartPage;
 use App\Livewire\Frontend\CheckoutPage;
 use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\InvoicePage;
+use App\Livewire\Frontend\MyAccount;
 use App\Livewire\Frontend\MyOrders;
 use App\Livewire\Frontend\OrderSuccess;
 use App\Livewire\Frontend\OrderTrack;
@@ -34,20 +35,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth', 'admin'])
-    ->prefix('admin')
-    ->group(function () {
-
-        Route::get(
-            '/dashboard',
-            Dashboard::class
-        )->name('admin.dashboard');
-    });
-
-
-
-
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'user.status')->group(function () {
 
     Route::get('/profile', Profile::class)
         ->name('profile');
@@ -64,24 +52,24 @@ Route::middleware('guest')->group(function () {
         ->name('register');
 });
 
+
+
+
+
+
+
 Route::get('/logout', function () {
 
     Auth::logout();
-
     request()->session()->invalidate();
-
     request()->session()->regenerateToken();
-
     return redirect('/login');
 })->name('logout');
 
 
 
 
-
-
-
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,Shop Manager,Editor,Contributor'])->group(function () {
 
     Route::get('/dashboard', Dashboard::class)
         ->name('admin.dashboard');
@@ -148,4 +136,15 @@ Route::prefix('customer')->group(function () {
 
     Route::get('/order-track', OrderTrack::class)
         ->name('order.track');
+
+
+
+
+    Route::get('/my-account', MyAccount::class)
+        ->middleware('auth', 'user.status')
+        ->name('account');
+
+    Route::get('/profile', Profile::class)
+        ->middleware('auth', 'user.status')
+        ->name('customer.profile');
 });

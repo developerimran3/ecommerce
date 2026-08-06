@@ -187,6 +187,19 @@ class CheckoutPage extends Component
         );
     }
 
+    public function mount()
+    {
+        if (Auth::check()) {
+
+            $this->name = Auth::user()->name;
+            $this->email = Auth::user()->email;
+            $this->phone = Auth::user()->phone;
+            $this->address = Auth::user()->address;
+
+            // যদি user table এ payment_method থাকে
+            // $this->payment_method = Auth::user()->payment_method ?? 'cod';
+        }
+    }
     public function render()
     {
         $cart = Cart::with('items.product')

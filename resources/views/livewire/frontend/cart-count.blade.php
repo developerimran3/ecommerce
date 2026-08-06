@@ -8,18 +8,19 @@
 
     <!-- Mini Cart -->
     <div class="mini-cart">
-        @if ($cart && $cart->items->count())
-            @foreach ($cart->items as $item)
-                <table class="table ">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($cart && $cart->items->count())
+                    @foreach ($cart->items as $item)
                         <tr>
                             <td> {{ Str::limit($item->product->name, 20) }} </td>
                             <td> {{ $item->qty }} </td>
@@ -30,11 +31,10 @@
                                 </a>
                             </td>
                         </tr>
-
-                    </tbody>
-                </table>
-            @endforeach
-        @endif
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
         <div class="mini-cart-footer">
             <p class="text-center"><strong> সর্বমোট :
                     ৳{{ number_format($cart ? $cart->items->sum('subtotal') : 0, 2) }}</strong></p>

@@ -58,5 +58,6 @@
         </button>
 
     </form>
-    <a href="{{ route('home') }}" class="btn btn-sm btn-primary">Back</a>
+
+    <a href="{{ route('home') }}" class="btn btn-sm btn-primary my-3">Home</a>
 </div>

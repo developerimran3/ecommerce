@@ -1,16 +1,9 @@
 <div>
-    <div class="content container-fluid">
+
+    <div class="content container">
         <!-- Page Header -->
-        <div class="page-header">
-            <div class="row">
-                <div class="col">
-                    <h3 class="page-title">My Profile</h3>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Profile</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="page-title">Products</h4>
         </div>
 
         <div class="row">
@@ -38,11 +31,6 @@
                                     {{ Auth::user()->address ?? 'No address added' }}
                                 </p>
                             </div>
-                            <div class="col-auto">
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">
-                                    <i class="fas fa-edit"></i> Edit Profile
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,7 +52,12 @@
                     <div class="tab-pane fade show active" id="per_details_tab">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Personal Information</h5>
+                                <div class="col-auto">
+                                    <h5 class="card-title">Personal Information</h5>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">
+                                        <i class="fas fa-edit"></i> Edit Profile
+                                    </button>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-3 col-4 text-muted">Full Name</div>
                                     <div class="col-sm-9 col-8">{{ Auth::user()->name }}</div>
@@ -165,6 +158,7 @@
             </div>
         </div>
     </div>
+
 
 
 </div>

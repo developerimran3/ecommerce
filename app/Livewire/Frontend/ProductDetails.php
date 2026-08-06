@@ -37,6 +37,7 @@ class ProductDetails extends Component
         }
     }
 
+
     public function addToCart()
     {
         $cart = Cart::firstOrCreate([
@@ -83,6 +84,11 @@ class ProductDetails extends Component
             'success',
             message: 'Product added to cart.'
         );
+    }
+    public function orderNow()
+    {
+        $this->addToCart();
+        return redirect()->route('checkout');
     }
 
     public function render()

@@ -21,7 +21,7 @@
 
         body {
             height: 100vh;
-            background: linear-gradient(135deg, #4f46e5, #2563eb);
+            background: linear-gradient(135deg, #10b981, #14b8a6);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -41,7 +41,7 @@
             width: 75px;
             height: 75px;
             border-radius: 50%;
-            background: #4f46e5;
+            background: #14b8a6;
             margin: auto;
             display: flex;
             justify-content: center;
@@ -81,23 +81,25 @@
         }
 
         .btn-login {
-            background: #4f46e5;
+            background: #14b8a6;
             color: #fff;
             border-radius: 30px;
             height: 45px;
             font-weight: 600;
+            border: none;
             transition: .3s;
         }
 
         .btn-login:hover {
-            background: #4338ca;
+            background: #119e8e;
             color: #fff;
+            border: none;
             transform: translateY(-2px);
         }
 
         .forgot {
             font-size: 14px;
-            color: #4f46e5;
+            color: #14b8a6;
         }
 
         .forgot:hover {
@@ -122,7 +124,18 @@
     {{ $slot ?? '' }}
     @yield('content')
 
+    <script>
+        document.addEventListener('livewire:init', () => {
 
+            Livewire.on('success', (event) => {
+                toastr.success(event.message);
+            });
+
+            Livewire.on('error', (event) => {
+                toastr.error(event.message);
+            });
+        });
+    </script>
 </body>
 
 </html>

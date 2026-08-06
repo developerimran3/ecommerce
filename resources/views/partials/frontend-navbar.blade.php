@@ -168,12 +168,24 @@
                                     </div>
                                     <div class="right__menu__top">
                                         <li class="for_order">
-                                            <p>
-                                                <a href="" wire:navigate>
+                                            @if (Auth::check())
+                                                @if (Auth::user()->role == 'Customer')
+                                                    <a href="{{ route('account') }}" wire:navigate>
+                                                        <i class="fa-regular fa-user"></i>
+                                                        {{ Str::limit(Auth::user()->name, 10) }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('profile') }}" wire:navigate>
+                                                        <i class="fa-regular fa-user"></i>
+                                                        {{ Str::limit(Auth::user()->name, 10) }}
+                                                    </a>
+                                                @endif
+                                            @else
+                                                <a href="{{ route('login') }}" wire:navigate>
                                                     <i class="fa-regular fa-user"></i>
                                                     Login / Sign Up
                                                 </a>
-                                            </p>
+                                            @endif
                                         </li>
                                     </div>
                                 </ul>

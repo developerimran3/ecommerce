@@ -1,163 +1,343 @@
 <div>
 
-    <h4 class="mb-4">
+    <div class="row">
 
-        Order Management
+        <div class="col-lg-12 mb-4">
 
-    </h4>
+            <div class="table-card">
 
-    <div class="card">
 
-        <div class="card-body">
+                <!-- Filter Area -->
+                <div class="p-4 border-bottom">
 
-            <div class="row mb-3">
+                    <div class="row">
 
-                <div class="col-md-6">
 
-                    <input type="text" class="form-control" placeholder="Search invoice, name, phone..."
-                        wire:model.live="search">
+                        <div class="col-md-6 mb-3">
+
+                            <input type="text" class="form-control" placeholder="🔍 Search invoice, name, phone..."
+                                wire:model.live="search">
+
+                        </div>
+
+
+
+                        <div class="col-md-3 mb-3">
+
+                            <select class="form-control" wire:model.live="status">
+
+
+                                <option value="">
+                                    All Status
+                                </option>
+
+
+                                <option value="pending">
+                                    Pending
+                                </option>
+
+
+                                <option value="processing">
+                                    Processing
+                                </option>
+
+
+                                <option value="delivered">
+                                    Delivered
+                                </option>
+
+
+                                <option value="cancelled">
+                                    Cancelled
+                                </option>
+
+
+                            </select>
+
+                        </div>
+
+
+
+                        <div class="col-md-1 mb-3">
+
+                            <button class="btn btn-light border w-100" wire:click="$set('search','')">
+
+                                <i class="fa fa-refresh"></i>
+
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
 
                 </div>
 
-                <div class="col-md-3">
 
-                    <select class="form-control" wire:model.live="status">
 
-                        <option value="">
-                            All Status
-                        </option>
+                <!-- Table -->
 
-                        <option value="pending">
-                            Pending
-                        </option>
+                <div class="table-responsive">
 
-                        <option value="processing">
-                            Processing
-                        </option>
 
-                        <option value="delivered">
-                            Delivered
-                        </option>
+                    <table class="table table-hover mb-0">
 
-                        <option value="cancelled">
-                            Cancelled
-                        </option>
 
-                    </select>
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    SL
+                                </th>
+
+                                <th>
+                                    Invoice
+                                </th>
+
+                                <th>
+                                    Customer
+                                </th>
+
+                                <th>
+                                    Phone
+                                </th>
+
+                                <th>
+                                    Total
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+
+                            </tr>
+
+
+                        </thead>
+
+
+
+                        <tbody>
+
+
+                            @forelse($orders as $order)
+                                <tr>
+
+
+                                    <td>
+                                        {{ $loop->iteration }}
+                                    </td>
+
+
+
+                                    <td>
+
+                                        <strong>
+                                            {{ $order->invoice_no }}
+                                        </strong>
+
+                                    </td>
+
+
+
+                                    <td>
+
+                                        {{ $order->name }}
+
+                                    </td>
+
+
+
+                                    <td>
+
+                                        {{ $order->phone }}
+
+                                    </td>
+
+
+
+
+                                    <td style="font-weight:bold;color:rgba(5,150,105,1)">
+
+                                        ৳ {{ number_format($order->grand_total, 2) }}
+
+                                    </td>
+
+
+
+
+                                    <td>
+
+
+                                        @if ($order->order_status == 'pending')
+                                            <span class="badge-status">
+                                                Pending
+                                            </span>
+                                        @elseif($order->order_status == 'processing')
+                                            <span class="badge-warning">
+                                                Processing
+                                            </span>
+                                        @elseif($order->order_status == 'delivered')
+                                            <span class="badge-success">
+                                                Delivered
+                                            </span>
+                                        @else
+                                            <span class="badge-inactive">
+                                                Cancelled
+                                            </span>
+                                        @endif
+
+
+
+                                    </td>
+
+
+
+
+                                    <td>
+
+                                        {{ $order->created_at->format('d M Y') }}
+
+                                    </td>
+
+
+
+
+                                    <td>
+
+
+                                        <div class="actions">
+
+
+                                            <button class="btn btn-sm bg-info-light mr-2"
+                                                wire:click="showOrder({{ $order->id }})" data-toggle="modal"
+                                                data-target="#orderModal">
+
+                                                <i class="fa fa-eye"></i>
+                                                View
+
+
+                                            </button>
+
+                                            <a href="{{ route('invoice', $order->id) }}" class="btn btn-primary btn-sm">
+                                                Invoice
+                                            </a>
+
+
+                                            <select class="form-control form-control-sm d-inline" style="width:120px"
+                                                wire:change="updateStatus({{ $order->id }}, $event.target.value)">
+
+
+                                                <option value="pending" @selected($order->order_status == 'pending')>
+                                                    Pending
+                                                </option>
+
+
+                                                <option value="processing" @selected($order->order_status == 'processing')>
+                                                    Processing
+                                                </option>
+
+
+
+                                                <option value="delivered" @selected($order->order_status == 'delivered')>
+                                                    Delivered
+                                                </option>
+
+
+
+                                                <option value="cancelled" @selected($order->order_status == 'cancelled')>
+                                                    Cancelled
+                                                </option>
+
+
+                                            </select>
+
+
+                                        </div>
+
+
+
+                                    </td>
+
+
+
+                                </tr>
+
+
+                            @empty
+
+
+                                <tr>
+
+                                    <td colspan="8" class="text-center">
+
+                                        No Data Found
+
+                                    </td>
+
+                                </tr>
+                            @endforelse
+
+
+
+                        </tbody>
+
+
+                    </table>
+
+
 
                 </div>
+
+
+
+
+                <div class="p-3 border-top">
+
+                    {{ $orders->links() }}
+
+                </div>
+
+
 
             </div>
 
-            <table class="table table-bordered">
-
-                <thead class="thead-dark">
-
-                    <tr>
-
-                        <th>Invoice</th>
-
-                        <th>Customer</th>
-
-                        <th>Phone</th>
-
-                        <th>Total</th>
-
-                        <th>Status</th>
-
-                        <th>Action</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    @foreach ($orders as $order)
-                        <tr>
-
-                            <td>{{ $order->invoice_no }}</td>
-
-                            <td>{{ $order->name }}</td>
-
-                            <td>{{ $order->phone }}</td>
-
-                            <td>
-                                ৳ {{ number_format($order->grand_total, 2) }}
-                            </td>
-
-                            <td>
-
-                                <select class="form-control form-control-sm"
-                                    wire:change="updateStatus(
-                                            {{ $order->id }},
-                                            $event.target.value
-                                        )">
-
-                                    <option value="pending" @selected($order->order_status == 'pending')>
-
-                                        Pending
-
-                                    </option>
-
-                                    <option value="processing" @selected($order->order_status == 'processing')>
-
-                                        Processing
-
-                                    </option>
-
-                                    <option value="delivered" @selected($order->order_status == 'delivered')>
-
-                                        Delivered
-
-                                    </option>
-
-                                    <option value="cancelled" @selected($order->order_status == 'cancelled')>
-
-                                        Cancelled
-
-                                    </option>
-
-                                </select>
-
-                            </td>
-
-                            <td>
-
-                                <button class="btn btn-info btn-sm" wire:click="showOrder({{ $order->id }})"
-                                    data-toggle="modal" data-target="#orderModal">
-
-                                    View
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-                    @endforeach
-
-                </tbody>
-
-            </table>
-
-            {{ $orders->links() }}
 
         </div>
 
+
     </div>
+
+
     <div wire:ignore.self class="modal fade" id="orderModal" tabindex="-1">
 
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
 
-            <div class="modal-content">
+            <div class="modal-content order-modal">
+
+
+                <!-- Header -->
 
                 <div class="modal-header">
 
                     <h5 class="modal-title">
 
+                        <i class="fa fa-shopping-cart"></i>
                         Order Details
 
                     </h5>
+
 
                     <button type="button" class="close" data-dismiss="modal">
 
@@ -167,159 +347,263 @@
 
                 </div>
 
+
+
                 <div class="modal-body">
+
 
                     @if ($selectedOrder)
 
-                        <div class="row mb-3">
+
+
+                        <!-- Customer Info -->
+
+                        <div class="row mb-4">
+
 
                             <div class="col-md-6">
 
-                                <h6>
-                                    Invoice:
-                                    {{ $selectedOrder->invoice_no }}
-                                </h6>
 
-                                <h6>
-                                    Customer:
-                                    {{ $selectedOrder->name }}
-                                </h6>
+                                <div class="info-card">
 
-                                <h6>
-                                    Phone:
-                                    {{ $selectedOrder->phone }}
-                                </h6>
 
-                                <h6>
-                                    Email:
-                                    {{ $selectedOrder->email }}
-                                </h6>
+                                    <h6>
+                                        Customer Information
+                                    </h6>
+
+
+                                    <p>
+                                        <b>Invoice:</b>
+                                        {{ $selectedOrder->invoice_no }}
+                                    </p>
+
+
+                                    <p>
+                                        <b>Name:</b>
+                                        {{ $selectedOrder->name }}
+                                    </p>
+
+
+                                    <p>
+                                        <b>Phone:</b>
+                                        {{ $selectedOrder->phone }}
+                                    </p>
+
+
+                                    <p>
+                                        <b>Email:</b>
+                                        {{ $selectedOrder->email }}
+                                    </p>
+
+
+
+                                </div>
+
 
                             </div>
+
+
 
                             <div class="col-md-6">
 
-                                <h6>
-                                    Payment:
-                                    {{ ucfirst($selectedOrder->payment_method) }}
-                                </h6>
 
-                                <h6>
-                                    Payment Status:
-                                    {{ ucfirst($selectedOrder->payment_status) }}
-                                </h6>
+                                <div class="info-card">
 
-                                <h6>
-                                    Order Status:
-                                    {{ ucfirst($selectedOrder->order_status) }}
-                                </h6>
 
-                                <h6>
-                                    Date:
-                                    {{ $selectedOrder->created_at->format('d M Y h:i A') }}
-                                </h6>
+                                    <h6>
+                                        Order Information
+                                    </h6>
+
+
+                                    <p>
+                                        <b>Payment:</b>
+                                        {{ ucfirst($selectedOrder->payment_method) }}
+                                    </p>
+
+
+                                    <p>
+                                        <b>Payment Status:</b>
+
+                                        @if ($selectedOrder->payment_status == 'pending')
+                                            <span class="badge-warning">
+                                                Pending
+                                            </span>
+                                        @else
+                                            <span class="badge-success">
+                                                Paid
+                                            </span>
+                                        @endif
+
+                                    </p>
+
+
+                                    <p>
+                                        <b>Order Status:</b>
+
+
+                                        <span class="badge-status">
+                                            {{ ucfirst($selectedOrder->order_status) }}
+                                        </span>
+
+
+                                    </p>
+
+
+
+                                    <p>
+                                        <b>Date:</b>
+                                        {{ $selectedOrder->created_at->format('d M Y h:i A') }}
+                                    </p>
+
+
+
+                                </div>
+
+
 
                             </div>
+
 
                         </div>
 
-                        <div class="mb-3">
 
-                            <strong>Address:</strong>
 
-                            <p class="mb-0">
 
+
+                        <!-- Address -->
+
+                        <div class="address-box mb-4">
+
+
+                            <h6>
+                                <i class="fa fa-map-marker"></i>
+                                Delivery Address
+                            </h6>
+
+
+                            <p>
                                 {{ $selectedOrder->address }}
-
                             </p>
 
+
                         </div>
 
-                        <table class="table table-bordered">
 
-                            <thead class="thead-dark">
 
-                                <tr>
 
-                                    <th>Image</th>
 
-                                    <th>Product</th>
 
-                                    <th>Price</th>
 
-                                    <th>Qty</th>
+                        <!-- Product Table -->
 
-                                    <th>Subtotal</th>
 
-                                </tr>
+                        <div class="table-responsive">
 
-                            </thead>
 
-                            <tbody>
+                            <table class="table table-hover order-table">
 
-                                @foreach ($selectedOrder->items as $item)
+
+                                <thead>
+
                                     <tr>
 
-                                        <td>
+                                        <th>
+                                            Image
+                                        </th>
 
-                                            @if ($item->product?->thumbnail)
-                                                <img src="{{ asset('storage/' . $item->product->thumbnail) }}"
-                                                    width="60">
-                                            @endif
+                                        <th>
+                                            Product
+                                        </th>
 
-                                        </td>
+                                        <th>
+                                            Price
+                                        </th>
 
-                                        <td>
+                                        <th>
+                                            Qty
+                                        </th>
 
-                                            {{ $item->product?->name }}
+                                        <th>
+                                            Subtotal
+                                        </th>
 
-                                        </td>
-
-                                        <td>
-
-                                            ৳ {{ number_format($item->price, 2) }}
-
-                                        </td>
-
-                                        <td>
-
-                                            {{ $item->qty }}
-
-                                        </td>
-
-                                        <td>
-
-                                            ৳ {{ number_format($item->subtotal, 2) }}
-
-                                        </td>
 
                                     </tr>
-                                @endforeach
 
-                            </tbody>
 
-                        </table>
+                                </thead>
 
-                        <div class="text-right">
 
-                            <h5>
 
-                                Grand Total:
+                                <tbody>
 
-                                ৳ {{ number_format($selectedOrder->grand_total, 2) }}
 
-                            </h5>
 
+                                    @foreach ($selectedOrder->items as $item)
+                                        <tr>
+
+
+                                            <td>
+
+
+                                                @if ($item->product?->thumbnail)
+                                                    <img src="{{ asset('storage/' . $item->product->thumbnail) }}"
+                                                        class="order-product-img">
+                                                @else
+                                                    <span>
+                                                        No Image
+                                                    </span>
+                                                @endif
+
+
+                                            </td>
+
+
+
+
+                                            <td>
+
+                                                <strong>
+                                                    {{ $item->product?->name }}
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                ৳ {{ number_format($item->price, 2) }}
+
+                                            </td>
+                                            <td>
+                                                {{ $item->qty }}
+                                            </td>
+                                            <td>
+
+                                                <b>
+                                                    ৳ {{ number_format($item->subtotal, 2) }}
+                                                </b>
+
+                                            </td>
+
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
 
+                        <!-- Total -->
+
+                        <div class="order-total">
+
+
+                            <h4>
+                                Grand Total :
+                                <span>
+                                    ৳ {{ number_format($selectedOrder->grand_total, 2) }}
+                                </span>
+                            </h4>
+                        </div>
                     @endif
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>

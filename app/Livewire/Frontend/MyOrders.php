@@ -10,19 +10,15 @@ use Livewire\WithPagination;
 class MyOrders extends Component
 {
     use WithPagination;
-
-    public $selectedOrder = null;
-
-    public function showOrder($id)
-    {
-        $this->selectedOrder = Order::with([
-            'items.product',
-        ])->findOrFail($id);
-    }
+    protected string $paginationTheme = 'bootstrap';
 
     public function render()
     {
-        $orders = Order::withCount('items')
+        $orders = Order::where(
+            'user_id',
+            auth()->id()
+        )
+            ->withCount('items')
             ->latest()
             ->paginate(10);
 

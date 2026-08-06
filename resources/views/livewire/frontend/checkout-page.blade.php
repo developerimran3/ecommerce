@@ -3,8 +3,6 @@
         <div class="row">
             <div class="col-sm-5 cus-order-2">
                 <div class="checkout-shipping">
-
-
                     <div class="card">
                         <div class="card-header">
                             <h6>আপনার অর্ডারটি কনফার্ম করতে তথ্যগুলো পূরণ করে "অর্ডার করুন" বাটন এ ক্লিক করুন </h6>

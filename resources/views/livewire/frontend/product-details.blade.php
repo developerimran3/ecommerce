@@ -5,10 +5,7 @@
                 <section class="product-section">
                     <div class="container">
                         <div class="row">
-
-
                             <div class="col-sm-6 position-relative">
-
                                 {{-- Discount Badge --}}
                                 @if ($product->price > $product->final_price)
                                     <div class="product-details-discount-badge">
@@ -45,9 +42,7 @@
                                         </div>
                                     @endforeach
                                 </div>
-
                             </div>
-
 
                             <div class="col-sm-6">
                                 <div class="details_right">
@@ -55,7 +50,7 @@
                                         <ul>
                                             <li><a href="/">Home</a></li>
                                             <li><span>/</span></li>
-                                            <li><a href="">ক্যানভাস</a>
+                                            <li><a href="">{{ $product->category->name }}</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -72,38 +67,27 @@
                                                 <i class="far fa-star"></i>
                                                 <i class="far fa-star"></i>
                                                 <i class="far fa-star"></i>
-
                                                 <span>0.00/5</span>
                                                 <a class="all-reviews-button" href="#writeReview">See Reviews</a>
                                             </div>
                                             <div class="product-code">
                                                 <p><span>প্রোডাক্ট কোড : </span> {{ $product->sku }}</p>
                                             </div>
-                                            <form action="https://v3.nexlifyo.com/cart/store" method="POST"
-                                                name="formName">
-                                                <input type="hidden" name="_token"
-                                                    value="2iJULWIcuSvQdkktx3dBNuIkKoHzY4DvJYEzOF1Y"> <input
-                                                    type="hidden" name="id" value="38">
+                                            <form>
                                                 <div class="pro-size" style="width: 100%;">
                                                     <div class="size_inner">
                                                         <p>Size - <span class="attibute-name"></span></p>
                                                         <div class="size-container">
                                                             <div class="selector">
                                                                 <div class="selector-item">
-                                                                    <input type="radio" id="f-option40" value="XL"
-                                                                        name="product_size"
-                                                                        class="selector-item_radio emptyalert"
-                                                                        required="">
-                                                                    <label for="f-option40"
-                                                                        class="selector-item_label">XL</label>
+                                                                    <input type="radio" value="XL" name="size"
+                                                                        class="selector-item_radio">
+                                                                    <label class="selector-item_label">XL</label>
                                                                 </div>
                                                                 <div class="selector-item">
-                                                                    <input type="radio" id="f-option41" value="L"
-                                                                        name="product_size"
-                                                                        class="selector-item_radio emptyalert"
-                                                                        required="">
-                                                                    <label for="f-option41"
-                                                                        class="selector-item_label">L</label>
+                                                                    <input type="radio" value="L" name="size"
+                                                                        class="selector-item_radio">
+                                                                    <label class="selector-item_label">L</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -121,38 +105,39 @@
                                                 </div>
 
                                                 <div class="row">
+
                                                     <div class="qty-cart col-sm-12">
                                                         <div class="quantity">
-                                                            <span class="minus">-</span>
-                                                            <input type="text" name="qty" value="1">
-                                                            <span class="plus">+</span>
+                                                            <span class="minus" wire:click="decreaseQty"> - </span>
+                                                            <input type="text" wire:model="qty" readonly>
+                                                            <span class="plus" wire:click="increaseQty"> + </span>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex single_product col-sm-12">
-                                                        <input type="submit" class="btn px-4 add_cart_btn"
-                                                            onclick="return sendSuccess();" name="add_cart"
-                                                            value="কার্টে যোগ করুন">
 
-                                                        <input type="submit"
-                                                            class="btn px-4 order_now_btn order_now_btn_m"
-                                                            onclick="return sendSuccess();" name="order_now"
-                                                            value="অর্ডার করুন">
+                                                    <div class="d-flex single_product col-sm-12">
+                                                        <button type="button" wire:click="addToCart"
+                                                            class="btn px-4 add_cart_btn"> কার্টে যোগ করুন
+                                                        </button>
+
+                                                        <button type="button" wire:click="orderNow"
+                                                            class="btn px-4 order_now_btn"> অর্ডার করুন
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 <div class="mt-md-2 mt-2">
                                                     <h4 class="font-weight-bold">
                                                         <a class="btn btn-success w-100 call_now_btn"
-                                                            href="tel: +8809638365975">
+                                                            href="tel: +8801756041512">
                                                             <i class="fa fa-phone-square"></i>
-                                                            +8809638365975
+                                                            +8801756041512
                                                         </a>
                                                     </h4>
                                                 </div>
                                                 <div class="mt-md-2 mt-2">
                                                     <h4 class="font-weight-bold">
-                                                        <a class="btn btn-success w-100 call_now_btn" href="#"
-                                                            target="_blank">
-                                                            <i class="fa fa-whatsapp"></i>
+                                                        <a href="https://wa.me/+8801756041512?text={{ urlencode($product->name) }}"
+                                                            target="_blank" class="btn btn-success w-100">
+                                                            <i class="fab fa-whatsapp"></i>
                                                             এই পণ্যটি সম্পর্কে জিজ্ঞাসা করুন
                                                         </a>
                                                     </h4>
@@ -164,7 +149,6 @@
                                                             <div class="flext_area">
                                                                 <i class="fa-solid fa-cubes"></i>
                                                                 <div>
-
                                                                     <span>সারা বাংলাদেশ ১৫০ টাকা ডেলিভারি চার্জ
                                                                         <br></span>
                                                                 </div>
