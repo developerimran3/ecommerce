@@ -5,14 +5,14 @@
         </button>
 
         <div class="topbar-buttons">
-            <a href="/" wire:navigate.hover class="btn btn-purple">
+            <a href="{{ route('home') }}" target="_blank" class="btn btn-purple btn-none">
                 <i class="fas fa-globe mr-2"></i>
-                <span class="btn-text">Visit Website</span>
+                Visit Website
             </a>
 
             <a href="#" class="btn btn-purple ml-2">
                 <i class="fas fa-headset mr-2"></i>
-                <span class="btn-text">Support</span>
+                <span class="btn-text btn-none">Support</span>
             </a>
         </div>
     </div>
@@ -21,18 +21,17 @@
         <div class="dropdown admin-dropdown">
             <button class="btn p-0 bg-transparent admin-toggle d-flex align-items-center">
                 <div class="user-avatar d-flex align-items-center justify-content-center">
-                    @if (Auth::user()?->image)
-                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}"
-                            class="category-img">
+
+                    @if (Auth::user()->image)
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}">
                     @else
-                        <img src="https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg"
-                            alt="Default Avatar" class="category-img">
+                        <i class="fa fa-user"></i>
                     @endif
                 </div>
 
                 <div class="ml-2 text-left">
-                    <div class="font-weight-bold">{{ Auth::user()?->name }}</div>
-                    <small class="text-muted">{{ Auth::user()?->role }}</small>
+                    <div class="font-weight-bold text-capitalize">{{ Auth::user()->name }}</div>
+                    <small class="text-muted">{{ Auth::user()->role }}</small>
                 </div>
 
                 <i class="fas fa-chevron-down ml-3"></i>
@@ -44,7 +43,7 @@
                     Dashboard
                 </a>
 
-                <a href="{{ route('profile') }}">
+                <a href="{{ route('users.profile') }}">
                     <i class="fas fa-user mr-2"></i>
                     Profile
                 </a>

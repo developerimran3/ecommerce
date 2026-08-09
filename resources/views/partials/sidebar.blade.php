@@ -91,13 +91,12 @@
             </li>
             {{-- Settings --}}
             <li class="nav-item">
-                <a href="{{ route('profile') }}" wire:navigate.hover
-                    class="nav-link {{ request()->routeIs('profile*') ? 'active' : '' }}">
+                <a href="{{ route('users.profile') }}" wire:navigate.hover
+                    class="nav-link {{ request()->routeIs('users.profile') ? 'active' : '' }}">
                     <i class="fas fa-cog"></i>
-                    <span>Settings</span>
+                    <span>Profile</span>
                 </a>
             </li>
-
         </ul>
     </div>
 </aside>

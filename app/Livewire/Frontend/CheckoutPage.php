@@ -29,19 +29,12 @@ class CheckoutPage extends Component
 
 
     protected $rules = [
-
         'name' => 'required',
-
         'phone' => 'required',
-
         'email' => 'required|email',
-
         'address' => 'required',
-
         'payment_method' => 'required',
     ];
-
-
 
     public function increaseQty($id)
     {
@@ -53,7 +46,6 @@ class CheckoutPage extends Component
 
         $this->dispatch('cartUpdated');
     }
-
 
     public function decreaseQty($id)
     {
@@ -82,11 +74,6 @@ class CheckoutPage extends Component
             message: 'Item removed from cart.'
         );
     }
-
-
-
-
-
 
     public function placeOrder()
     {
@@ -165,9 +152,7 @@ class CheckoutPage extends Component
             }
 
             $cart->items()->delete();
-
             $cart->delete();
-
             return $order;
         });
 
@@ -181,7 +166,7 @@ class CheckoutPage extends Component
     {
         return 'INV-' . str_pad(
             Order::count() + 1,
-            5,
+            10,
             '0',
             STR_PAD_LEFT
         );

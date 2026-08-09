@@ -83,19 +83,27 @@
                                     <td> {{ $order->created_at->format('d-m-Y H:i:s') }} </td>
                                     <td class="align-center">
                                         @if ($order->order_status == 'pending')
-                                            <span class="w-100 badge badge-warning">
+                                            <span class="badge-status">
                                                 Pending
                                             </span>
+                                        @elseif($order->order_status == 'confirmed')
+                                            <span class="badge-info">
+                                                Confirmed
+                                            </span>
                                         @elseif($order->order_status == 'processing')
-                                            <span class="w-100 badge badge-info">
+                                            <span class="badge-warning">
                                                 Processing
                                             </span>
+                                        @elseif($order->order_status == 'shipped')
+                                            <span class="badge-primary">
+                                                Shipped
+                                            </span>
                                         @elseif($order->order_status == 'delivered')
-                                            <span class="w-100 badge badge-success">
+                                            <span class="badge-success">
                                                 Delivered
                                             </span>
-                                        @elseif($order->order_status == 'cancelled')
-                                            <span class="w-100 badge badge-danger">
+                                        @else
+                                            <span class="badge-inactive">
                                                 Cancelled
                                             </span>
                                         @endif

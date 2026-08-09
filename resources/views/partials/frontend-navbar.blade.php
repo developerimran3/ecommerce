@@ -1,64 +1,3 @@
-{{-- <div class="sticky-header">
-    <div class="top-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-2">
-                    <img src="{{ asset('assets/img/logo.webp') }}" class="logo" alt="Logo">
-                </div>
-                <div class="col-lg-7">
-                    <div class="search-box">
-                        <input type="text" placeholder="Search Product...">
-                        <button>
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header-right">
-                        <a href="#">
-                            <i class="fa fa-truck"></i> Track Order
-                        </a>
-                        <livewire:frontend.cart-count />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg main-nav">
-        <div class="container">
-            <button class="navbar-toggler bg-white" data-toggle="collapse" data-target="#menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a href="#" class="nav-link"> ALL CATEGORIES <i class="fa-solid fa-list"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('home') }}" wire:navigate class="nav-link"> Home </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"> Offers </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"> Contact </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fa fa-user"></i>
-                            Login / Sign Up
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div> --}}
-
 <header id="navbar_top">
     <div class="mobile-header sticky">
         <div class="mobile-logo">
@@ -175,7 +114,7 @@
                                                         {{ Str::limit(Auth::user()->name, 10) }}
                                                     </a>
                                                 @else
-                                                    <a href="{{ route('profile') }}" wire:navigate>
+                                                    <a href="{{ route('users.profile') }}">
                                                         <i class="fa-regular fa-user"></i>
                                                         {{ Str::limit(Auth::user()->name, 10) }}
                                                     </a>

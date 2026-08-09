@@ -117,7 +117,8 @@
         <!-- Button -->
         <div class="action-btn">
             <a href="{{ route('home') }}" class="btn btn-primary btn-sm"> Go To Home </a>
-            <a href="{{ route('invoice', $order->id) }}" class="btn btn-success btn-sm"> <i class="fa fa-save"></i>
+            <a href="{{ route('invoice.download', $order->id) }}" class="btn btn-success btn-sm"> <i
+                    class="fa fa-save"></i>
                 Save PDF </a>
         </div>
     </div>

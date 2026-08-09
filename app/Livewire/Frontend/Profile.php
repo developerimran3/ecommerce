@@ -26,7 +26,6 @@ class Profile extends Component
         $this->email = $user->email;
         $this->phone = $user->phone;
         $this->address = $user->address;
-        $this->image = $user->image;
     }
 
     public function updateProfile()
@@ -60,6 +59,15 @@ class Profile extends Component
             'success',
             message: 'Profile updated successfully.'
         );
+    }
+    public function logout()
+    {
+        Auth::logout();
+
+        session()->invalidate();
+        session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 
     public function render()

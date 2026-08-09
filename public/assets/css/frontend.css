@@ -1915,6 +1915,10 @@ p.text-center {
     padding: 10px 15px;
     background: #f5f7f9;
 }
+.track_info ul li {
+    display: block;
+    line-height: 30px;
+}
 
 .track_info ul li span {
     width: 80px;
@@ -1934,10 +1938,6 @@ td.tfoot_bg {
     margin: 10px 0;
     border: 1px solid #ddd;
     overflow: hidden;
-}
-.track_info ul li {
-    display: block;
-    line-height: 30px;
 }
 
 .tracktable thead {
@@ -2116,4 +2116,48 @@ table.table.table-bordered.tracktable {
 
 .profile-save-btn:hover {
     background: #006b58;
+}
+
+.badge-status {
+    background: #dbeafe;
+    color: #2563eb;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge-info {
+    background: #d9f7fc;
+    color: #17a2b8;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.badge-primary {
+    background: #eaddff;
+    color: #6d28d9;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #d97706;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #16a34a;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
 }

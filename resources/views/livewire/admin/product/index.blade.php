@@ -5,7 +5,6 @@
             <i class="fas fa-shopping-cart"></i> Add Product </button>
     </div>
 
-
     <div class="row">
         <div class="col-lg-12 mb-4">
             <div class="table-card">
@@ -44,7 +43,6 @@
                         <div class="col-md-2 mb-3">
                             <select class="form-control" wire:model.live="filterStatus">
                                 <option value="">Status</option>
-
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
@@ -52,18 +50,14 @@
 
                         <div class="col-md-1 mb-3">
                             <button class="btn btn-light border w-100" wire:click="clearFilters">
-
                                 <i class="fa fa-refresh"></i>
                             </button>
                         </div>
-
                     </div>
-
                 </div>
                 <!-- Table -->
 
                 <div class="table-responsive">
-
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
@@ -77,7 +71,7 @@
                                 <th>Stock</th>
                                 <th>Status</th>
                                 <th>Publish</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
 
@@ -85,7 +79,6 @@
                             @forelse ($products as $product)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-
                                     <td>
                                         @if ($product->thumbnail)
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
@@ -95,28 +88,20 @@
                                                 No Image
                                             </span>
                                         @endif
-
                                     </td>
 
-                                    <td>{{ $product->name }}</td>
+                                    <td>{{ str($product->name)->limit(30) }}</td>
                                     <td>{{ $product->category?->name }}</td>
                                     <td>{{ $product->brand?->name }}</td>
                                     <td>{{ $product->sku }}</td>
                                     <td style="font-weight: bold; color: rgba(5, 150, 105, 1)">৳
                                         {{ number_format($product->price, 2) }}</td>
-
                                     <td>{{ $product->stock }}</td>
-
                                     <td>
-
                                         @if ($product->status)
-                                            <span class="badge-status">
-                                                Active
-                                            </span>
+                                            <span class="badge-status"> Active </span>
                                         @else
-                                            <span class="badge-inactive">
-                                                Inactive
-                                            </span>
+                                            <span class="badge-inactive"> Inactive </span>
                                         @endif
                                     </td>
                                     <td> {{ $product->created_at->format('d M Y') }}</td>
@@ -131,19 +116,14 @@
                                             <a class="btn btn-sm bg-danger-light"
                                                 wire:click="delete({{ $product->id }})"
                                                 wire:confirm="Are you sure? product Delete?">
-
                                                 <i class="fas fa-trash"></i> Delete
                                             </a>
                                         </div>
                                     </td>
-
                                 </tr>
-
                             @empty
                                 <tr>
-                                    <td colspan="10" class="text-center">
-                                        No Data Found
-                                    </td>
+                                    <td colspan="10" class="text-center"> No Data Found </td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -153,10 +133,7 @@
                 <div class="p-3 border-top">
                     {{ $products->links() }}
                 </div>
-
             </div>
-
-
         </div>
     </div>
 
@@ -165,16 +142,13 @@
     <div class="modal fade" id="productdModal" wire:ignore.self>
         <div class="modal-dialog modal-xl">
             <div class="modal-content product-modal">
-
                 <!-- Header -->
                 <div class="modal-header border-0">
                     <div>
                         <h4 class="mb-1">
                             {{ $product_id ? 'Edit Product' : 'Add Product' }}
                         </h4>
-
                     </div>
-
                     <button class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -186,9 +160,7 @@
                         <!-- LEFT -->
                         <div class="col-lg-8">
                             <div class="wc-card mb-4">
-                                <h5 class="section-title">
-                                    Product Information
-                                </h5>
+                                <h5 class="section-title"> Product Information </h5>
                                 <div class="form-group">
                                     <label>Product Name</label>
                                     <input type="text" name="product_name" class="form-control"

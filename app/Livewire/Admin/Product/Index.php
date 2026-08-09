@@ -83,9 +83,6 @@ class Index extends Component
         $this->colors = $value;
     }
 
-
-
-
     public function mount()
     {
         $this->sizes = [];
@@ -135,9 +132,6 @@ class Index extends Component
         $this->resetInput();
         $this->dispatch('resetSelect2');
     }
-
-
-
 
 
 
@@ -314,8 +308,6 @@ class Index extends Component
         );
     }
 
-
-
     public function updatingSearch()
     {
         $this->resetPage();
@@ -335,7 +327,6 @@ class Index extends Component
     {
         $this->resetPage();
     }
-
 
 
     public function clearFilters()

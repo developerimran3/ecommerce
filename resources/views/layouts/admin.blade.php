@@ -178,13 +178,22 @@
             });
         });
     </script>
-
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('password-updated', () => {
+                setTimeout(() => {
+                    $('#password-tab').tab('show');
+                }, 100);
+            });
+        });
+    </script>
     <script>
         document.addEventListener('livewire:init', () => {
 
             Livewire.on('close-modal', () => {
 
                 $('#userModal').modal('hide');
+                $('#editProfileModal').modal('hide');
                 $('#brandModal').modal('hide');
                 $('#categoryModal').modal('hide');
                 $('#productdModal').modal('hide');

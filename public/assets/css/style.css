@@ -13,27 +13,213 @@ body {
     font-size: 14px;
 }
 
+.btn:focus {
+    box-shadow: none;
+    border: none;
+}
+.btn:active {
+    box-shadow: none;
+    border: none;
+}
+.btn {
+    border: none;
+}
+
+.btn:focus-visible {
+    box-shadow: none;
+    border: none;
+}
+
 .wrapper {
     display: flex;
     min-height: 100vh;
 }
 
 /* Profile Page */
-img.rounded-circle.profile-avatar {
-    width: 200px;
-    height: 200px;
-    padding: 5px;
-    border: 1px solid #ddd;
+.profile-wrapper {
+    padding: 30px 0;
 }
-.col-auto.profile-image {
-    padding: 0 0 0 50px;
-}
-.row.align-items-center {
-    height: 300px;
-}
-.col-auto {
+
+/* Header */
+
+.profile-cover {
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    color: white;
+
     display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+}
+
+.profile-avatar img,
+.profile-avatar i {
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 50px;
+
+    object-fit: cover;
+
+    color: #7c3aed;
+
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.profile-info h3 {
+    font-weight: 700;
+}
+
+.profile-info p {
+    opacity: 0.9;
+}
+
+.role-badge {
+    background: white;
+
+    color: #7c3aed;
+
+    padding: 6px 15px;
+
+    border-radius: 30px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+/* Tabs */
+
+.profile-tabs {
+    margin-top: 30px;
+}
+
+.custom-tabs {
+    border: none;
+}
+
+.custom-tabs .nav-link {
+    border: none;
+
+    background: #f1f5f9;
+
+    margin-right: 10px;
+
+    border-radius: 10px;
+
+    padding: 12px 25px;
+
+    color: #64748b;
+}
+
+.custom-tabs .nav-link.active {
+    background: #7c3aed;
+
+    color: white;
+}
+
+/* Card */
+
+.profile-card {
+    background: white;
+
+    margin-top: 20px;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card-title-area {
+    display: flex;
+
     justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.edit-btn {
+    background: #7c3aed;
+
+    color: white;
+
+    border-radius: 10px;
+}
+.edit-btn:hover {
+    background: #6d28d9;
+    color: white;
+}
+.edit-btn:focus {
+    box-shadow: none;
+}
+
+.info-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+.info-item span {
+    color: #64748b;
+}
+
+.form-control {
+    height: 45px;
+
+    border-radius: 10px;
+}
+
+.password-btn {
+    background: #7c3aed;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 25px;
+
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .profile-cover {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .info-item {
+        display: block;
+    }
+
+    .info-item strong {
+        display: block;
+
+        margin-top: 8px;
+    }
 }
 
 /* =======================
@@ -283,12 +469,20 @@ img.rounded-circle.profile-avatar {
 ======================= */
 
 .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
     background: #ede9fe;
     color: #7c3aed;
     font-weight: bold;
+}
+.user-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    padding: 2px;
+    object-fit: cover;
 }
 
 /* =======================
@@ -370,8 +564,9 @@ img.rounded-circle.profile-avatar {
 }
 
 .table th {
-    background: #fff;
+    background: linear-gradient(90deg, #7c3aed, #5b21b6);
     font-size: 14px;
+    color: #fff;
     font-weight: 600;
 }
 
@@ -384,14 +579,6 @@ img.rounded-circle.profile-avatar {
     width: 40px;
     height: 40px;
     border-radius: 8px;
-}
-
-.badge-status {
-    background: #d1fae5;
-    color: #059669;
-    border-radius: 30px;
-    padding: 6px 14px;
-    font-size: 12px;
 }
 
 /* =======================
@@ -621,72 +808,8 @@ img.rounded-circle.profile-avatar {
 }
 
 /* =========================
-   TABLE
-========================= */
-
-.table-card {
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
-}
-
-.table-header-purple {
-    background: linear-gradient(135deg, #7c3aed, #9333ea);
-    color: #fff;
-    padding: 18px 24px;
-    font-size: 17px;
-    font-weight: 600;
-}
-
-.table {
-    margin-bottom: 0;
-}
-
-.table thead th {
-    border: none;
-    padding: 16px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #6b7280;
-    background: #f9fafb;
-    white-space: nowrap;
-}
-
-.table tbody td {
-    border-top: 1px solid #f3f4f6;
-    padding: 16px;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-.table tbody tr:hover {
-    background: #faf5ff;
-}
-
-/* =========================
-   PRODUCT IMAGE
-========================= */
-
-.product-img {
-    width: 55px;
-    height: 55px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-
-/* =========================
    BADGE
 ========================= */
-
-.badge-status {
-    background: #dcfce7;
-    color: #15803d;
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
-}
 
 .badge-inactive {
     background: #fee2e2;
@@ -836,6 +959,7 @@ textarea.form-control {
     width: 50px;
     height: 50px;
     object-fit: cover;
+    border: 1px solid #ddd;
     border-radius: 50px;
 }
 
@@ -872,40 +996,12 @@ textarea.form-control {
     color: #fff;
 }
 
-.badge-status {
-    background: #dcfce7;
-    color: #16a34a;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
 .badge-inactive {
     background: #fee2e2;
     color: #dc2626;
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 12px;
-}
-
-.table-card {
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid #ececec;
-}
-
-.table-header-purple {
-    background: linear-gradient(90deg, #7c3aed, #5b21b6);
-    color: white;
-    padding: 16px 20px;
-    font-weight: 600;
-}
-
-.table td,
-.table th {
-    vertical-align: middle;
-    padding: 14px;
 }
 
 /* proguct Add */
@@ -1027,11 +1123,6 @@ textarea.form-control {
     font-weight: 700;
 }
 
-.order-table thead {
-    background: #111827;
-    color: white;
-}
-
 .order-product-img {
     width: 60px;
     height: 60px;
@@ -1053,6 +1144,24 @@ textarea.form-control {
 .badge-status {
     background: #dbeafe;
     color: #2563eb;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge-info {
+    background: #d9f7fc;
+    color: #17a2b8;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.badge-primary {
+    background: #eaddff;
+    color: #6d28d9;
+    font-weight: 600;
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 12px;
@@ -1061,15 +1170,19 @@ textarea.form-control {
 .badge-warning {
     background: #fef3c7;
     color: #d97706;
+    font-weight: 600;
     padding: 5px 12px;
     border-radius: 20px;
+    font-size: 12px;
 }
 
 .badge-success {
     background: #dcfce7;
     color: #16a34a;
+    font-weight: 600;
     padding: 5px 12px;
     border-radius: 20px;
+    font-size: 12px;
 }
 
 /* select 2 */

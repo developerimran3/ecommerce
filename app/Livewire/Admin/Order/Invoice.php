@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Frontend;
+namespace App\Livewire\Admin\Order;
 
 use App\Models\Order;
 use Livewire\Component;
 
-class InvoicePage extends Component
+class Invoice extends Component
 {
     public Order $order;
 
@@ -15,11 +15,9 @@ class InvoicePage extends Component
             'items.product',
         ]);
     }
-
     public function render()
     {
-        return view(
-            'livewire.frontend.invoice-page'
-        )->layout('layouts.frontend');
+        return view('livewire.admin.order.invoice')
+            ->layout('layouts.admin');
     }
 }

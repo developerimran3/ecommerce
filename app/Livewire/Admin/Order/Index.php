@@ -25,6 +25,15 @@ class Index extends Component
     {
         $this->resetPage();
     }
+    public function clearFilters()
+    {
+        $this->reset([
+            'search',
+            'status',
+        ]);
+        $this->resetPage();
+    }
+
 
     public function showOrder($id)
     {
@@ -53,17 +62,13 @@ class Index extends Component
         $orders = Order::with([
             'user',
         ])
-
             ->when($this->search, function ($query) {
-
                 $query->where(function ($q) {
-
                     $q->where(
                         'invoice_no',
                         'like',
                         '%' . $this->search . '%'
                     )
-
                         ->orWhere(
                             'name',
                             'like',
@@ -79,15 +84,12 @@ class Index extends Component
             })
 
             ->when($this->status, function ($query) {
-
                 $query->where(
                     'order_status',
                     $this->status
                 );
             })
-
             ->latest()
-
             ->paginate(10);
 
         return view(

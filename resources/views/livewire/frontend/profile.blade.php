@@ -33,7 +33,7 @@
                         </li>
 
                         <li class="active">
-                            <a href="{{ route('profile') }}" wire:navigate>
+                            <a href="{{ route('customer.profile') }}" wire:navigate>
                                 <i class="fa fa-user"></i> Profile
                             </a>
                         </li>
@@ -84,13 +84,9 @@
                                 <div class="form-group">
                                     <label>Profile Picture</label>
                                     <input type="file" class="form-control" wire:model="image">
-
-                                    {{-- @if ($image)
-                                        <img src="{{ $image->temporaryUrl() }}" width="120" class="mt-2 rounded">
-                                    @elseif(Auth::user()->image)
-                                        <img src="{{ asset('storage/' . Auth::user()->image) }}" width="120"
-                                            class="mt-2 rounded">
-                                    @endif --}}
+                                    @error('image')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">

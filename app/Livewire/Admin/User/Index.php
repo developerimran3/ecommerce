@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -42,6 +43,14 @@ class Index extends Component
 
     public function create()
     {
+        // Only Administrator can create user
+        if (auth()->user()->role !== 'Administrator') {
+            $this->dispatch(
+                'error',
+                message: 'Only Administrator can create new user.'
+            );
+            return;
+        }
         $this->validate([
             'name'  => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -60,10 +69,10 @@ class Index extends Component
             'success',
             message: 'New user created successfully.'
         );
+
         $this->dispatch('close-modal');
         $this->reset();
     }
-
 
     public function edit($id)
     {
@@ -74,36 +83,96 @@ class Index extends Component
         $this->role = $user->role;
     }
 
-
     public function update()
     {
-        User::findOrFail($this->user_id)->update([
+        $currentUser = auth()->user();
+        // Only Administrator and Editor can access
+        if (!in_array($currentUser->role, ['Administrator', 'Editor'])) {
+            $this->dispatch(
+                'error',
+                message: 'You do not have permission to change user role.'
+            );
+            return;
+        }
+
+        $user = User::findOrFail($this->user_id);
+
+        // নিজের role নিজে change করতে পারবে না
+        if ($user->id === $currentUser->id) {
+            $this->dispatch(
+                'error',
+                message: 'You cannot change your own role.'
+            );
+            return;
+        }
+        // Editor Administrator এর role change করতে পারবে না
+        if ($currentUser->role === 'Editor' && $user->role === 'Administrator') {
+            $this->dispatch(
+                'error',
+                message: 'Editor cannot change Administrator role.'
+            );
+            return;
+        }
+
+        $user->update([
             'role' => $this->role,
         ]);
+
         $this->dispatch(
             'success',
-            message: 'User updated successfully.'
+            message: 'User role updated successfully.'
         );
+
         $this->dispatch('close-modal');
         $this->reset();
     }
 
     public function changeStatus($id)
     {
+        // Only Administrator can change status
+        if (auth()->user()->role !== 'Administrator' && auth()->user()->role !== 'Editor') {
+
+            $this->dispatch(
+                'error',
+                message: 'You do not have permission to change user status.'
+            );
+            return;
+        }
         $user = User::findOrFail($id);
+        // নিজের status নিজে change করতে পারবে না
+        if ($user->id === auth()->id()) {
+
+            $this->dispatch(
+                'error',
+                message: 'You cannot change your own status.'
+            );
+
+            return;
+        }
         $user->update([
             'status' => !$user->status,
         ]);
+
         $this->dispatch(
             'success',
             message: 'User status updated successfully.'
         );
     }
 
-
     public function delete($id)
     {
+        // Only Administrator can change status
+        if (auth()->user()->role !== 'Administrator') {
+
+            $this->dispatch(
+                'error',
+                message: 'You do not have permission to change user status.'
+            );
+            return;
+        }
         $user = User::findOrFail($id);
+
+        // নিজের account delete করতে পারবে না
         if ($user->id === auth()->id()) {
             $this->dispatch(
                 'error',
@@ -111,10 +180,18 @@ class Index extends Component
             );
             return;
         }
+
+        // Profile image delete
+        if ($user->image && Storage::disk('public')->exists($user->image)) {
+            Storage::disk('public')->delete($user->image);
+        }
+
+        // User delete
         $user->delete();
+
         $this->dispatch(
             'success',
-            message: 'User deleted successfully.'
+            message: 'User and profile photo deleted successfully.'
         );
     }
 

@@ -65,19 +65,27 @@
                                     <td> ৳ {{ number_format($order->grand_total, 2) }} </td>
                                     <td class="align-center">
                                         @if ($order->order_status == 'pending')
-                                            <span class="w-100 badge badge-warning">
+                                            <span class="w-100 badge-status">
                                                 Pending
                                             </span>
+                                        @elseif($order->order_status == 'confirmed')
+                                            <span class="w-100 badge-info">
+                                                Confirmed
+                                            </span>
                                         @elseif($order->order_status == 'processing')
-                                            <span class="w-100 badge badge-info">
+                                            <span class="w-100 badge-warning">
                                                 Processing
                                             </span>
+                                        @elseif($order->order_status == 'shipped')
+                                            <span class="w-100 badge-primary">
+                                                Shipped
+                                            </span>
                                         @elseif($order->order_status == 'delivered')
-                                            <span class="w-100 badge badge-success">
+                                            <span class="w-100 badge-success">
                                                 Delivered
                                             </span>
-                                        @elseif($order->order_status == 'cancelled')
-                                            <span class="w-100 badge badge-danger">
+                                        @else
+                                            <span class="w-100 badge-inactive">
                                                 Cancelled
                                             </span>
                                         @endif
@@ -85,7 +93,8 @@
                                     </td>
                                     <td> {{ $order->items_count }} </td>
                                     <td>
-                                        <a href="{{ route('invoice', $order->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('invoice.download', $order->id) }}"
+                                            class="btn btn-primary btn-sm">
                                             Invoice
                                         </a>
                                     </td>
