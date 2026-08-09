@@ -1,17 +1,10 @@
 <div>
-    <style>
-        @font-face {
-
-            font-family: 'nirmala';
-            src: url("{{ public_path('assets/fonts/Nirmala.ttf') }}") format('truetype');
-
-        }
-    </style>
-
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="55%" valign="top">
-                {{-- <img src="{{ public_path('assets/logo.png') }}" width="170"> --}}
+                <h4
+                    style="background:#6d28d9;color:#ffffff;padding:20px;text-align:right;font-size:35px;font-weight:bold;">
+                    GENIUS.SHOP</h4>
                 <p style="margin-top:20px;">
                     <strong>Payment Method:</strong>
                     {{ strtoupper($order->payment_method) }}
@@ -37,7 +30,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding:15px;text-align:right;font-size:14px;line-height:18px;">
+                        <td style="padding:15px;text-align:right;font-size:16px;line-height:18px;">
                             Invoice ID : <strong style="font-weight: bold"> {{ $order->invoice_no }} </strong>
                             <br>
                             Invoice Date : <strong style="font-weight: bold"> {{ $order->created_at->format('d-m-Y') }}
@@ -46,7 +39,7 @@
                     </tr>
                 </table>
                 <br>
-                <p style="text-align:right;font-size:14px;line-height:22px;">
+                <p style="text-align:right;font-size:16px;line-height:22px;">
                     <strong>Invoice To:</strong>
                     <br>
                     {{ $order->name }}
@@ -55,7 +48,7 @@
                     <br>
                     {{ $order->address }}
                     <br>
-                    সারা বাংলাদেশ ১৫০ টাকা ডেলিভারি চার্জ ধার্য করা হলো।
+                    সারা বাংলাদেশ ১৫০ টাকা ডেলিভারি চার্জ ।
                 </p>
             </td>
         </tr>
@@ -78,7 +71,8 @@
                     <td style="border:1px solid #ddd;"> {{ $item->product?->name }} </td>
                     <td style="border:1px solid #ddd;"> ৳ {{ number_format($item->price, 2) }} </td>
                     <td style="border:1px solid #ddd;"> {{ $item->qty }} </td>
-                    <td style="border:1px solid #ddd;"> ৳ {{ number_format($item->subtotal, 2) }} </td>
+                    <td style="border:1px solid #ddd;text-align:right;"> ৳ {{ number_format($item->subtotal, 2) }}
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -96,7 +90,7 @@
             <td> <strong>Discount(-)</strong> </td>
             <td align="right"> ৳ {{ number_format($order->discount, 2) }} </td>
         </tr>
-        <tr style="background:#6d28d9;color:white;">
+        <tr style="background:#6d28d9; color:#ffffff; ">
             <td>
                 <strong> Final Total </strong>
             </td>
