@@ -56,7 +56,7 @@
                 <p style="text-align:right;font-size:15px;line-height:22px;">
                     <strong style="font-size:16px;">Invoice To:</strong>
                     <br>
-                    {{ $order->name }}
+                    {{ ucwords($order->name) }}
                     <br>
                     {{ $order->phone }}
                     <br>
@@ -84,7 +84,7 @@
                 <tr>
                     <td style="border:1px solid #ddd;"> {{ $key + 1 }} </td>
                     <td style="border:1px solid #ddd;"> {{ $item->product?->name }} </td>
-                    <td style="border:1px solid #ddd;"> ৳ {{ number_format($item->price, 2) }} </td>
+                    <td style="border:1px solid #ddd;text-align:right;"> ৳ {{ number_format($item->price, 2) }} </td>
                     <td style="border:1px solid #ddd;"> {{ $item->qty }} </td>
                     <td style="border:1px solid #ddd;text-align:right;"> ৳ {{ number_format($item->subtotal, 2) }}
                     </td>

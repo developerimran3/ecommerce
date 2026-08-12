@@ -41,6 +41,22 @@ p {
     font-family: "Alinur Banglaborno", sans-serif;
 }
 
+.btn-primary {
+    background-color: #008d76;
+    border: 1px solid #008d76;
+}
+.btn-primary:hover {
+    background-color: #006b58;
+    border: 1px solid #006b58;
+}
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #006b58 !important;
+    border: 1px solid #006b58 !important;
+    outline: none !important;
+    box-shadow: 0 0 !important;
+}
+
 button,
 button:focus,
 button:active {
@@ -1866,21 +1882,14 @@ p.text-center {
 
 .form-control {
     height: 45px;
-
     border: 1px solid #ddd;
-
     border-radius: 5px;
-
-    padding: 0 15px;
-
     font-size: 14px;
-
     transition: 0.3s;
 }
 
 .form-control:focus {
     border-color: #008e74;
-
     box-shadow: 0 0 0 0.15rem rgba(0, 142, 116, 0.15) !important;
 }
 
@@ -1909,11 +1918,9 @@ p.text-center {
     .order-track {
         padding: 40px 10px;
     }
-
     .form-content {
         padding: 25px 20px;
     }
-
     .auth-title {
         font-size: 22px;
     }

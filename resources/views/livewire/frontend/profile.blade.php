@@ -12,12 +12,8 @@
                                 <i class="fa fa-user"></i>
                             @endif
                         </div>
-                        <h4>
-                            {{ auth()->user()->name }}
-                        </h4>
-                        <p>
-                            {{ auth()->user()->email }}
-                        </p>
+                        <h4> {{ ucwords(auth()->user()->name) }} </h4>
+                        <p> {{ auth()->user()->email }} </p>
                     </div>
 
                     <ul class="account-menu">
@@ -65,7 +61,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Full Name </label>
-                                    <input type="text" class="form-control" wire:model="name">
+                                    <input type="text" class="form-control text-capitalize" wire:model="name">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -94,7 +90,7 @@
                                     <label>
                                         Address
                                     </label>
-                                    <textarea class="form-control" wire:model="address" rows="3"></textarea>
+                                    <textarea class="form-control ext-capitalize" wire:model="address" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>

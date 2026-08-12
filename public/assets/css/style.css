@@ -330,18 +330,14 @@ body {
 }
 
 .logo {
-    padding: 20px 25px;
-    border-bottom: 1px solid #eee;
+    padding: 5px 75px;
+    border-bottom: 2px solid #eee;
 }
 
 .logo-icon img {
-    height: 50px;
+    height: 70px;
+    text-align: center;
 }
-
-/* .logo h4 {
-    font-size: 22px;
-    margin: 0;
-} */
 
 .sidebar .nav-link {
     display: flex;

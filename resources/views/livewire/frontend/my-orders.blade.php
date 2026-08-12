@@ -12,7 +12,7 @@
                                 <i class="fa fa-user"></i>
                             @endif
                         </div>
-                        <h4> {{ auth()->user()->name }} </h4>
+                        <h4> {{ ucwords(auth()->user()->name) }}</h4>
                         <p> {{ auth()->user()->email }} </p>
                     </div>
                     <ul class="account-menu">
@@ -94,7 +94,7 @@
                                     </td>
                                     <td> {{ $order->items_count }} </td>
                                     <td>
-                                        <a href="{{ route('customer.invoice.download', $order->id) }}"
+                                        <a href="{{ route('customer.invoice.download', $order->id) }}" target="_blank"
                                             class="btn btn-primary btn-sm">
                                             <i class="fa fa-eye"> </i>
                                         </a>

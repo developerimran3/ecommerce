@@ -1,6 +1,6 @@
 <aside class="sidebar" id="sidebar">
     <div class="logo d-flex align-items-center">
-        <div class="logo-icon ">
+        <div class="logo-icon">
             <img src="{{ asset('assets/img/logo.png') }}" alt="">
         </div>
     </div>

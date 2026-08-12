@@ -65,21 +65,15 @@ class ProductDetails extends Component
         } else {
 
             CartItem::create([
-
                 'cart_id' => $cart->id,
-
                 'product_id' => $this->product->id,
-
                 'qty' => $this->qty,
-
                 'price' => $this->product->final_price,
-
                 'subtotal' => $this->product->final_price * $this->qty,
             ]);
         }
 
         $this->dispatch('cartUpdated');
-
         $this->dispatch(
             'success',
             message: 'Product added to cart.'

@@ -12,7 +12,7 @@
                                 <i class="fa fa-user"></i>
                             @endif
                         </div>
-                        <h4> {{ auth()->user()->name }} </h4>
+                        <h4> {{ ucwords(auth()->user()->name) }} </h4>
                         <p> {{ auth()->user()->email }} </p>
                     </div>
                     <ul class="account-menu">

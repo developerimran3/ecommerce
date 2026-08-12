@@ -29,7 +29,7 @@ class OrderTrack extends Component
 
         $this->orders = $query
             ->latest()
-            ->take(3)
+            ->take(1)
             ->get();
 
         if ($this->orders->isEmpty()) {

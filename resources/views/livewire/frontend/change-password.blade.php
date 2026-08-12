@@ -1,107 +1,50 @@
 <div class="my-account-page">
-
     <div class="container py-5">
-
         <div class="row">
-
             {{-- Sidebar --}}
             <div class="col-md-4 mb-4">
-
                 <div class="account-card profile-card">
-
                     <div class="profile-header">
-
                         <div class="avatar">
-
                             @if (Auth::user()->image)
                                 <img src="{{ asset('storage/' . Auth::user()->image) }}">
                             @else
                                 <i class="fa fa-user"></i>
                             @endif
-
                         </div>
-
-                        <h4>
-                            {{ auth()->user()->name }}
-                        </h4>
-
-                        <p>
-                            {{ auth()->user()->email }}
-                        </p>
-
+                        <h4> {{ ucwords(auth()->user()->name) }} </h4>
+                        <p> {{ auth()->user()->email }} </p>
                     </div>
-
-
                     <ul class="account-menu">
-
                         <li>
-
                             <a href="{{ route('account') }}" wire:navigate>
-
                                 <i class="fa fa-dashboard"></i>
-
                                 <span>Dashboard</span>
-
                             </a>
-
                         </li>
-
-
                         <li>
-
                             <a href="{{ route('my.orders') }}" wire:navigate>
-
-                                <i class="fa fa-shopping-bag"></i>
-
-                                <span>My Orders</span>
-
+                                <i class="fa fa-shopping-bag"></i> <span>My Orders</span>
                             </a>
-
                         </li>
-
-
                         <li>
-
                             <a href="{{ route('customer.profile') }}" wire:navigate>
-
-                                <i class="fa fa-user"></i>
-
-                                <span>Profile</span>
-
+                                <i class="fa fa-user"></i> <span>Profile</span>
                             </a>
-
                         </li>
-
 
                         <li class="active">
-
                             <a href="{{ route('customer.password') }}" wire:navigate>
-
-                                <i class="fa fa-lock"></i>
-
-                                <span>Change Password</span>
-
+                                <i class="fa fa-lock"></i> <span>Change Password</span>
                             </a>
-
                         </li>
-
-
                         <li>
-
                             <button type="button" wire:click="logout" class="logout-btn">
-
-                                <i class="fa fa-sign-out"></i>
-
-                                <span>Logout</span>
-
+                                <i class="fa fa-sign-out"></i> <span>Logout</span>
                             </button>
-
                         </li>
-
                     </ul>
-
                 </div>
-
             </div>
 
             <!-- Content -->
@@ -112,61 +55,41 @@
                         <form wire:submit.prevent="updatePassword">
                             <!-- Current Password -->
                             <div class="form-group password-group">
-
-                                <label>
-                                    <i class="fa fa-key"></i> Current Password
+                                <label> <i class="fa fa-key"></i> Current Password
                                 </label>
-
                                 <div class="password-input">
                                     <input type="password" class="form-control"
                                         placeholder="Enter your current password" wire:model="current_password">
-
                                     <span class="password-eye" onclick="togglePassword('current_password', this)">
                                         <i class="fa fa-eye"></i>
                                     </span>
                                 </div>
-
                                 @error('current_password')
-                                    <small class="text-danger"> {{ $message }}
-                                    </small>
+                                    <small class="text-danger"> {{ $message }} </small>
                                 @enderror
-
                             </div>
-
                             <!-- New Password -->
                             <div class="form-group password-group">
-
-                                <label>
-                                    <i class="fa fa-lock"></i> New Password
-                                </label>
-
+                                <label> <i class="fa fa-lock"></i> New Password </label>
                                 <div class="password-input">
                                     <input type="password" class="form-control" placeholder="Enter new password"
                                         wire:model="password">
-
                                     <span class="password-eye" onclick="togglePassword('password', this)">
                                         <i class="fa fa-eye"></i>
                                     </span>
                                 </div>
-
                                 @error('password')
-                                    <small class="text-danger"> {{ $message }}
-                                    </small>
+                                    <small class="text-danger"> {{ $message }} </small>
                                 @enderror
                             </div>
-
-
                             <!-- Confirm Password -->
                             <div class="form-group password-group">
-
                                 <label>
                                     <i class="fa fa-check-circle"></i> Confirm New Password
                                 </label>
-
                                 <div class="password-input">
                                     <input type="password" class="form-control" placeholder="Confirm your new password"
                                         wire:model="password_confirmation">
-
                                     <span class="password-eye" onclick="togglePassword('password_confirmation', this)">
                                         <i class="fa fa-eye"></i>
                                     </span>
@@ -179,26 +102,15 @@
                                     <span wire:loading.remove>
                                         <i class="fa fa-save"></i> Update Password
                                     </span>
-
                                     <span wire:loading>
                                         <i class="fa fa-spinner fa-spin"></i> Updating...
                                     </span>
-
                                 </button>
-
                             </div>
-
                         </form>
-
                     </div>
-
                 </div>
-
             </div>
-
-
         </div>
-
     </div>
-
 </div>

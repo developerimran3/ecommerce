@@ -13,8 +13,8 @@
                                     <div class="form-group mb-3">
                                         <label class="form-check-label-checkout" for="name">আপনার নাম লিখুন
                                             *</label>
-                                        <input type="text" id="name" class="form-control" wire:model="name"
-                                            name="name">
+                                        <input type="text" id="name" class="form-control text-capitalize"
+                                            wire:model="name" name="name">
                                         @error('name')
                                             <small class="text-danger"> {{ $message }} </small>
                                         @enderror

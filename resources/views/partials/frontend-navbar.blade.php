@@ -7,7 +7,7 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/logo.webp') }}"
+                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/logo.png') }}"
                         alt=""></a>
             </div>
             <div class="menu-bag">
@@ -27,8 +27,6 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="feather feather-search">
-
-
                 </svg>
             </button>
         </form>
@@ -44,7 +42,7 @@
                         <div class="logo-header">
                             <div class="main-logo">
                                 <a href="{{ route('home') }}" wire:navigate><img
-                                        src="{{ asset('assets/img/logo.webp') }}" alt=""></a>
+                                        src="{{ asset('assets/img/logo.png') }}" alt=""></a>
                             </div>
                             <div class="main-search">
                                 <form action="#">
@@ -111,7 +109,7 @@
                                                 @if (Auth::user()->role == 'Customer')
                                                     <a href="{{ route('account') }}" wire:navigate>
                                                         <i class="fa-regular fa-user"></i>
-                                                        {{ Str::limit(Auth::user()->name, 10) }}
+                                                        {{ ucwords(Str::limit(Auth::user()->name, 10)) }}
                                                     </a>
                                                 @else
                                                     <a href="{{ route('users.profile') }}">

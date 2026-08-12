@@ -21,19 +21,13 @@
                                 @error('invoice_no')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
-
                             </div>
-
                             <button type="submit" class="submit-btn">
                                 Track Order
                             </button>
-
                         </form>
-
                     </div>
-
                 </div>
-
             </div>
 
             @if ($orders)
@@ -46,7 +40,9 @@
                                     <ul>
                                         <li><span>Invoice ID:</span> {{ $order->invoice_no }} </li>
                                         <li><span>Date:</span> {{ $order->created_at->format('Y-m-d H:i:s') }} </li>
-                                        <li><span>Status:</span> {{ $order->order_status }} </li>
+                                        <li><span>Status:</span>
+                                            <p>{{ ucwords($order->order_status) }}</p>
+                                        </li>
                                     </ul>
                                 </div>
                                 <table class="table table-bordered tracktable">

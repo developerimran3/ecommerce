@@ -17,7 +17,6 @@ class Profile extends Component
     public $address;
     public $image;
 
-
     public function mount()
     {
         $user = Auth::user();
@@ -37,9 +36,7 @@ class Profile extends Component
         ]);
 
         $user = Auth::user();
-
         $imagePath = $user->image;
-
         if ($this->image) {
             // পুরাতন ছবি delete করতে চাইলে
             if ($user->image && Storage::disk('public')->exists($user->image)) {
@@ -63,10 +60,8 @@ class Profile extends Component
     public function logout()
     {
         Auth::logout();
-
         session()->invalidate();
         session()->regenerateToken();
-
         return redirect()->route('login');
     }
 
