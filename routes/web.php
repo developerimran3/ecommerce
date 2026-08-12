@@ -6,17 +6,18 @@ use App\Livewire\Admin\Category\Index as CategoryIndex;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Media\Index as MediaIndex;
 use App\Livewire\Admin\Order\Index as OrderIndex;
-use App\Livewire\Admin\Order\Invoice;
+
 use App\Livewire\Admin\Product\Index as ProductIndex;
 use App\Livewire\Admin\Profile;
 use App\Livewire\Admin\User\Index as UserIndex;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 
-use App\Livewire\Frontend\CartPage;
+
+use App\Livewire\Frontend\ChangePassword;
 use App\Livewire\Frontend\CheckoutPage;
 use App\Livewire\Frontend\Home;
-use App\Livewire\Frontend\InvoicePage;
+
 use App\Livewire\Frontend\MyAccount;
 use App\Livewire\Frontend\MyOrders;
 use App\Livewire\Frontend\OrderSuccess;
@@ -27,13 +28,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', Home::class)->name('home');
 
 
 Route::middleware('guest')->group(function () {
-
     Route::get('/login', Login::class)
         ->name('login');
 
@@ -42,9 +41,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-
 Route::get('/logout', function () {
-
     Auth::logout();
     return redirect('/login');
 })->name('logout');
@@ -72,9 +69,6 @@ Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,S
     Route::get('/orders', OrderIndex::class)
         ->name('admin.orders');
 
-    Route::get('/invoice/{order}', Invoice::class)
-        ->name('admin.invoice');
-
     Route::get('/orders/pending', OrderIndex::class)
         ->name('admin.orders.pending');
 
@@ -83,6 +77,9 @@ Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,S
 
     Route::get('/orders/completed', OrderIndex::class)
         ->name('admin.orders.completed');
+
+    Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
+        ->name('admin.invoice.download');
 
     Route::get('/users', UserIndex::class)
         ->name('admin.users');
@@ -95,40 +92,34 @@ Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,S
 });
 
 
+Route::get('/product/{slug}', ProductDetails::class)
+    ->name('product.details');
+
+Route::get('/checkout', CheckoutPage::class)
+    ->name('checkout');
+
+Route::get('/my-orders', MyOrders::class)
+    ->name('my.orders');
+
+Route::get('/order-success/{order}', OrderSuccess::class)
+    ->name('order.success');
+
+Route::get('/order-track', OrderTrack::class)
+    ->name('order.track');
 
 
-Route::get('/', Home::class)->name('home');
 
-
-Route::prefix('customer')->group(function () {
-    Route::get('/product/{slug}', ProductDetails::class)
-        ->name('product.details');
-
-    // Route::get('/cart', CartPage::class)
-    //     ->name('cart');
-
-    Route::get('/checkout', CheckoutPage::class)
-        ->name('checkout');
-
-    Route::get('/my-orders', MyOrders::class)
-        ->name('my.orders');
-
+Route::prefix('customer')->middleware(['auth', 'user.status', 'role:Customer'])->group(function () {
 
     Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
-        ->name('invoice.download');
-
-    Route::get('/order-success/{order}', OrderSuccess::class)
-        ->name('order.success');
-
-    Route::get('/order-track', OrderTrack::class)
-        ->name('order.track');
-
+        ->name('customer.invoice.download');
 
     Route::get('/my-account', MyAccount::class)
-        ->middleware(['auth', 'user.status'])
         ->name('account');
 
     Route::get('/profile', CustomerProfile::class)
-        ->middleware(['auth', 'user.status'])
         ->name('customer.profile');
+
+    Route::get('/change-password', ChangePassword::class)
+        ->name('customer.password');
 });

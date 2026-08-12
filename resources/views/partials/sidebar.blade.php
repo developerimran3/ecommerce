@@ -1,9 +1,8 @@
 <aside class="sidebar" id="sidebar">
     <div class="logo d-flex align-items-center">
-        <div class="logo-icon d-flex align-items-center justify-content-center">
-            G
+        <div class="logo-icon ">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="">
         </div>
-        <h4 class="mb-0 ml-3 font-weight-bold">Genius.shop</h4>
     </div>
 
     <div class="p-4">

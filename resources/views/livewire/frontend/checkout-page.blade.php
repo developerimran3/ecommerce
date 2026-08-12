@@ -6,13 +6,13 @@
                     <div class="card">
                         <div class="card-header">
                             <h6>আপনার অর্ডারটি কনফার্ম করতে তথ্যগুলো পূরণ করে "অর্ডার করুন" বাটন এ ক্লিক করুন </h6>
-
                         </div>
-                        <div class="card-body">
+                        <div class="card-body ">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group mb-3">
-                                        <label for="name">আপনার নাম লিখুন *</label>
+                                        <label class="form-check-label-checkout" for="name">আপনার নাম লিখুন
+                                            *</label>
                                         <input type="text" id="name" class="form-control" wire:model="name"
                                             name="name">
                                         @error('name')
@@ -22,7 +22,8 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group mb-3">
-                                        <label for="email">আপনার ই-মেইল লিখুন *</label>
+                                        <label class="form-check-label-checkout" for="email">আপনার ই-মেইল লিখুন
+                                            *</label>
                                         <input type="email" id="email" class="form-control" wire:model="email"
                                             name="email">
                                         @error('email')
@@ -33,7 +34,8 @@
                                 <!-- col-end -->
                                 <div class="col-sm-12">
                                     <div class="form-group mb-3">
-                                        <label for="phone">মোবাইল নাম্বার দিন *</label>
+                                        <label class="form-check-label-checkout" for="phone">মোবাইল নাম্বার দিন
+                                            *</label>
                                         <input type="text" minlength="11" id="number" maxlength="11"
                                             pattern="0[0-9]+" class="form-control" name="phone" wire:model="phone">
                                         @error('phone')
@@ -44,7 +46,7 @@
                                 <!-- col-end -->
                                 <div class="col-sm-12">
                                     <div class="form-group mb-3">
-                                        <label for="address">ঠিকানা লিখুন *</label>
+                                        <label class="form-check-label-checkout" for="address">ঠিকানা লিখুন *</label>
                                         <input type="address" id="address" class="form-control" name="address"
                                             wire:model="address">
                                         @error('address')
@@ -54,7 +56,8 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group mb-3">
-                                        <label for="area">ডেলিভারি এরিয়া নিবার্চন করুন *</label>
+                                        <label class="form-check-label-checkout" for="area">ডেলিভারি এরিয়া নিবার্চন
+                                            করুন *</label>
                                         <select type="area" id="area" class="form-control" wire:model="area"
                                             name="area">
                                             <option value="2">সারা বাংলাদেশ ১৫০ টাকা ডেলিভারি চার্জ</option>
@@ -62,16 +65,19 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <div class="form-group mb-3">
-                                        <label for="area">পেমেন্ট মেথড (optional)</label>
-                                        <select type="area" id="area" class="form-control"
-                                            wire:model="payment_method" name="payment_method">
-                                            <option value="2">সারা বাংলাদেশ ১৫০ টাকা ডেলিভারি চার্জ</option>
-                                        </select>
+                                    <label class="form-check-label-checkout">পেমেন্ট মেথড (optional)</label>
+                                    <div class="payment-methods">
+                                        <div class="form-check p_cash">
+                                            <input class="form-check-input" type="radio" name="payment_method"
+                                                value="Cash On Delivery">
+                                            <label class="form-check-label"> Cash On Delivery </label>
+                                        </div>
+                                        <div class="form-check p_bkash">
+                                            <input class="form-check-input" type="radio" name="payment_method">
+                                            <label class="form-check-label"> Bkash </label>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <!-------------------->
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <button class="order_place" wire:click="placeOrder">অর্ডার করুন</button>
@@ -87,7 +93,7 @@
                 <div class="cart_details table-responsive-sm">
                     <div class="card">
                         <div class="card-header">
-                            <h5>অর্ডারের তথ্য</h5>
+                            <h6>অর্ডারের তথ্য</h6>
                         </div>
 
                         <div class="card-body cartlist">
@@ -103,7 +109,6 @@
 
                                 <tbody>
                                     @if ($cart && $cart->items->count())
-
                                         @foreach ($cart->items as $item)
                                             <tr>
                                                 <td>
@@ -129,8 +134,6 @@
                                                 <td>৳ {{ number_format($item->subtotal) }}</td>
                                             </tr>
                                         @endforeach
-
-
                                     @endif
                                 </tbody>
 
@@ -162,7 +165,6 @@
                             </table>
                         </div>
 
-
                         @if ($cart && $cart->items->count())
                             <div class="card-footer">
                                 <form id="coupon_form">
@@ -178,7 +180,6 @@
                                 </form>
                             </div>
                         @endif
-
                     </div>
                 </div>
             </div>

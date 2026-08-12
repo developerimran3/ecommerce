@@ -29,7 +29,8 @@
                                 <i class="fa fa-user"></i> Profile </a>
                         </li>
                         <li>
-                            <a href="#"> <i class="fa fa-lock"></i> Change Password </a>
+                            <a href="{{ route('customer.password') }}" wire:navigate>
+                                <i class="fa fa-lock"></i> Change Password </a>
                         </li>
                         <li>
                             <button wire:click="logout" class="logout-btn">
@@ -93,9 +94,9 @@
                                     </td>
                                     <td> {{ $order->items_count }} </td>
                                     <td>
-                                        <a href="{{ route('invoice.download', $order->id) }}"
+                                        <a href="{{ route('customer.invoice.download', $order->id) }}"
                                             class="btn btn-primary btn-sm">
-                                            Invoice
+                                            <i class="fa fa-eye"> </i>
                                         </a>
                                     </td>
                                 </tr>

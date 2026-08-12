@@ -334,20 +334,14 @@ body {
     border-bottom: 1px solid #eee;
 }
 
-.logo-icon {
-    width: 34px;
-    height: 34px;
-    background: #7c3aed;
-    color: #fff;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: bold;
+.logo-icon img {
+    height: 50px;
 }
 
-.logo h4 {
+/* .logo h4 {
     font-size: 22px;
     margin: 0;
-}
+} */
 
 .sidebar .nav-link {
     display: flex;
@@ -972,6 +966,16 @@ textarea.form-control {
     align-items: center;
     justify-content: center;
     color: #9ca3af;
+}
+
+.btn-view {
+    background: #ecfdf5;
+    color: #7c3aed;
+    border: none;
+}
+.btn-view:hover {
+    background: #7c3aed;
+    color: #fff;
 }
 
 .btn-edit {

@@ -24,38 +24,26 @@ class Home extends Component
             ->first();
 
         if ($item) {
-
             $item->qty++;
-
             $item->subtotal = $item->qty * $item->price;
-
             $item->save();
         } else {
 
             CartItem::create([
-
                 'cart_id' => $cart->id,
-
                 'product_id' => $product->id,
-
                 'qty' => 1,
-
                 'price' => $product->final_price,
-
                 'subtotal' => $product->final_price,
             ]);
         }
 
         $this->dispatch('cartUpdated');
-
         $this->dispatch(
             'success',
             message: 'Product added to cart.'
         );
     }
-
-
-
 
 
     public function render()
@@ -65,9 +53,7 @@ class Home extends Component
             'products' => Product::where('status', true)
                 ->latest()
                 ->paginate(12),
-
             'categories' => Category::where('status', true)->get(),
-
         ])->layout('layouts.frontend');
     }
 }

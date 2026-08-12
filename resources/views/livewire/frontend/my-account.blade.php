@@ -29,7 +29,8 @@
                                 <i class="fa fa-user"></i> Profile </a>
                         </li>
                         <li>
-                            <a href="#"> <i class="fa fa-lock"></i> Change Password </a>
+                            <a href="{{ route('customer.password') }}" wire:navigate>
+                                <i class="fa fa-lock"></i> Change Password </a>
                         </li>
                         <li>
                             <button wire:click="logout" class="logout-btn">

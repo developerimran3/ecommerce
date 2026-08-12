@@ -38,8 +38,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="fa fa-lock"></i> Change Password
+                            <a href="{{ route('customer.password') }}" wire:navigate>
+                                <i class="fa fa-lock"> </i> Change Password
                             </a>
                         </li>
                         <li>

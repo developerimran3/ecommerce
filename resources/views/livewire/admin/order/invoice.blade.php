@@ -1,4 +1,4 @@
-<div>
+{{-- <div>
     <style>
         .customer-invoice {
             margin: 25px 0;
@@ -88,11 +88,9 @@
                         </div>
                         <div class="invoice-bar"
                             style="background: #fff; transform: skew(36deg); width: 72%; margin-left: 182px; padding: 12px 32px; margin-top: 6px;">
-                            <p
-                                style="font-size: 15px; color: #222;font-weight:bold; transform: skew(-36deg); text-align: right; padding-right: 18px">
+                            <p style=" color: #222; transform: skew(-36deg); text-align: right; padding-right: 18px">
                                 Invoice ID : <strong>{{ $order->invoice_no }}</strong></p>
-                            <p
-                                style="font-size: 15px; color: #222;font-weight:bold; transform: skew(-36deg); text-align: right; padding-right: 32px">
+                            <p style=" color: #222; transform: skew(-36deg); text-align: right; padding-right: 32px">
                                 Invoice Date: <strong>{{ $order->created_at->format('d-m-y') }}</strong></span></p>
                         </div>
                         <div class="invoice_to" style="padding-top: 20px;">
@@ -158,4 +156,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

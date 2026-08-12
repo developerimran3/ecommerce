@@ -1745,10 +1745,28 @@ p.text-center {
     font-size: 35px;
     margin-bottom: 10px;
 }
+
 .chheckout-section {
     padding: 30px 0;
 }
+.payment-methods {
+    display: flex;
+}
 
+.form-check-label {
+    margin-bottom: 10px;
+    padding-right: 50px;
+}
+.card-header h6 {
+    color: #008e74;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.form-check-label-checkout {
+    font-weight: 600;
+}
 /* ORDER SUCCESS PAGE */
 .order-success-page {
     background: #fff;
@@ -2160,4 +2178,226 @@ table.table.table-bordered.tracktable {
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 12px;
+}
+
+/* =========================================
+   PASSWORD PAGE
+========================================= */
+
+.password-page {
+    width: 100%;
+}
+
+/* Header */
+
+.password-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.password-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f4f4f4;
+    border: 1px solid #e5e5e5;
+
+    font-size: 22px;
+}
+
+.password-header h4 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.password-header p {
+    margin: 5px 0 0;
+    color: #777;
+    font-size: 13px;
+}
+
+/* Password Card */
+
+.password-card {
+    padding: 30px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+}
+
+/* Form */
+
+.password-group {
+    margin-bottom: 22px;
+}
+
+.password-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.password-group label i {
+    width: 20px;
+    margin-right: 5px;
+}
+
+/* Input */
+
+.password-input {
+    position: relative;
+}
+
+.password-input .form-control {
+    height: 48px;
+    padding: 0 48px 0 15px;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    transition: all 0.2s ease;
+}
+
+.password-input .form-control:focus {
+    border-color: #999;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Eye */
+
+.password-eye {
+    position: absolute;
+
+    right: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+
+    color: #999;
+    font-size: 15px;
+}
+
+.password-eye:hover {
+    color: #222;
+}
+
+/* Error */
+
+.password-group .text-danger {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+/* Security Tips */
+
+.password-tips {
+    display: flex;
+    gap: 12px;
+
+    padding: 15px;
+
+    margin-top: 10px;
+    margin-bottom: 25px;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+
+    background: #fafafa;
+}
+
+.tips-icon {
+    font-size: 18px;
+    padding-top: 2px;
+}
+
+.password-tips strong {
+    font-size: 13px;
+}
+
+.password-tips ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+}
+
+.password-tips li {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 3px;
+}
+
+/* Footer */
+
+.password-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    padding-top: 5px;
+}
+
+/* Submit */
+
+.password-submit {
+    border: 0;
+
+    padding: 12px 22px;
+
+    border-radius: 8px;
+
+    background: #222;
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.password-submit:hover {
+    background: #000;
+    transform: translateY(-1px);
+}
+
+.password-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mobile */
+
+@media (max-width: 767px) {
+    .password-card {
+        padding: 20px;
+    }
+
+    .password-header h4 {
+        font-size: 19px;
+    }
+
+    .password-header p {
+        font-size: 12px;
+    }
+
+    .password-footer {
+        justify-content: stretch;
+    }
+
+    .password-submit {
+        width: 100%;
+    }
 }

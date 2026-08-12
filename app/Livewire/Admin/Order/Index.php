@@ -46,14 +46,30 @@ class Index extends Component
     public function updateStatus($id, $status)
     {
         $order = Order::findOrFail($id);
-
         $order->update([
             'order_status' => $status,
         ]);
-
         $this->dispatch(
             'success',
             message: 'Order status updated.'
+        );
+    }
+
+    public function delete($id)
+    {
+        $order = Order::findOrFail($id);
+        if ($order->order_status === 'delivered') {
+            $this->dispatch(
+                'error',
+                message: 'Delivered order cannot be deleted.'
+            );
+            return;
+        }
+        $order->items()->delete();
+        $order->delete();
+        $this->dispatch(
+            'success',
+            message: 'Order deleted successfully.'
         );
     }
 
