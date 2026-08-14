@@ -48,7 +48,7 @@
                     Profile
                 </a>
 
-                <a href="{{ route('logout') }}" class="text-danger">
+                <a href="{{ route('admin.logout') }}" class="text-danger">
                     <i class="fas fa-sign-out-alt mr-2"></i>
                     Logout
                 </a>

@@ -6,45 +6,39 @@ use App\Livewire\Admin\Category\Index as CategoryIndex;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Media\Index as MediaIndex;
 use App\Livewire\Admin\Order\Index as OrderIndex;
-
 use App\Livewire\Admin\Product\Index as ProductIndex;
 use App\Livewire\Admin\Profile;
 use App\Livewire\Admin\User\Index as UserIndex;
-use App\Livewire\Auth\Login;
-use App\Livewire\Auth\Register;
-
-
-use App\Livewire\Frontend\ChangePassword;
+use App\Livewire\Auth\Admin\Login as AdminLogin;
+use App\Livewire\Auth\Customer\ForgotPassword as CustomerForgotPassword;
+use App\Livewire\Auth\Customer\Login as CustomerLogin;
+use App\Livewire\Auth\Customer\Register as CustomerRegister;
+use App\Livewire\Auth\Customer\ResetPassword as CustomerResetPassword;
+use App\Livewire\Customer\Account as MyAccount;
+use App\Livewire\Customer\Order as MyOrders;
+use App\Livewire\Customer\PasswordChange;
+use App\Livewire\Customer\Profile as CustomerProfile;
 use App\Livewire\Frontend\CheckoutPage;
 use App\Livewire\Frontend\Home;
-
-use App\Livewire\Frontend\MyAccount;
-use App\Livewire\Frontend\MyOrders;
 use App\Livewire\Frontend\OrderSuccess;
 use App\Livewire\Frontend\OrderTrack;
 use App\Livewire\Frontend\ProductDetails;
-use App\Livewire\Frontend\Profile as CustomerProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', Home::class)->name('home');
 
 
-Route::middleware('guest')->group(function () {
-    Route::get('/login', Login::class)
-        ->name('login');
-
-    Route::get('/register', Register::class)
-        ->name('register');
-});
 
 
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('/login');
-})->name('logout');
+Route::get('/admin/login', AdminLogin::class)
+    ->name('admin.login');
+
+// Route::get('/register', Register::class)
+//     ->name('register');
+
+
 
 
 
@@ -89,23 +83,49 @@ Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,S
 
     Route::get('/media', MediaIndex::class)
         ->name('admin.media');
+
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/admin/login');
+    })->name('admin.logout');
 });
 
 
-Route::get('/product/{slug}', ProductDetails::class)
-    ->name('product.details');
 
-Route::get('/checkout', CheckoutPage::class)
-    ->name('checkout');
 
-Route::get('/my-orders', MyOrders::class)
-    ->name('my.orders');
 
-Route::get('/order-success/{order}', OrderSuccess::class)
-    ->name('order.success');
 
-Route::get('/order-track', OrderTrack::class)
-    ->name('order.track');
+
+Route::get('/customer/login', CustomerLogin::class)
+    ->name('customer.login');
+
+Route::get('/customer/register', CustomerRegister::class)
+    ->name('customer.register');
+
+Route::get('/customer/forgot-password', CustomerForgotPassword::class)
+    ->name('customer.forgot.password');
+
+Route::get('/customer/reset-password/{token}', CustomerResetPassword::class)
+    ->name('customer.reset.password');
+
+
+Route::middleware(['user.status'])->group(function () {
+
+    Route::get('/', Home::class)->name('home');
+
+    Route::get('/product/{slug}', ProductDetails::class)
+        ->name('product.details');
+
+    Route::get('/checkout', CheckoutPage::class)
+        ->name('checkout');
+
+    Route::get('/order-success/{order}', OrderSuccess::class)
+        ->name('order.success');
+
+    Route::get('/order-track', OrderTrack::class)
+        ->name('order.track');
+});
+
 
 
 
@@ -117,9 +137,19 @@ Route::prefix('customer')->middleware(['auth', 'user.status', 'role:Customer'])-
     Route::get('/my-account', MyAccount::class)
         ->name('account');
 
+    Route::get('/my-orders', MyOrders::class)
+        ->name('my.orders');
+
     Route::get('/profile', CustomerProfile::class)
         ->name('customer.profile');
 
-    Route::get('/change-password', ChangePassword::class)
+    Route::get('/change-password', PasswordChange::class)
         ->name('customer.password');
+
+
+
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    })->name('customer.logout');
 });

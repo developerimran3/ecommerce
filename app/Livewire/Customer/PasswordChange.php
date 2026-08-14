@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Livewire\Frontend;
+namespace App\Livewire\Customer;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class ChangePassword extends Component
+class PasswordChange extends Component
 {
-    // Password fields
+
+
     public $current_password = '';
     public $password = '';
     public $password_confirmation = '';
@@ -49,18 +50,10 @@ class ChangePassword extends Component
     }
 
 
-    public function logout()
-    {
-        Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
-
-        return redirect()->route('home');
-    }
-
     public function render()
     {
-        return view('livewire.frontend.change-password')
-            ->layout('layouts.frontend');
+
+        return view('livewire.customer.password-change')
+            ->layout('layouts.frontend', ['title' => 'Change Password']);
     }
 }

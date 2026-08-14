@@ -7,7 +7,7 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/logo.png') }}"
+                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/home-logo.jpg') }}"
                         alt=""></a>
             </div>
             <div class="menu-bag">
@@ -42,7 +42,7 @@
                         <div class="logo-header">
                             <div class="main-logo">
                                 <a href="{{ route('home') }}" wire:navigate><img
-                                        src="{{ asset('assets/img/logo.png') }}" alt=""></a>
+                                        src="{{ asset('assets/img/home-logo.jpg') }}" alt=""></a>
                             </div>
                             <div class="main-search">
                                 <form action="#">
@@ -118,7 +118,7 @@
                                                     </a>
                                                 @endif
                                             @else
-                                                <a href="{{ route('login') }}" wire:navigate>
+                                                <a href="{{ route('customer.login') }}" wire:navigate>
                                                     <i class="fa-regular fa-user"></i>
                                                     Login / Sign Up
                                                 </a>

@@ -134,7 +134,7 @@
 
     {{-- Order Detailes --}}
     <div wire:ignore.self class="modal fade" id="orderModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content order-modal">
                 <!-- Header -->
                 <div class="modal-header">

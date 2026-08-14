@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next, ...$roles)
     {
         if (!auth()->check()) {
-            return redirect()->route('login');
+            return redirect()->route('home');
         }
 
         if (!in_array(auth()->user()->role, $roles)) {

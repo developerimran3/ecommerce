@@ -1,7 +1,7 @@
 <aside class="sidebar" id="sidebar">
     <div class="logo d-flex align-items-center">
         <div class="logo-icon">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="">
+            <img src="{{ asset('assets/img/dashboard-logo.jpg') }}" alt="">
         </div>
     </div>
 
@@ -88,14 +88,40 @@
                     <span>Media</span>
                 </a>
             </li>
-            {{-- Settings --}}
+
             <li class="nav-item">
                 <a href="{{ route('users.profile') }}" wire:navigate.hover
                     class="nav-link {{ request()->routeIs('users.profile') ? 'active' : '' }}">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-user"></i>
                     <span>Profile</span>
                 </a>
             </li>
+
+
+
+            {{-- Settings --}}
+            <li class="nav-item">
+                <a href="javascript:void(0)"
+                    class="nav-link menu-toggle {{ request()->routeIs('admin.orders*') ? 'active' : '' }}">
+                    <i class="fas fa-cog"></i>
+                    <span class="flex-grow-1">Site Setting</span>
+                    <i class="fas fa-chevron-down arrow {{ request()->routeIs('admin.orders*') ? 'rotate' : '' }}"></i>
+                </a>
+                <ul class="submenu {{ request()->routeIs('admin.orders*') ? 'open' : '' }}">
+                    <li><a href="{{ route('admin.orders') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.orders') ? 'active' : '' }}">All Orders</a></li>
+                    <li><a href="{{ route('admin.orders.pending') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.orders.pending') ? 'active' : '' }}">Pending Orders</a>
+                    </li>
+                    <li><a href="{{ route('admin.orders.completed') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.orders.completed') ? 'active' : '' }}">Completed
+                            Orders</a></li>
+                    <li><a href="{{ route('admin.orders.cancelled') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.orders.cancelled') ? 'active' : '' }}">Cancelled
+                            Orders</a></li>
+                </ul>
+            </li>
+
         </ul>
     </div>
 </aside>

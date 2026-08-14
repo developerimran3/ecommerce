@@ -2,13 +2,26 @@
 <html lang="en">
 
 <head>
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('assets/img/favicon.png') }}" type="image/png">
+
+    <!-- Site Title -->
+    <title>{{ $title ?? 'Dashboard' }} - Genius Fashion</title>
+
+    <!-- SEO Description / Tagline -->
+    <meta name="description"
+        content="GENIUS.SHOP — Your Smart Shopping Destination. Shop quality products at the best prices in Bangladesh.">
+
+    <!-- Browser / SEO -->
+    <meta name="author" content="GENIUS.SHOP">
+
     <meta charset="UTF-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{{ $title ?? 'Dashboard' }}</title>
 
-    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}" type="image/x-icon">
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -68,7 +81,7 @@
 
         });
     </script>
-    @livewireScripts
+
     {{-- media --}}
     <script>
         function toggleSelect(el) {
@@ -208,6 +221,7 @@
 
         });
     </script>
+    @livewireScripts
 </body>
 
 </html>

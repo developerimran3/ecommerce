@@ -116,7 +116,7 @@
                     <form wire:submit.prevent="{{ $user_id ? 'update' : 'create' }}">
                         <div class="form-group">
                             <label>User Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control text-capitalize" wire:model="name"
+                            <input type="text" class="form-control text-capitalize" name="name" wire:model="name"
                                 placeholder="Enter user name" @if ($user_id) readonly @endif>
                             @error('name')
                                 <small class="text-danger">
@@ -127,8 +127,8 @@
 
                         <div class="form-group">
                             <label>Email <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" wire:model="email" placeholder="Enter email"
-                                @if ($user_id) readonly @endif>
+                            <input type="email" class="form-control" wire:model="email" name="email"
+                                placeholder="Enter email" @if ($user_id) readonly @endif>
                             @error('email')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
@@ -136,7 +136,7 @@
                         <div class="{{ $user_id ? 'd-none' : '' }}">
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="text" class="form-control" wire:model="phone">
+                                <input type="text" class="form-control" name="phone" wire:model="phone">
                             </div>
                         </div>
 

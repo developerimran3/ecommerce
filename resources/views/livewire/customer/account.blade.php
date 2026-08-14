@@ -33,9 +33,9 @@
                                 <i class="fa fa-lock"></i> Change Password </a>
                         </li>
                         <li>
-                            <button wire:click="logout" class="logout-btn">
+                            <a href="{{ route('customer.logout') }}" wire:navigate class="logout-btn">
                                 <i class="fa fa-sign-out"></i> Logout
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -121,7 +121,6 @@
                                     </td>
                                 </tr>
                             @endforelse
-
                         </tbody>
                     </table>
                 </div>

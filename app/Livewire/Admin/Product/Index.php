@@ -403,6 +403,6 @@ class Index extends Component
             'categories' => Category::all(),
             'brands' => Brand::all(),
         ])
-            ->layout('layouts.admin');
+            ->layout('layouts.admin', ['title' => 'Product']);
     }
 }

@@ -111,6 +111,6 @@ class Index extends Component
         return view(
             'livewire.admin.order.index',
             compact('orders')
-        )->layout('layouts.admin');
+        )->layout('layouts.admin', ['title' => 'Orders']);
     }
 }

@@ -153,6 +153,6 @@ class Index extends Component
         return view(
             'livewire.admin.brand.index',
             compact('brands')
-        )->layout('layouts.admin');
+        )->layout('layouts.admin', ['title' => 'Brands']);
     }
 }

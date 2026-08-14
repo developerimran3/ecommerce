@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-
             $table->id();
-
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained('users')
                 ->cascadeOnDelete();
-
             $table->string('session_id')->nullable();
-
             $table->timestamps();
         });
     }

@@ -195,9 +195,11 @@ class CheckoutPage extends Component
             ? $cart->items->sum('subtotal')
             : 0;
 
-        return view(
-            'livewire.frontend.checkout-page',
-            compact('cart', 'total')
-        )->layout('layouts.frontend');
+        return view('livewire.frontend.checkout-page', [
+            'cart' => $cart,
+            'total' => $total,
+        ])->layout('layouts.frontend', [
+            'title' => 'Checkout',
+        ]);
     }
 }

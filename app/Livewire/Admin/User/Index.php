@@ -230,6 +230,6 @@ class Index extends Component
         return view(
             'livewire.admin.user.index',
             compact('users')
-        )->layout('layouts.admin');
+        )->layout('layouts.admin', ['title' => 'Users']);
     }
 }

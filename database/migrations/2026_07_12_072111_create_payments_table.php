@@ -12,30 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
-
             $table->id();
-
             $table->foreignId('order_id')
                 ->constrained()
                 ->cascadeOnDelete();
-
             $table->string('trx_id')->nullable();
-
             $table->enum('method', [
                 'cod',
                 'bkash',
                 'nagad',
                 'sslcommerz',
             ]);
-
             $table->decimal('amount', 12, 2);
-
             $table->enum('status', [
                 'pending',
                 'paid',
                 'failed',
             ])->default('pending');
-
             $table->timestamps();
         });
     }

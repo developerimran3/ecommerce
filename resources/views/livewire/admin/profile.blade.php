@@ -66,7 +66,6 @@
                                 <strong> {{ Auth::user()->email }} </strong>
                             </div>
                             <div class="info-item">
-
                                 <span> Phone </span>
                                 <strong> {{ Auth::user()->phone ?? 'Not Provided' }} </strong>
                             </div>
@@ -127,31 +126,36 @@
                     <h5 class="modal-title">Edit Profile</h5>
                     <button type="button" class="btn-none close" data-dismiss="modal">&times;</button>
                 </div>
+
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" wire:model="name">
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" wire:model="email">
-                    </div>
-                    <div class="form-group">
-                        <label>Phone</label>
-                        <input type="text" class="form-control" wire:model="phone">
-                    </div>
-                    <div class="form-group">
-                        <label>Address</label>
-                        <textarea class="form-control" wire:model="address" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Profile Picture</label>
-                        <input type="file" class="form-control" wire:model="image">
-                        @error('image')
-                            <small class="text-danger"> {{ $message }} </small>
-                        @enderror
-                    </div>
-                    <button wire:click="updateProfile" class="btn btn-primary btn-block">Save Changes</button>
+                    <form wire:submit.prevent="updateProfile">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" wire:model="name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" wire:model="email">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" wire:model="phone">
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" wire:model="address" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Profile Picture</label>
+                            <input type="file" class="form-control" wire:model="image"
+                                accept=".jpg,.jpeg,.png,.webp">
+                            @error('image')
+                                <small class="text-danger"> {{ $message }} </small>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Save
+                            Changes</button>
+                    </form>
                 </div>
             </div>
         </div>

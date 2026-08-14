@@ -152,6 +152,6 @@ class Index extends Component
         return view(
             'livewire.admin.category.index',
             compact('categories')
-        )->layout('layouts.admin');
+        )->layout('layouts.admin', ['title' => 'Category']);
     }
 }

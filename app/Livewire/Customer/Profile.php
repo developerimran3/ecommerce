@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Frontend;
+namespace App\Livewire\Customer;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -9,6 +9,8 @@ use Livewire\WithFileUploads;
 
 class Profile extends Component
 {
+
+
     use WithFileUploads;
 
     public $name;
@@ -57,17 +59,10 @@ class Profile extends Component
             message: 'Profile updated successfully.'
         );
     }
-    public function logout()
-    {
-        Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
-        return redirect()->route('login');
-    }
 
     public function render()
     {
-        return view('livewire.frontend.profile')
-            ->layout('layouts.frontend');
+        return view('livewire.customer.profile')
+            ->layout('layouts.frontend', ['title' => 'Customer Profile']);
     }
 }

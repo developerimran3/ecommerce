@@ -14,7 +14,6 @@ class Home extends Component
     {
         $product = Product::select('id', 'price', 'discount_price')
             ->findOrFail($productId);
-
         $cart = Cart::firstOrCreate([
             'session_id' => session()->getId(),
         ]);
@@ -28,7 +27,6 @@ class Home extends Component
             $item->subtotal = $item->qty * $item->price;
             $item->save();
         } else {
-
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $product->id,
@@ -37,7 +35,6 @@ class Home extends Component
                 'subtotal' => $product->final_price,
             ]);
         }
-
         $this->dispatch('cartUpdated');
         $this->dispatch(
             'success',
@@ -54,6 +51,8 @@ class Home extends Component
                 ->latest()
                 ->paginate(12),
             'categories' => Category::where('status', true)->get(),
-        ])->layout('layouts.frontend');
+        ])->layout('layouts.frontend', [
+            'title' => 'The Kindom Of Fashion',
+        ]);
     }
 }
