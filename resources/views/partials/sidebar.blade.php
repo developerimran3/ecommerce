@@ -56,7 +56,7 @@
                 </a>
                 <ul
                     class="submenu {{ request()->routeIs('admin.products*') || request()->routeIs('admin.brands*') || request()->routeIs('admin.categories*') ? 'open' : '' }}">
-                    @if (auth()->check() && auth()->user()->hasPermission('products.manage'))
+                    @if (auth()->check() && auth()->user()->hasPermission('product.manage'))
                         <li><a href="{{ route('admin.products') }}" wire:navigate.hover
                                 class="{{ request()->routeIs('admin.products') ? 'active' : '' }}">All Products</a>
                         </li>
@@ -85,7 +85,7 @@
                 </li>
             @endif
             {{-- Users --}}
-            @if (auth()->check() && auth()->user()->hasPermission('review.user'))
+            @if (auth()->check() && auth()->user()->hasPermission('user.manage'))
                 <li class="nav-item">
                     <a href="{{ route('admin.users') }}" wire:navigate.hover
                         class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
@@ -95,7 +95,7 @@
                 </li>
             @endif
             {{-- Media --}}
-            @if (auth()->check() && auth()->user()->hasPermission('review.media'))
+            @if (auth()->check() && auth()->user()->hasPermission('media.manage'))
                 <li class="nav-item">
                     <a href="{{ route('admin.media') }}" wire:navigate.hover
                         class="nav-link {{ request()->routeIs('admin.media*') ? 'active' : '' }}">
