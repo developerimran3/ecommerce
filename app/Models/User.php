@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Permission;
+use App\Models\RolePermission;
 
 class User extends Authenticatable
 {
@@ -47,6 +49,31 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    //Role Permission ar jonno
+    public function hasPermission(string $permission): bool
+    {
+        if ($this->role === 'Administrator') {
+            return true;
+        }
+
+        return RolePermission::where('role', $this->role)
+            ->whereHas('permission', function ($query) use ($permission) {
+                $query->where('name', $permission);
+            })
+            ->exists();
+    }
+    public function hasAnyPermission(array $permissions): bool
+    {
+        if ($this->role === 'Administrator') {
+            return true;
+        }
+
+        return RolePermission::where('role', $this->role)
+            ->whereHas('permission', function ($query) use ($permissions) {
+                $query->whereIn('name', $permissions);
+            })
+            ->exists();
+    }
 
 
 

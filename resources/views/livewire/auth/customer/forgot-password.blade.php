@@ -19,9 +19,21 @@
                             @error('email')
                                 <div class="text-danger small mb-3">{{ $message }}</div>
                             @enderror
-                            <button type="submit" class="btn btn-primary btn-block btn-login">
-                                Submit
+                            <button type="submit" class="btn btn-primary btn-block btn-login"
+                                wire:loading.attr="disabled">
+                                <span wire:loading.remove>
+                                    <i class="fa fa-sign-in"></i> Reset
+                                </span>
+                                <span wire:loading>
+                                    <i class="fa fa-spinner fa-spin"></i> Reseteing...
+                                </span>
                             </button>
+                            <div class="register-text mt-2 text-right">
+                                have an account?
+                                <a href="{{ route('customer.login') }}">
+                                    Login
+                                </a>
+                            </div>
                         </form>
                     </div>
                 </div>

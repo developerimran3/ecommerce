@@ -27,7 +27,7 @@ class ForgotPassword extends Component
         */
 
         $user = User::where('email', $this->email)
-            ->where('role', 'customer')
+            ->where('role', 'Customer')
             ->first();
 
         /*

@@ -104,16 +104,24 @@
                                                 class="btn btn-view btn-sm mr-2">
                                                 <i class="fa-solid fa-download"></i>
                                             </a>
-                                            <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
-                                                data-target="#orderModal" wire:click="showOrder({{ $order->id }})">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
 
-                                            <button class="btn btn-sm btn-delete"
-                                                wire:click="delete({{ $order->id }})"
-                                                wire:confirm="Are you sure you want to delete this user?">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                            @if (auth()->user()->hasPermission('order.view'))
+                                                <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
+                                                    data-target="#orderModal"
+                                                    wire:click="showOrder({{ $order->id }})">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            @endif
+                                            @if (auth()->user()->hasPermission('order.delete'))
+                                                <button class="btn btn-sm btn-delete"
+                                                    wire:click="delete({{ $order->id }})"
+                                                    wire:confirm="Are you sure you want to delete this user?">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            @endif
+
+
+
                                         </div>
                                     </td>
                                 </tr>

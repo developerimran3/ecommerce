@@ -41,7 +41,7 @@
                                     <label class="form-check-label" for="remember">Remember Me</label>
                                 </div>
 
-                                <a href="{{ route('customer.forgot.password') }}" class="forgot">Forgot Password?</a>
+                                <a href="{{ route('admin.forgot.password') }}" class="forgot">Forgot Password?</a>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block btn-login"
@@ -55,7 +55,7 @@
                             </button>
                             <div class="register-text mt-2 text-right">
                                 Don't have an account?
-                                <a href="{{ route('customer.register') }}">
+                                <a href="{{ route('admin.register') }}">
                                     Create Account
                                 </a>
                             </div>

@@ -62,12 +62,10 @@ class Profile extends Component
 
         // input reset
         $this->reset('image');
-
         $this->dispatch('close-modal');
-
         $this->dispatch(
             'success',
-            message: 'Profile updated successfully.'
+            message: 'Your Profile updated successfully.'
         );
     }
 

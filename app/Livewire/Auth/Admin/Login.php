@@ -61,9 +61,9 @@ class Login extends Component
             return;
         }
 
-        session()->flash(
+        $this->dispatch(
             'success',
-            'Login successful.'
+            message: 'Login successful..'
         );
         return redirect()->route('admin.dashboard');
     }
@@ -71,6 +71,6 @@ class Login extends Component
     public function render()
     {
         return view('livewire.auth.admin.login')
-            ->layout('layouts.guest');
+            ->layout('layouts.guest', ['title' => 'Admin Login']);
     }
 }

@@ -144,7 +144,6 @@
                             <label>Role</label>
                             <select class="form-control" wire:model="role">
                                 <option value="">Select Role</option>
-                                <option value="Customer">Customer</option>
                                 <option value="Shop Manager">Shop Manager</option>
                                 <option value="Contributor">Contributor</option>
                                 <option value="Editor">Editor</option>

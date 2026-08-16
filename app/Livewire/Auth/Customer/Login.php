@@ -73,17 +73,13 @@ class Login extends Component
         */
 
         if ($user->status == 0) {
-
             Auth::logout();
-
             session()->invalidate();
             session()->regenerateToken();
-
             $this->addError(
                 'phone',
                 'Your account is inactive. Please contact Administrator.'
             );
-
             return;
         }
 
@@ -93,11 +89,10 @@ class Login extends Component
         |--------------------------------------------------------------------------
         */
 
-        session()->flash(
+        $this->dispatch(
             'success',
-            'Login successful.'
+            message: 'Login successful.'
         );
-
         return redirect()->route('home');
     }
 

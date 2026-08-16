@@ -54,12 +54,14 @@ class Index extends Component
         $this->validate([
             'name'  => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'phone' => 'required|string|max:20|unique:users,phone',
             'role'  => 'required',
         ]);
 
         User::create([
             'name'     => $this->name,
             'email'    => $this->email,
+            'phone'    => $this->phone,
             'status'   => $this->status,
             'role'     => $this->role,
             'password' => Hash::make('12345678'),
@@ -76,11 +78,12 @@ class Index extends Component
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $this->user_id = $user->id;
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->role = $user->role;
+        $user           = User::findOrFail($id);
+        $this->user_id  = $user->id;
+        $this->name     = $user->name;
+        $this->email    = $user->email;
+        $this->phone    = $user->phone;
+        $this->role     = $user->role;
     }
 
     public function update()
@@ -191,7 +194,7 @@ class Index extends Component
 
         $this->dispatch(
             'success',
-            message: 'User and profile photo deleted successfully.'
+            message: 'User profile deleted successfully.'
         );
     }
 

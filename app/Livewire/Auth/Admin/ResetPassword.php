@@ -8,6 +8,7 @@ class ResetPassword extends Component
 {
     public function render()
     {
-        return view('livewire.auth.admin.reset-password');
+        return view('livewire.auth.admin.reset-password')
+            ->layout('layouts.guest', ['title' => 'Admin Reset Password']);
     }
 }

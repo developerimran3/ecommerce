@@ -96,7 +96,15 @@
                     <span>Profile</span>
                 </a>
             </li>
-
+            @if (auth()->check() && auth()->user()->hasPermission('permission.manage'))
+                <li class="nav-item">
+                    <a href="{{ route('admin.role-permission') }}" wire:navigate.hover
+                        class="nav-link {{ request()->routeIs('admin.role-permission') ? 'active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Role & Permission</span>
+                    </a>
+                </li>
+            @endif
 
 
             {{-- Settings --}}

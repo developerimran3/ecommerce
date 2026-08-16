@@ -13,8 +13,8 @@
                                         <i class="fas fa-phone"></i>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="phone" wire:model="phone"
-                                    placeholder="Enter your  or phone">
+                                <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                    name="phone" wire:model="phone" placeholder="Enter your  or phone">
                             </div>
                             @error('phone')
                                 <div class="text-danger small mb-3">{{ $message }}</div>

@@ -91,6 +91,10 @@ class Index extends Component
 
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('product.create'),
+            403
+        );
         $this->validate();
         $thumbnail = null;
         if ($this->thumbnail) {
@@ -166,6 +170,10 @@ class Index extends Component
 
     public function update()
     {
+        abort_unless(
+            auth()->user()->hasPermission('product.edit'),
+            403
+        );
         $this->validate([
             'category_id'   => 'required',
             'name'          => 'required|min:2',

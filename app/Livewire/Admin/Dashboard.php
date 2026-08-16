@@ -45,6 +45,6 @@ class Dashboard extends Component
             'pendingOrders' => $pendingOrders,
             'processingOrders' => $processingOrders,
             'deliveredOrders' => $deliveredOrders,
-        ])->layout('layouts.admin');
+        ])->layout('layouts.admin', ['title' => 'The Kindom Of Fashion',]);
     }
 }

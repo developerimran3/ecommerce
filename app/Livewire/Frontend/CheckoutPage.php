@@ -84,23 +84,17 @@ class CheckoutPage extends Component
             ->first();
 
         if (!$cart || $cart->items->isEmpty()) {
-
             $this->dispatch(
                 'error',
                 message: 'Cart is empty.'
             );
-
             return;
         }
 
         $userId = auth()->id();
-
         if (!$userId) {
-
             $user = User::where('email', $this->email)->first();
-
             if (!$user) {
-
                 $user = User::create([
                     'name' => $this->name,
                     'email' => $this->email,
@@ -109,14 +103,11 @@ class CheckoutPage extends Component
                     'password' => Hash::make('12345678'),
                 ]);
             }
-
             Auth::login($user);
-
             $userId = $user->id;
         }
 
         $order = DB::transaction(function () use ($cart, $userId) {
-
             $subtotal = $cart->items->sum('subtotal');
 
             $order = Order::create([

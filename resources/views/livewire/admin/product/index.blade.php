@@ -1,8 +1,11 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="page-title">Products</h4>
-        <button class="btn btn-purple" data-toggle="modal" data-target="#productdModal" wire:click="resetInput">
-            <i class="fas fa-shopping-cart"></i> Add Product </button>
+
+        @if (auth()->user()->hasPermission('product.create'))
+            <button class="btn btn-purple" data-toggle="modal" data-target="#productdModal" wire:click="resetInput">
+                <i class="fas fa-shopping-cart"></i> Add Product </button>
+        @endif
     </div>
 
     <div class="row">
@@ -107,17 +110,23 @@
                                     <td> {{ $product->created_at->format('d M Y') }}</td>
                                     <td>
                                         <div class="actions">
-                                            <a href="#" data-toggle="modal" data-target="#productdModal"
-                                                wire:click="edit({{ $product->id }})"
-                                                class="btn btn-sm bg-success-light mr-2">
-                                                <i class="fa fa-edit"></i> Edit
-                                            </a>
+                                            @if (auth()->user()->hasPermission('product.edit'))
+                                                <a href="#" data-toggle="modal" data-target="#productdModal"
+                                                    wire:click="edit({{ $product->id }})"
+                                                    class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                            @endif
 
-                                            <a class="btn btn-sm bg-danger-light"
-                                                wire:click="delete({{ $product->id }})"
-                                                wire:confirm="Are you sure? product Delete?">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </a>
+                                            @if (auth()->user()->hasPermission('product.delete'))
+                                                <a class="btn btn-sm bg-danger-light"
+                                                    wire:click="delete({{ $product->id }})"
+                                                    wire:confirm="Are you sure? product Delete?">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </a>
+                                            @endif
+
+
                                         </div>
                                     </td>
                                 </tr>

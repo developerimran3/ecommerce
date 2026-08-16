@@ -8,8 +8,12 @@ use App\Livewire\Admin\Media\Index as MediaIndex;
 use App\Livewire\Admin\Order\Index as OrderIndex;
 use App\Livewire\Admin\Product\Index as ProductIndex;
 use App\Livewire\Admin\Profile;
+use App\Livewire\Admin\RolePermission;
 use App\Livewire\Admin\User\Index as UserIndex;
+use App\Livewire\Auth\Admin\ForgotPassword as AdminForgotPassword;
 use App\Livewire\Auth\Admin\Login as AdminLogin;
+use App\Livewire\Auth\Admin\Register as AdminRegister;
+use App\Livewire\Auth\Admin\ResetPassword as AdminResetPassword;
 use App\Livewire\Auth\Customer\ForgotPassword as CustomerForgotPassword;
 use App\Livewire\Auth\Customer\Login as CustomerLogin;
 use App\Livewire\Auth\Customer\Register as CustomerRegister;
@@ -35,15 +39,28 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin/login', AdminLogin::class)
     ->name('admin.login');
 
-// Route::get('/register', Register::class)
-//     ->name('register');
+
+
+Route::get('/admin/register', AdminRegister::class)
+    ->name('admin.register');
+
+Route::get('/admin/forgot-password', AdminForgotPassword::class)
+    ->name('admin.forgot.password');
+
+Route::get('/admin/reset-password/{token}', AdminResetPassword::class)
+    ->name('admin.reset.password');
 
 
 
+Route::middleware(['auth'])->group(function () {
 
-
+    Route::get('/admin/role-permission', RolePermission::class)
+        ->name('admin.role-permission');
+});
 
 Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,Shop Manager,Editor,Contributor'])->group(function () {
+
+
 
     Route::get('users/profile', Profile::class)
         ->name('users.profile');

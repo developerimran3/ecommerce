@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Dashboard' }} - Genius Shop</title>
@@ -45,11 +44,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         document.addEventListener('livewire:init', () => {
-
             Livewire.on('success', (event) => {
                 toastr.success(event.message);
             });
-
             Livewire.on('error', (event) => {
                 toastr.error(event.message);
             });
