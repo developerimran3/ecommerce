@@ -9,7 +9,6 @@ use Livewire\Component;
 class RolePermission extends Component
 {
     public $selectedRole = 'Editor';
-
     public $selectedPermissions = [];
 
     public function mount()
@@ -18,7 +17,6 @@ class RolePermission extends Component
             auth()->user()->hasPermission('permission.manage'),
             403
         );
-
         $this->loadPermissions();
     }
 
@@ -46,14 +44,11 @@ class RolePermission extends Component
                 type: 'info',
                 message: 'Administrator already has all permissions.'
             );
-
             return;
         }
 
         PermissionRole::where('role', $this->selectedRole)->delete();
-
         foreach ($this->selectedPermissions as $permissionId) {
-
             PermissionRole::create([
                 'role' => $this->selectedRole,
                 'permission_id' => $permissionId,
@@ -71,7 +66,6 @@ class RolePermission extends Component
         if ($this->selectedRole === 'Administrator') {
             return;
         }
-
         $this->selectedPermissions = Permission::pluck('id')
             ->map(fn($id) => (string) $id)
             ->toArray();
@@ -82,7 +76,6 @@ class RolePermission extends Component
         if ($this->selectedRole === 'Administrator') {
             return;
         }
-
         $this->selectedPermissions = [];
     }
 
@@ -92,7 +85,6 @@ class RolePermission extends Component
             ->orderBy('action')
             ->get()
             ->groupBy('module');
-
         return view('livewire.admin.role-permission', [
             'permissions' => $permissions,
         ])->layout('layouts.admin');
