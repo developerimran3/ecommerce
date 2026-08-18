@@ -1,8 +1,10 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="page-title mb-0">Category List</h4>
-        <button class="btn btn-purple" data-toggle="modal" data-target="#categoryModal" wire:click="resetInput">
-            <i class="fas fa-th-list mr-1"></i> Add Category </button>
+        @if (auth()->user()->hasPermission('category.create'))
+            <button class="btn btn-purple" data-toggle="modal" data-target="#categoryModal" wire:click="resetInput">
+                <i class="fas fa-th-list mr-1"></i> Add Category </button>
+        @endif
     </div>
 
     <div class="table-card">
@@ -50,14 +52,16 @@
                                 </span>
                             </td>
                             <td>
-                                <div class="custom-control custom-switch d-inline-block"
-                                    style="transform: scale(1.4); transform-origin: left center;">
-                                    <input type="checkbox" class="custom-control-input" id="status{{ $category->id }}"
-                                        {{ $category->status ? 'checked' : '' }}
-                                        wire:click="changeStatus({{ $category->id }})">
+                                @if (auth()->user()->hasPermission('category.status'))
+                                    <div class="custom-control custom-switch d-inline-block"
+                                        style="transform: scale(1.4); transform-origin: left center;">
+                                        <input type="checkbox" class="custom-control-input"
+                                            id="status{{ $category->id }}" {{ $category->status ? 'checked' : '' }}
+                                            wire:click="changeStatus({{ $category->id }})">
 
-                                    <label class="custom-control-label" for="status{{ $category->id }}"></label>
-                                </div>
+                                        <label class="custom-control-label" for="status{{ $category->id }}"></label>
+                                    </div>
+                                @endif
                             </td>
 
                             <td>
@@ -73,13 +77,16 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <button class="btn btn-sm btn-edit mr-2" wire:click="edit({{ $category->id }})"
-                                        data-toggle="modal" data-target="#categoryModal"> <i class="fa fa-edit"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-delete" wire:click="delete({{ $category->id }})"
-                                        wire:confirm="Delete this category?"> <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if (auth()->user()->hasPermission('category.edit'))
+                                        <button class="btn btn-sm btn-edit mr-2" wire:click="edit({{ $category->id }})"
+                                            data-toggle="modal" data-target="#categoryModal"> <i class="fa fa-edit"></i>
+                                        </button>
+                                    @endif
+                                    @if (auth()->user()->hasPermission('category.delete'))
+                                        <button class="btn btn-sm btn-delete" wire:click="delete({{ $category->id }})"
+                                            wire:confirm="Delete this category?"> <i class="fa fa-trash"></i>
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

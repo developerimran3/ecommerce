@@ -20,6 +20,7 @@
                                 <div class="text-danger small mb-3">{{ $message }}</div>
                             @enderror
 
+
                             <!-- Password Field -->
                             <label>Password</label>
                             <div class="input-group mb-3">
@@ -61,7 +62,9 @@
                             </button>
                             <div class="register-text mt-2 text-right">
                                 Remember your password?
-                                <a href="{{ route('admin.login') }}"> Login </a>
+                                <a href="{{ route('admin.login') }}">
+                                    Login
+                                </a>
                             </div>
                         </form>
                     </div>

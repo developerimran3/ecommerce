@@ -1,8 +1,10 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="page-title mb-0">Brand List</h4>
-        <button class="btn btn-purple" data-toggle="modal" data-target="#brandModal" wire:click="resetInput">
-            <i class="fa fa-plus mr-1"></i> Add Brand </button>
+        @if (auth()->user()->hasPermission('brand.create'))
+            <button class="btn btn-purple" data-toggle="modal" data-target="#brandModal" wire:click="resetInput">
+                <i class="fa fa-plus mr-1"></i> Add Brand </button>
+        @endif
     </div>
 
     <div class="table-card">
@@ -51,14 +53,16 @@
                                 </span>
                             </td>
                             <td>
-                                <div class="custom-control custom-switch d-inline-block"
-                                    style="transform: scale(1.4); transform-origin: left center;">
-                                    <input type="checkbox" class="custom-control-input" id="status{{ $brand->id }}"
-                                        {{ $brand->status ? 'checked' : '' }}
-                                        wire:click="changeStatus({{ $brand->id }})">
+                                @if (auth()->user()->hasPermission('brand.status'))
+                                    <div class="custom-control custom-switch d-inline-block"
+                                        style="transform: scale(1.4); transform-origin: left center;">
+                                        <input type="checkbox" class="custom-control-input"
+                                            id="status{{ $brand->id }}" {{ $brand->status ? 'checked' : '' }}
+                                            wire:click="changeStatus({{ $brand->id }})">
 
-                                    <label class="custom-control-label" for="status{{ $brand->id }}"></label>
-                                </div>
+                                        <label class="custom-control-label" for="status{{ $brand->id }}"></label>
+                                    </div>
+                                @endif
                             </td>
                             <td>
                                 {{ $brand->created_at->format('d M Y') }}
@@ -73,14 +77,18 @@
 
                             <td>
                                 <div class="d-flex">
-                                    <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
-                                        data-target="#brandModal" wire:click="edit({{ $brand->id }})">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-delete" wire:click="delete({{ $brand->id }})"
-                                        wire:confirm="Are you sure you want to delete this brand?">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if (auth()->user()->hasPermission('brand.edit'))
+                                        <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
+                                            data-target="#brandModal" wire:click="edit({{ $brand->id }})">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    @endif
+                                    @if (auth()->user()->hasPermission('brand.delete'))
+                                        <button class="btn btn-sm btn-delete" wire:click="delete({{ $brand->id }})"
+                                            wire:confirm="Are you sure you want to delete this brand?">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

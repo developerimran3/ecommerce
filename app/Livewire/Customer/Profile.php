@@ -39,13 +39,18 @@ class Profile extends Component
 
         $user = Auth::user();
         $imagePath = $user->image;
+
         if ($this->image) {
-            // পুরাতন ছবি delete করতে চাইলে
+            // পুরাতন ছবি ডিলিট করা
             if ($user->image && Storage::disk('public')->exists($user->image)) {
                 Storage::disk('public')->delete($user->image);
             }
-            $imagePath = $this->image->store('users/customers', 'public');
+
+            // এক লাইনে নাম ও ফোন যুক্ত করে কাস্টম নামে আপলোড
+            $fileName = strtolower(str_replace(' ', '', $this->name)) . "_{$this->phone}." . $this->image->extension();
+            $imagePath = $this->image->storeAs('users/customers', $fileName, 'public');
         }
+
 
         $user->update([
             'name'    => $this->name,

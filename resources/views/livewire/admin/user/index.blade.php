@@ -1,7 +1,7 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="page-title mb-0">User List</h4>
-        @if (auth()->user()->role === 'Administrator')
+        @if (auth()->user()->hasPermission('user.create'))
             <button class="btn btn-purple" data-toggle="modal" data-target="#userModal" wire:click="resetInput">
                 <i class="fas fa-user-plus mr-1"></i> Add New User
             </button>
@@ -54,14 +54,16 @@
                                 <span class="text-muted">{{ $user->phone ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <div class="custom-control custom-switch d-inline-block"
-                                    style="transform: scale(1.4); transform-origin: left center;">
-                                    <input type="checkbox" class="custom-control-input" id="status{{ $user->id }}"
-                                        {{ $user->status ? 'checked' : '' }}
-                                        wire:click="changeStatus({{ $user->id }})">
+                                @if (auth()->user()->hasPermission('user.status'))
+                                    <div class="custom-control custom-switch d-inline-block"
+                                        style="transform: scale(1.4); transform-origin: left center;">
+                                        <input type="checkbox" class="custom-control-input"
+                                            id="status{{ $user->id }}" {{ $user->status ? 'checked' : '' }}
+                                            wire:click="changeStatus({{ $user->id }})">
 
-                                    <label class="custom-control-label" for="status{{ $user->id }}"></label>
-                                </div>
+                                        <label class="custom-control-label" for="status{{ $user->id }}"></label>
+                                    </div>
+                                @endif
                             </td>
                             <td>
                                 <span class=" badge-primary p-1 px-2">{{ $user->role }}</span>
@@ -78,14 +80,18 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
-                                        data-target="#userModal" wire:click="edit({{ $user->id }})">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-delete" wire:click="delete({{ $user->id }})"
-                                        wire:confirm="Are you sure you want to delete this user?">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if (auth()->user()->hasPermission('user.edit'))
+                                        <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
+                                            data-target="#userModal" wire:click="edit({{ $user->id }})">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    @endif
+                                    @if (auth()->user()->hasPermission('user.delete'))
+                                        <button class="btn btn-sm btn-delete" wire:click="delete({{ $user->id }})"
+                                            wire:confirm="Are you sure you want to delete this user?">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

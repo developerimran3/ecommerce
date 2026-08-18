@@ -21,22 +21,14 @@ class ResetPassword extends Component
         $this->email = request()->query('email', '');
     }
 
-    protected function rules()
-    {
-        return [
-            'email' => 'required|email',
-
-            'password' => [
-                'required',
-                'min:6',
-                'confirmed',
-            ],
-        ];
-    }
+    
 
     public function resetPassword()
     {
-        $this->validate();
+       $this->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -61,32 +53,21 @@ class ResetPassword extends Component
             }
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | Success
-        |--------------------------------------------------------------------------
-        */
-
+      //success
         if ($status === Password::PASSWORD_RESET) {
 
-            session()->flash(
-                'success',
-                'Your password has been reset successfully. Please login.'
-            );
+            $this->dispatch(
+            'success',
+            message: 'Your password has been reset successfully. Please login.'
+        );
 
             return redirect()->route('customer.login');
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Error
-        |--------------------------------------------------------------------------
-        */
-
-        $this->addError(
-            'email',
-            __($status)
-        );
+         $this->dispatch(
+                'error',
+                message: __($status)
+            );
     }
 
     public function render()

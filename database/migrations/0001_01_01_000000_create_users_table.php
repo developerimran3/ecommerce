@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->enum('role', [
                 'Administrator',
+                'Shop Manager',
                 'Editor',
                 'Contributor',
-                'Shop Manager',
                 'Customer',
             ])->default('Customer');
             $table->boolean('status')->default(true);

@@ -12,10 +12,9 @@ return new class extends Migration
             $table->id();
             $table->enum('role', [
                 'Administrator',
+                'Shop Manager',
                 'Editor',
                 'Contributor',
-                'Shop Manager',
-                'Customer',
             ]);
 
             $table->foreignId('permission_id')

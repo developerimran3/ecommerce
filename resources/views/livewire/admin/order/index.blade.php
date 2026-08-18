@@ -57,18 +57,20 @@
                                         ৳ {{ number_format($order->grand_total, 2) }}
                                     </td>
                                     <td>
-                                        @if ($order->order_status == 'pending')
-                                            <span class="badge-status"> Pending </span>
-                                        @elseif($order->order_status == 'confirmed')
-                                            <span class="badge-info"> Confirmed </span>
-                                        @elseif($order->order_status == 'processing')
-                                            <span class="badge-warning"> Processing </span>
-                                        @elseif($order->order_status == 'shipped')
-                                            <span class="badge-primary"> Shipped </span>
-                                        @elseif($order->order_status == 'delivered')
-                                            <span class="badge-success"> Delivered </span>
-                                        @else
-                                            <span class="badge-inactive"> Cancelled </span>
+                                        @if (auth()->user()->hasPermission('order.status'))
+                                            @if ($order->order_status == 'pending')
+                                                <span class="badge-status"> Pending </span>
+                                            @elseif($order->order_status == 'confirmed')
+                                                <span class="badge-info"> Confirmed </span>
+                                            @elseif($order->order_status == 'processing')
+                                                <span class="badge-warning"> Processing </span>
+                                            @elseif($order->order_status == 'shipped')
+                                                <span class="badge-primary"> Shipped </span>
+                                            @elseif($order->order_status == 'delivered')
+                                                <span class="badge-success"> Delivered </span>
+                                            @else
+                                                <span class="badge-inactive"> Cancelled </span>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>
@@ -100,11 +102,12 @@
 
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('admin.invoice.download', $order->id) }}" target="_blank"
-                                                class="btn btn-view btn-sm mr-2">
-                                                <i class="fa-solid fa-download"></i>
-                                            </a>
-
+                                            @if (auth()->user()->hasPermission('order.invoice'))
+                                                <a href="{{ route('admin.invoice.download', $order->id) }}"
+                                                    target="_blank" class="btn btn-view btn-sm mr-2">
+                                                    <i class="fa-solid fa-download"></i>
+                                                </a>
+                                            @endif
                                             @if (auth()->user()->hasPermission('order.view'))
                                                 <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
                                                     data-target="#orderModal"

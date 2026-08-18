@@ -51,6 +51,7 @@ return new class extends Migration
             ['name' => 'order.invoice',  'module' => 'order', 'action' => 'invoice'],
             ['name' => 'order.view',     'module' => 'order', 'action' => 'view'],
             ['name' => 'order.delete',   'module' => 'order', 'action' => 'delete'],
+            ['name' => 'order.status',   'module' => 'order', 'action' => 'status'],
 
             // User
             ['name' => 'user.manage', 'module' => 'user', 'action' => 'manage'],

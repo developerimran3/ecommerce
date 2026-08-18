@@ -50,7 +50,7 @@ class RolePermission extends Component
         PermissionRole::where('role', $this->selectedRole)->delete();
         foreach ($this->selectedPermissions as $permissionId) {
             PermissionRole::create([
-                'role' => $this->selectedRole,
+                'role'          => $this->selectedRole,
                 'permission_id' => $permissionId,
             ]);
         }

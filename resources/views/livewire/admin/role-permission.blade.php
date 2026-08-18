@@ -13,7 +13,6 @@
                     <button type="button" wire:click="selectAll" class="btn btn-sm btn-outline-primary mr-2">
                         Select All
                     </button>
-
                     <button type="button" wire:click="clearAll" class="btn btn-sm btn-outline-danger">
                         Clear All
                     </button>
@@ -27,10 +26,9 @@
                 <label class="font-weight-bold"> Select Role </label>
                 <select wire:model.live="selectedRole" class="form-control">
                     <option value="Administrator"> Administrator </option>
+                    <option value="Shop Manager"> Shop Manager </option>
                     <option value="Editor"> Editor </option>
                     <option value="Contributor"> Contributor </option>
-                    <option value="Shop Manager"> Shop Manager </option>
-                    <option value="Customer"> Customer </option>
                 </select>
             </div>
 

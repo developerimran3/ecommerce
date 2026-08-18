@@ -45,7 +45,6 @@
             @endif
 
             {{-- Products --}}
-
             <li class="nav-item">
                 <a href="javascript:void(0)"
                     class="nav-link menu-toggle {{ request()->routeIs('admin.products*') || request()->routeIs('admin.brands*') || request()->routeIs('admin.categories*') ? 'active' : '' }}">

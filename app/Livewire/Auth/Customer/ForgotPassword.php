@@ -39,9 +39,9 @@ class ForgotPassword extends Component
 
         if (!$user) {
 
-            session()->flash(
-                'success',
-                'If this email is registered, a password reset link has been sent.'
+            $this->dispatch(
+                'error',
+                message: 'We could not find an admin account with this email.'
             );
 
             return;
@@ -65,9 +65,9 @@ class ForgotPassword extends Component
             new CustomerPasswordResetMail($user, $token)
         );
 
-        session()->flash(
+        $this->dispatch(
             'success',
-            'If this email is registered, a password reset link has been sent.'
+            message: 'If this email is registered, a password reset link has been sent.'
         );
 
         $this->reset('email');

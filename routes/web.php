@@ -34,12 +34,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-
 Route::get('/admin/login', AdminLogin::class)
     ->name('admin.login');
-
-
 
 Route::get('/admin/register', AdminRegister::class)
     ->name('admin.register');
@@ -59,8 +55,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,Shop Manager,Editor,Contributor'])->group(function () {
-
-
 
     Route::get('users/profile', Profile::class)
         ->name('users.profile');
@@ -106,10 +100,6 @@ Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,S
         return redirect('/admin/login');
     })->name('admin.logout');
 });
-
-
-
-
 
 
 

@@ -34,23 +34,23 @@ class Profile extends Component
         ]);
 
         $user = Auth::user();
-
-        // পুরাতন image-টাই default থাকবে
         $imagePath = $user->image;
 
-        // নতুন image select করলে শুধু তখনই upload হবে
         if ($this->image) {
-
-            // পুরাতন image delete
-            if (
-                $user->image &&
-                Storage::disk('public')->exists($user->image)
-            ) {
+            // old image delete
+            if ($user->image && Storage::disk('public')->exists($user->image)) {
                 Storage::disk('public')->delete($user->image);
             }
 
-            // নতুন image upload
-            $imagePath = $this->image->store('users/admin', 'public');
+            // $user->role use folder create
+            $roleName = $user->role ?? 'customer';
+            $folder = 'users/' . strtolower($roleName);
+
+            // file name create
+            $fileName = strtolower(str_replace(' ', '', $this->name)) . "_{$this->phone}." . $this->image->extension();
+
+            // upload file name
+            $imagePath = $this->image->storeAs($folder, $fileName, 'public');
         }
 
         $user->update([
@@ -60,13 +60,9 @@ class Profile extends Component
             'image'   => $imagePath,
         ]);
 
-        // input reset
         $this->reset('image');
         $this->dispatch('close-modal');
-        $this->dispatch(
-            'success',
-            message: 'Your Profile updated successfully.'
-        );
+        $this->dispatch('success', message: 'Your Profile updated successfully.');
     }
 
 
