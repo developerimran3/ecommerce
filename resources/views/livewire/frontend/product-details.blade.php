@@ -100,7 +100,7 @@
                                                 </div>
                                                 <div class="pro_brand">
                                                     <p>Brand :
-                                                        {{ $product->brand->name }}
+                                                        {{ $product->brand?->name }}
                                                     </p>
                                                 </div>
 
