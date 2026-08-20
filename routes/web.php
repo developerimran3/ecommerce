@@ -9,6 +9,7 @@ use App\Livewire\Admin\Order\Index as OrderIndex;
 use App\Livewire\Admin\Product\Index as ProductIndex;
 use App\Livewire\Admin\Profile;
 use App\Livewire\Admin\RolePermission;
+use App\Livewire\Admin\Shipping\ShippingAreaIndex;
 use App\Livewire\Admin\User\Index as UserIndex;
 use App\Livewire\Auth\Admin\ForgotPassword as AdminForgotPassword;
 use App\Livewire\Auth\Admin\Login as AdminLogin;
@@ -29,7 +30,6 @@ use App\Livewire\Frontend\OrderTrack;
 use App\Livewire\Frontend\ProductDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 
 
 
@@ -82,6 +82,14 @@ Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,S
 
     Route::get('/orders/completed', OrderIndex::class)
         ->name('admin.orders.completed');
+
+
+
+    Route::get('/shipping-areas', ShippingAreaIndex::class)
+        ->name('admin.shipping');
+
+    // Route::get('/shipping-areas', ShippingAreaIndex::class)
+    //     ->name('admin.coupon');
 
     Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
         ->name('admin.invoice.download');

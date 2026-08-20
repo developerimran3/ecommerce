@@ -125,29 +125,66 @@
 
 
             {{-- Settings --}}
+            {{-- Settings --}}
             @if (auth()->check() && auth()->user()->hasPermission('setting.manage'))
+                @php
+                    $settingsActive =
+                        request()->routeIs('admin.coupon') ||
+                        request()->routeIs('admin.shipping') ||
+                        request()->routeIs('admin.smpt.server');
+                @endphp
+
                 <li class="nav-item">
-                    <a href="javascript:void(0)"
-                        class="nav-link menu-toggle {{ request()->routeIs('admin.orders*') ? 'active' : '' }}">
+
+                    <a href="javascript:void(0)" class="nav-link menu-toggle {{ $settingsActive ? 'active' : '' }}">
+
                         <i class="fas fa-cog"></i>
-                        <span class="flex-grow-1">Site Setting</span>
-                        <i
-                            class="fas fa-chevron-down arrow {{ request()->routeIs('admin.orders*') ? 'rotate' : '' }}"></i>
+
+                        <span class="flex-grow-1">
+                            Site Setting
+                        </span>
+
+                        <i class="fas fa-chevron-down arrow {{ $settingsActive ? 'rotate' : '' }}"></i>
+
                     </a>
-                    <ul class="submenu {{ request()->routeIs('admin.orders*') ? 'open' : '' }}">
-                        <li><a href="{{ route('admin.orders') }}" wire:navigate.hover
-                                class="{{ request()->routeIs('admin.orders') ? 'active' : '' }}">All Orders</a></li>
-                        <li><a href="{{ route('admin.orders.pending') }}" wire:navigate.hover
-                                class="{{ request()->routeIs('admin.orders.pending') ? 'active' : '' }}">Pending
-                                Orders</a>
+
+                    <ul class="submenu {{ $settingsActive ? 'open' : '' }}">
+
+                        {{-- Coupon --}}
+                        {{-- <li>
+                            <a href="{{ route('admin.coupon') }}" wire:navigate.hover
+                                class="{{ request()->routeIs('admin.coupon') ? 'active' : '' }}">
+
+                                <i class="fas fa-ticket-alt"></i>
+                                <span>Coupon</span>
+
+                            </a>
+                        </li> --}}
+
+                        {{-- Shipping Charge --}}
+                        <li>
+                            <a href="{{ route('admin.shipping') }}" wire:navigate.hover
+                                class="{{ request()->routeIs('admin.shipping') ? 'active' : '' }}">
+
+                                <i class="fas fa-truck"></i>
+                                <span>Shipping Charge</span>
+
+                            </a>
                         </li>
-                        <li><a href="{{ route('admin.orders.completed') }}" wire:navigate.hover
-                                class="{{ request()->routeIs('admin.orders.completed') ? 'active' : '' }}">Completed
-                                Orders</a></li>
-                        <li><a href="{{ route('admin.orders.cancelled') }}" wire:navigate.hover
-                                class="{{ request()->routeIs('admin.orders.cancelled') ? 'active' : '' }}">Cancelled
-                                Orders</a></li>
+
+                        {{-- SMTP Setup --}}
+                        {{-- <li>
+                            <a href="{{ route('admin.smpt.server') }}" wire:navigate.hover
+                                class="{{ request()->routeIs('admin.smpt.server') ? 'active' : '' }}">
+
+                                <i class="fas fa-envelope"></i>
+                                <span>SMTP Setup</span>
+
+                            </a>
+                        </li> --}}
+
                     </ul>
+
                 </li>
             @endif
         </ul>

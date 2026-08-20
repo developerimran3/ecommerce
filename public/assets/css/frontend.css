@@ -1767,7 +1767,8 @@ p.text-center {
     padding: 30px 0;
 }
 .payment-methods {
-    display: flex;
+    
+    margin: 0 0 10px 18px;
 }
 
 .form-check-label {

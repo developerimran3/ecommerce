@@ -54,29 +54,46 @@
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="col-sm-12">
                                     <div class="form-group mb-3">
-                                        <label class="form-check-label-checkout" for="area">ডেলিভারি এরিয়া নিবার্চন
-                                            করুন *</label>
-                                        <select type="area" id="area" class="form-control" wire:model="area"
-                                            name="area">
-                                            <option value="2">সারা বাংলাদেশ ১৫০ টাকা ডেলিভারি চার্জ</option>
+
+                                        <label class="form-check-label-checkout" for="area">
+                                            ডেলিভারি এরিয়া নির্বাচন করুন
+                                        </label>
+
+                                        <select id="area" class="form-control" wire:model.live="area">
+                                            @foreach ($shippingAreas as $shippingArea)
+                                                <option value="{{ $shippingArea->id }}">
+                                                    {{ $shippingArea->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <label class="form-check-label-checkout">পেমেন্ট মেথড (optional)</label>
-                                    <div class="payment-methods">
-                                        <div class="form-check p_cash">
-                                            <input class="form-check-input" type="radio" name="payment_method"
-                                                value="Cash On Delivery">
-                                            <label class="form-check-label"> Cash On Delivery </label>
-                                        </div>
-                                        <div class="form-check p_bkash">
-                                            <input class="form-check-input" type="radio" name="payment_method">
-                                            <label class="form-check-label"> Bkash </label>
-                                        </div>
+                                <div class="payment-methods">
+                                    <div class="mb-2">
+                                        <label class="form-check-label-checkout">
+                                            পেমেন্ট মেথড <span class="text-muted">(optional)</span>
+                                        </label>
                                     </div>
+
+                                    <div class="form-check p_cash">
+                                        <input class="form-check-input" type="radio" id="cod"
+                                            name="payment_method" value="cod" wire:model="payment_method">
+                                        <label class="form-check-label" for="cod"> Cash On Delivery </label>
+                                    </div>
+                                    <div class="form-check p_bkash">
+                                        <input class="form-check-input" type="radio" id="bkash"
+                                            name="payment_method" value="bkash" wire:model="payment_method">
+                                        <label class="form-check-label" for="bkash"> bKash </label>
+                                    </div>
+                                    <div class="form-check p_nagad">
+                                        <input class="form-check-input" type="radio" id="nagad"
+                                            name="payment_method" value="nagad" wire:model="payment_method">
+                                        <label class="form-check-label" for="nagad"> Nagad </label>
+                                    </div>
+
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -125,9 +142,11 @@
 
                                                 <td>
                                                     <div class="quantity-box">
-                                                        <button wire:click="decreaseQty({{ $item->id }})">−</button>
+                                                        <button
+                                                            wire:click="decreaseQty({{ $item->id }})">−</button>
                                                         <input type="text" value="{{ $item->qty }}" readonly>
-                                                        <button wire:click="increaseQty({{ $item->id }})">+</button>
+                                                        <button
+                                                            wire:click="increaseQty({{ $item->id }})">+</button>
                                                     </div>
                                                 </td>
 
@@ -142,23 +161,32 @@
                                         <th colspan="3" class="text-end px-4">মোট</th>
                                         <td class="px-4">
                                             <span class="alinur">৳</span>
-                                            <strong>{{ number_format($total ?? 0) }}</strong>
+                                            <strong>{{ number_format($subtotal ?? 0) }}</strong>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <th colspan="3" class="text-end px-4">ডেলিভারি চার্জ</th>
+
+                                        <th colspan="3" class="text-end px-4">
+                                            ডেলিভারি চার্জ
+                                        </th>
+
                                         <td class="px-4">
                                             <span class="alinur">৳</span>
-                                            <strong>00</strong>
+                                            <strong>
+                                                {{ number_format($shipping ?? 0, 2) }}
+                                            </strong>
                                         </td>
                                     </tr>
-
                                     <tr>
-                                        <th colspan="3" class="text-end px-4">সর্বমোট</th>
+                                        <th colspan="3" class="text-end px-4">
+                                            সর্বমোট
+                                        </th>
                                         <td class="px-4">
                                             <span class="alinur">৳</span>
-                                            <strong>{{ number_format($total ?? 0) }}</strong>
+                                            <strong>
+                                                {{ number_format($grandTotal ?? 0, 2) }}
+                                            </strong>
                                         </td>
                                     </tr>
                                 </tfoot>

@@ -89,7 +89,7 @@
                             Shipping Cost
                         </td>
                         <td>
-                            ৳150
+                            ৳ {{ number_format($order->shipping) }}
                         </td>
                     </tr>
                     <tr>
