@@ -20,8 +20,8 @@
             <div class="stat-card card-green">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h2>{{ $totalSales }}</h2>
-                        <p>Today's Orders</p>
+                        <h2>{{ $totalPayment }}</h2>
+                        <p>Total Sales</p>
                     </div>
 
                     <div class="icon-box">

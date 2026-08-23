@@ -1,13 +1,17 @@
 <div>
-    <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="content container">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <h4 class="mb-1"> Coupons </h4>
                 <p class="text-muted mb-0"> Manage discount coupons </p>
             </div>
-            <button wire:click="create" class="btn btn-primary">
+            <button wire:click="create" class="btn btn-purple">
                 <i class="fas fa-plus"></i> Add Coupon </button>
         </div>
+
+
+
         {{-- Search --}}
         <div class="card mb-3">
             <div class="card-body">
@@ -16,88 +20,86 @@
         </div>
 
         {{-- Table --}}
-        <div class="card">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="thead-dark">
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Code</th>
+                            <th>Type</th>
+                            <th>Discount</th>
+                            <th>Minimum</th>
+                            <th>Validity</th>
+                            <th>Usage</th>
+                            <th>Status</th>
+                            <th width="130"> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($coupons as $coupon)
                             <tr>
-                                <th>#</th>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Discount</th>
-                                <th>Minimum</th>
-                                <th>Validity</th>
-                                <th>Usage</th>
-                                <th>Status</th>
-                                <th width="130"> Action </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($coupons as $coupon)
-                                <tr>
-                                    <td> {{ $coupons->firstItem() + $loop->index }} </td>
-                                    <td> <strong> {{ $coupon->code }} </strong> </td>
-                                    <td>
-                                        @if ($coupon->type === 'fixed')
-                                            Fixed
-                                        @else
-                                            Percentage
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($coupon->type === 'fixed')
-                                            ৳ {{ number_format($coupon->value, 2) }}
-                                        @else
-                                            {{ number_format($coupon->value, 2) }}%
-                                        @endif
-                                    </td>
-                                    <td> ৳ {{ number_format($coupon->minimum_amount, 2) }} </td>
-                                    <td>
-                                        {{ $coupon->start_date->format('d M Y') }}
-                                        <br>
-                                        <small class="text-muted"> to
-                                            {{ $coupon->end_date->format('d M Y') }}
-                                        </small>
-                                    </td>
-                                    <td>
-                                        {{ $coupon->used }}
-                                        /
-                                        {{ $coupon->limit ?? '∞' }}
-                                    </td>
-                                    <td>
-                                        @if ($coupon->status)
-                                            <span class="badge badge-success"> Active </span>
-                                        @else
-                                            <span class="badge badge-secondary"> Inactive </span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <button wire:click="edit({{ $coupon->id }})" class="btn btn-sm btn-info">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button wire:click="toggleStatus({{ $coupon->id }})"
-                                            class="btn btn-sm btn-warning">
-                                            <i class="fas fa-power-off"></i>
-                                        </button>
+                                <td> {{ $coupons->firstItem() + $loop->index }} </td>
+                                <td> <strong> {{ $coupon->code }} </strong> </td>
+                                <td>
+                                    @if ($coupon->type === 'fixed')
+                                        Fixed
+                                    @else
+                                        Percentage
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($coupon->type === 'fixed')
+                                        ৳ {{ number_format($coupon->value, 2) }}
+                                    @else
+                                        {{ number_format($coupon->value, 2) }}%
+                                    @endif
+                                </td>
+                                <td> ৳ {{ number_format($coupon->minimum_amount, 2) }} </td>
+                                <td>
+                                    {{ $coupon->start_date->format('d M Y') }}
+                                    <br>
+                                    <small class="text-muted"> to
+                                        {{ $coupon->end_date->format('d M Y') }}
+                                    </small>
+                                </td>
+                                <td>
+                                    {{ $coupon->used }}
+                                    /
+                                    {{ $coupon->limit ?? '∞' }}
+                                </td>
+                                <td>
+                                    @if ($coupon->status)
+                                        <span class="badge badge-success"> Active </span>
+                                    @else
+                                        <span class="badge badge-secondary"> Inactive </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <button wire:click="edit({{ $coupon->id }})" class="btn btn-sm btn-info">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button wire:click="toggleStatus({{ $coupon->id }})"
+                                        class="btn btn-sm btn-warning">
+                                        <i class="fas fa-power-off"></i>
+                                    </button>
 
-                                        <button wire:click="delete({{ $coupon->id }})"
-                                            wire:confirm="Are you sure you want to delete this coupon?"
-                                            class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="9" class="text-center py-4">
-                                        No coupons found.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                                    <button wire:click="delete({{ $coupon->id }})"
+                                        wire:confirm="Are you sure you want to delete this coupon?"
+                                        class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="9" class="text-center py-4">
+                                    No coupons found.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="mt-3">

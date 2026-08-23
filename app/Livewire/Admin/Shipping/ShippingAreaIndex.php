@@ -56,7 +56,7 @@ class ShippingAreaIndex extends Component
         ]);
 
         $this->resetInput();
-
+        $this->dispatch('close-modal');
         $this->dispatch(
             'success',
             message: 'Shipping area added successfully.'
@@ -87,7 +87,6 @@ class ShippingAreaIndex extends Component
 
         $this->resetInput();
         $this->dispatch('close-modal');
-
         $this->dispatch(
             'success',
             message: 'Shipping area updated successfully.'

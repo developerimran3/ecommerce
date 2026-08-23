@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -20,6 +21,7 @@ class Order extends Model
         'payment_method',
         'payment_status',
         'order_status',
+        'shipping_area_id',
     ];
 
     public function items()
@@ -35,5 +37,10 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function shippingArea()
+    {
+        return $this->belongsTo(ShippingArea::class);
     }
 }

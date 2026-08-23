@@ -86,9 +86,7 @@
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                 class="product-img" />
                                         @else
-                                            <span class="text-muted">
-                                                No Image
-                                            </span>
+                                            <span class="text-muted"> No Image </span>
                                         @endif
                                     </td>
 

@@ -12,7 +12,8 @@ class InvoiceController extends Controller
     public function download($id)
     {
         $order = Order::with([
-            'items.product'
+            'items.product',
+            'shippingArea',
         ])->findOrFail($id);
 
         $pdf = PDF::loadView('invoice-page', [

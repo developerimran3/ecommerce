@@ -75,7 +75,7 @@
             </div>
             {{-- Save --}}
             <div class="text-right mt-3">
-                <button type="button" wire:click="save" wire:loading.attr="disabled" class="btn btn-primary px-4"
+                <button type="button" wire:click="save" wire:loading.attr="disabled" class="btn btn-purple px-4"
                     @disabled($selectedRole === 'Administrator')>
                     <span wire:loading.remove wire:target="save">
                         <i class="fas fa-save mr-1"></i> Save Permissions </span>

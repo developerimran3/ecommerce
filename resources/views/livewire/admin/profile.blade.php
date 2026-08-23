@@ -112,7 +112,7 @@
                             <label> Confirm Password </label>
                             <input type="password" class="form-control" wire:model="password_confirmation">
                         </div>
-                        <button type="button" class="password-btn" wire:click="updatePassword"><i
+                        <button type="button" class="btn btn-purple" wire:click="updatePassword"><i
                                 class="fa fa-save"></i> Update Password </button>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Save
+                        <button type="submit" class="btn btn-purple btn-block">Save
                             Changes</button>
                     </form>
                 </div>

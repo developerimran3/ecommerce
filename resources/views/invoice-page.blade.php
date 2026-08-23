@@ -62,7 +62,7 @@
                     <br>
                     {{ ucwords($order->address) }}
                     <br>
-                    সারা বাংলাদেশ ১৫০ টাকা ডেলিভারি চার্জ ।
+                    {{ $order->shippingArea?->name }}
                 </p>
             </td>
         </tr>
@@ -97,14 +97,18 @@
             <td> <strong>SubTotal</strong> </td>
             <td align="right"> ৳ {{ number_format($order->subtotal, 2) }} </td>
         </tr>
+
         <tr>
             <td> <strong>Shipping(+)</strong> </td>
             <td align="right"> ৳ {{ number_format($order->shipping, 2) }} </td>
         </tr>
-        <tr>
-            <td> <strong>Discount(-)</strong> </td>
-            <td align="right"> ৳ {{ number_format($order->discount, 2) }} </td>
-        </tr>
+        @if ($order->discount > 0)
+            <tr>
+                <td> <strong>Discount(-)</strong> </td>
+                <td align="right"> ৳ {{ number_format($order->discount, 2) }} </td>
+            </tr>
+        @endif
+
         <tr style="background:#6d28d9;">
             <td style="color:#ffffff !important;">
                 <strong style="color:#ffffff !important;font-weight:bold;">

@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
 use Livewire\Component;
@@ -15,6 +16,7 @@ class Dashboard extends Component
             'order_status',
             'delivered'
         )->sum('grand_total');
+
 
         $totalOrders = Order::count();
 
@@ -36,6 +38,11 @@ class Dashboard extends Component
             'order_status',
             'delivered'
         )->count();
+        $totalPayment = Payment::where(
+            'status',
+            'paid'
+        )->sum('amount');
+
 
         return view('livewire.admin.dashboard', [
             'totalSales' => $totalSales,
@@ -45,6 +52,8 @@ class Dashboard extends Component
             'pendingOrders' => $pendingOrders,
             'processingOrders' => $processingOrders,
             'deliveredOrders' => $deliveredOrders,
+            'totalPayment' => $totalPayment,
+
         ])->layout('layouts.admin', ['title' => 'The Kindom Of Fashion',]);
     }
 }

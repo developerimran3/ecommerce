@@ -271,6 +271,7 @@ class CheckoutPage extends Component
                 'shipping'       => $shipping,
                 'discount'       => $discount,
                 'grand_total'    => $grandTotal,
+                'shipping_area_id' => $this->area,
 
                 'payment_method' => $this->payment_method,
                 'payment_status' => 'pending',
