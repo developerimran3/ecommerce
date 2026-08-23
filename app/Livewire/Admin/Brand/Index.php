@@ -28,6 +28,13 @@ class Index extends Component
         ];
     }
 
+
+    public function create()
+    {
+        $this->resetInput();
+        $this->dispatch('open-modal');
+    }
+
     public function resetInput()
     {
         $this->reset([
@@ -36,14 +43,12 @@ class Index extends Component
             'logo',
             'oldLogo',
         ]);
-
         $this->status = true;
     }
 
     public function store()
     {
         $this->validate();
-
         // Check if slug already exists
         $slug = Str::slug($this->name);
 
@@ -78,6 +83,8 @@ class Index extends Component
         $this->brand_id = $brand->id;
         $this->oldLogo = $brand->logo;
         $this->name = $brand->name;
+
+        $this->dispatch('open-modal');
     }
 
     public function update()

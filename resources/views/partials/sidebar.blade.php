@@ -113,6 +113,8 @@
                     <span>Profile</span>
                 </a>
             </li>
+
+
             @if (auth()->check() && auth()->user()->hasPermission('permission.manage'))
                 <li class="nav-item">
                     <a href="{{ route('admin.role-permission') }}" wire:navigate.hover
@@ -124,6 +126,7 @@
             @endif
 
 
+
             {{-- Settings --}}
             {{-- Settings --}}
             @if (auth()->check() && auth()->user()->hasPermission('setting.manage'))
@@ -131,6 +134,7 @@
                     $settingsActive =
                         request()->routeIs('admin.coupon') ||
                         request()->routeIs('admin.shipping') ||
+                        request()->routeIs('admin.payment') ||
                         request()->routeIs('admin.smpt.server');
                 @endphp
 
@@ -151,7 +155,7 @@
                     <ul class="submenu {{ $settingsActive ? 'open' : '' }}">
 
                         {{-- Coupon --}}
-                        {{-- <li>
+                        <li>
                             <a href="{{ route('admin.coupon') }}" wire:navigate.hover
                                 class="{{ request()->routeIs('admin.coupon') ? 'active' : '' }}">
 
@@ -159,7 +163,7 @@
                                 <span>Coupon</span>
 
                             </a>
-                        </li> --}}
+                        </li>
 
                         {{-- Shipping Charge --}}
                         <li>
@@ -168,6 +172,15 @@
 
                                 <i class="fas fa-truck"></i>
                                 <span>Shipping Charge</span>
+
+                            </a>
+                        </li>
+                        {{-- Payment --}}
+                        <li>
+                            <a href="{{ route('admin.payment') }}" wire:navigate.hover
+                                class="{{ request()->routeIs('admin.payment') ? 'active' : '' }}">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Payment</span>
 
                             </a>
                         </li>

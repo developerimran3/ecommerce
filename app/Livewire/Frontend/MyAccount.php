@@ -8,26 +8,20 @@ use Illuminate\Support\Facades\Auth;
 
 class MyAccount extends Component
 {
-
     public $user;
-
 
     public function mount()
     {
         $this->user = Auth::user();
     }
 
-
     public function logout()
     {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
-
         return redirect()->route('home');
     }
-
-
 
     public function render()
     {
@@ -57,10 +51,9 @@ class MyAccount extends Component
         return view(
             'livewire.frontend.my-account',
             [
-                'orders' => $orders,
+                'orders'          => $orders,
                 'completedOrders' => $completedOrders,
-                'pendingOrders' => $pendingOrders
-
+                'pendingOrders'   => $pendingOrders
             ]
         )
             ->layout('layouts.frontend');

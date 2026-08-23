@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="page-title mb-0">Category List</h4>
         @if (auth()->user()->hasPermission('category.create'))
-            <button class="btn btn-purple" data-toggle="modal" data-target="#categoryModal" wire:click="resetInput">
+            <button class="btn btn-purple" wire:click="create">
                 <i class="fas fa-th-list mr-1"></i> Add Category </button>
         @endif
     </div>
@@ -78,8 +78,8 @@
                             <td>
                                 <div class="d-flex">
                                     @if (auth()->user()->hasPermission('category.edit'))
-                                        <button class="btn btn-sm btn-edit mr-2" wire:click="edit({{ $category->id }})"
-                                            data-toggle="modal" data-target="#categoryModal"> <i class="fa fa-edit"></i>
+                                        <button class="btn btn-sm btn-edit mr-2" wire:click="edit({{ $category->id }})">
+                                            <i class="fa fa-edit"></i>
                                         </button>
                                     @endif
                                     @if (auth()->user()->hasPermission('category.delete'))

@@ -89,6 +89,15 @@ class Index extends Component
         $this->colors = [];
     }
 
+    public function create()
+    {
+        $this->resetInput();
+
+        $this->dispatch('open-modal');
+    }
+
+
+
     public function store()
     {
         abort_unless(
@@ -160,11 +169,7 @@ class Index extends Component
         $this->sizes = json_decode($product->sizes, true) ?? [];
         $this->colors = json_decode($product->colors, true) ?? [];
 
-        $this->dispatch(
-            'fillSelect2',
-            sizes: $this->sizes,
-            colors: $this->colors
-        );
+        $this->dispatch('open-modal');
     }
 
 

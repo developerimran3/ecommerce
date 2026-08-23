@@ -3,8 +3,7 @@
         <h4 class="page-title">Products</h4>
 
         @if (auth()->user()->hasPermission('product.create'))
-            <button class="btn btn-purple" data-toggle="modal" data-target="#productdModal" wire:click="resetInput">
-                <i class="fas fa-shopping-cart"></i> Add Product </button>
+            <button class="btn btn-purple" wire:click="create"> <i class="fas fa-shopping-cart"></i> Add Product </button>
         @endif
     </div>
 
@@ -111,18 +110,17 @@
                                     <td>
                                         <div class="actions">
                                             @if (auth()->user()->hasPermission('product.edit'))
-                                                <a href="#" data-toggle="modal" data-target="#productdModal"
-                                                    wire:click="edit({{ $product->id }})"
-                                                    class="btn btn-sm bg-success-light mr-2">
-                                                    <i class="fa fa-edit"></i> Edit
-                                                </a>
+                                                <button class="btn btn-sm btn-edit mr-2"
+                                                    wire:click="edit({{ $product->id }})">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
                                             @endif
 
                                             @if (auth()->user()->hasPermission('product.delete'))
                                                 <a class="btn btn-sm bg-danger-light"
                                                     wire:click="delete({{ $product->id }})"
                                                     wire:confirm="Are you sure? product Delete?">
-                                                    <i class="fas fa-trash"></i> Delete
+                                                    <i class="fas fa-trash"></i>
                                                 </a>
                                             @endif
 
@@ -148,7 +146,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="productdModal" wire:ignore.self>
+    <div wire:ignore.self class="modal fade" id="productModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
             <div class="modal-content product-modal">
                 <!-- Header -->

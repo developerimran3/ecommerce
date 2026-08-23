@@ -38,7 +38,14 @@ class ShippingAreaIndex extends Component
         $this->resetValidation();
     }
 
+
     public function create()
+    {
+        $this->resetInput();
+        $this->dispatch('open-modal');
+    }
+
+    public function store()
     {
         $this->validate();
 
@@ -64,6 +71,8 @@ class ShippingAreaIndex extends Component
         $this->name = $shipping->name;
         $this->charge = $shipping->charge;
         $this->status = $shipping->status;
+
+        $this->dispatch('open-modal');
     }
 
     public function update()
@@ -77,6 +86,7 @@ class ShippingAreaIndex extends Component
         ]);
 
         $this->resetInput();
+        $this->dispatch('close-modal');
 
         $this->dispatch(
             'success',
@@ -107,6 +117,6 @@ class ShippingAreaIndex extends Component
     {
         return view('livewire.admin.shipping.shipping-area-index', [
             'shippingAreas' => ShippingArea::latest()->paginate(10),
-        ])->layout('layouts.admin');
+        ])->layout('layouts.admin', ['title' => 'Shipping Area']);
     }
 }

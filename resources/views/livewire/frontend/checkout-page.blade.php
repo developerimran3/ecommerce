@@ -54,14 +54,10 @@
                                         @enderror
                                     </div>
                                 </div>
-
                                 <div class="col-sm-12">
                                     <div class="form-group mb-3">
-
-                                        <label class="form-check-label-checkout" for="area">
-                                            ডেলিভারি এরিয়া নির্বাচন করুন
-                                        </label>
-
+                                        <label class="form-check-label-checkout" for="area"> ডেলিভারি এরিয়া নির্বাচন
+                                            করুন </label>
                                         <select id="area" class="form-control" wire:model.live="area">
                                             @foreach ($shippingAreas as $shippingArea)
                                                 <option value="{{ $shippingArea->id }}">
@@ -72,29 +68,51 @@
                                     </div>
                                 </div>
                                 <div class="payment-methods">
-                                    <div class="mb-2">
-                                        <label class="form-check-label-checkout">
-                                            পেমেন্ট মেথড <span class="text-muted">(optional)</span>
-                                        </label>
+                                    <div class="mb-3">
+                                        <label class="form-check-label-checkout"> পেমেন্ট মেথড </label>
                                     </div>
-
-                                    <div class="form-check p_cash">
+                                    {{-- COD --}}
+                                    <div class="form-check p_cash mb-2">
                                         <input class="form-check-input" type="radio" id="cod"
-                                            name="payment_method" value="cod" wire:model="payment_method">
+                                            name="payment_method" value="cod" wire:model.live="payment_method">
                                         <label class="form-check-label" for="cod"> Cash On Delivery </label>
                                     </div>
-                                    <div class="form-check p_bkash">
+                                    {{-- bKash --}}
+                                    <div class="form-check p_bkash mb-2">
                                         <input class="form-check-input" type="radio" id="bkash"
-                                            name="payment_method" value="bkash" wire:model="payment_method">
+                                            name="payment_method" value="bkash" wire:model.live="payment_method">
                                         <label class="form-check-label" for="bkash"> bKash </label>
                                     </div>
-                                    <div class="form-check p_nagad">
+                                    {{-- Nagad --}}
+                                    <div class="form-check p_nagad mb-2">
                                         <input class="form-check-input" type="radio" id="nagad"
-                                            name="payment_method" value="nagad" wire:model="payment_method">
+                                            name="payment_method" value="nagad" wire:model.live="payment_method">
                                         <label class="form-check-label" for="nagad"> Nagad </label>
                                     </div>
+                                    {{-- SSLCommerz --}}
+                                    <div class="form-check p_ssl mb-2">
 
+                                        <input class="form-check-input" type="radio" id="sslcommerz"
+                                            name="payment_method" value="sslcommerz" wire:model.live="payment_method">
+
+                                        <label class="form-check-label" for="sslcommerz">
+                                            Online Payment
+                                        </label>
+
+                                    </div>
+                                    @if (in_array($payment_method, ['bkash', 'nagad']))
+                                        <div class="form-group mt-3">
+                                            <label class="form-check-label-checkout"> Transaction ID </label>
+
+                                            <input type="text" class="form-control" wire:model="trx_id"
+                                                placeholder="Enter Transaction ID">
+                                            @error('trx_id')
+                                                <small class="text-danger"> {{ $message }} </small>
+                                            @enderror
+                                        </div>
+                                    @endif
                                 </div>
+
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <button class="order_place" wire:click="placeOrder">অর্ডার করুন</button>
@@ -164,13 +182,8 @@
                                             <strong>{{ number_format($subtotal ?? 0) }}</strong>
                                         </td>
                                     </tr>
-
                                     <tr>
-
-                                        <th colspan="3" class="text-end px-4">
-                                            ডেলিভারি চার্জ
-                                        </th>
-
+                                        <th colspan="3" class="text-end px-4"> ডেলিভারি চার্জ </th>
                                         <td class="px-4">
                                             <span class="alinur">৳</span>
                                             <strong>
@@ -178,10 +191,18 @@
                                             </strong>
                                         </td>
                                     </tr>
+                                    @if ($discount > 0)
+                                        <tr>
+                                            <th colspan="3" class="text-right px-4 text-success">
+                                                Coupon Discount
+                                            </th>
+                                            <td class="px-4 text-success">
+                                                - ৳ {{ number_format($discount, 2) }}
+                                            </td>
+                                        </tr>
+                                    @endif
                                     <tr>
-                                        <th colspan="3" class="text-end px-4">
-                                            সর্বমোট
-                                        </th>
+                                        <th colspan="3" class="text-end px-4"> সর্বমোট </th>
                                         <td class="px-4">
                                             <span class="alinur">৳</span>
                                             <strong>
@@ -195,17 +216,34 @@
 
                         @if ($cart && $cart->items->count())
                             <div class="card-footer">
-                                <form id="coupon_form">
-                                    <div class="form-group mb-2">
-                                        <label for="coupon_code">Have a coupon?</label>
-                                        <input type="text" id="coupon_code" class="form-control"
-                                            placeholder="Enter coupon code">
+                                @if (!$coupon)
+                                    <form id="coupon_form">
+                                        <div class="form-group mb-2">
+                                            <label for="coupon_code">Have a coupon?</label>
+                                            <input type="text" id="coupon_code"
+                                                class="form-control"wire:model="coupon_code"
+                                                placeholder="Enter coupon code">
+                                            @error('coupon_code')
+                                                <small class="text-danger"> {{ $message }} </small>
+                                            @enderror
+                                        </div>
+                                        <button type="button" wire:click="applyCoupon"
+                                            class="btn btn-primary btn-sm"> Apply Coupon
+                                        </button>
+                                        <div id="coupon-message" class="mt-2"></div>
+                                    </form>
+                                @else
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong> {{ $coupon->code }} </strong>
+                                            <br>
+                                            <small class="text-success"> Coupon applied </small>
+                                        </div>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            wire:click="removeCoupon"> Remove
+                                        </button>
                                     </div>
-                                    <button type="button" id="apply_coupon" class="btn btn-primary btn-sm">
-                                        Apply Coupon
-                                    </button>
-                                    <div id="coupon-message" class="mt-2"></div>
-                                </form>
+                                @endif
                             </div>
                         @endif
                     </div>

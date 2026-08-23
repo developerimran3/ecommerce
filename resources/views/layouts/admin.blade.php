@@ -180,19 +180,24 @@
     <script>
         document.addEventListener('livewire:init', () => {
 
-            Livewire.on('close-modal', () => {
+            Livewire.on('open-modal', () => {
+                $('#userModal').modal('show');
+                $('#editProfileModal').modal('show');
+                $('#brandModal').modal('show');
+                $('#categoryModal').modal('show');
+                $('#productModal').modal('show');
+                $('#couponModal').modal('show');
+                $('#shippingModal').modal('show');
+            });
 
+            Livewire.on('close-modal', () => {
                 $('#userModal').modal('hide');
                 $('#editProfileModal').modal('hide');
                 $('#brandModal').modal('hide');
                 $('#categoryModal').modal('hide');
-                $('#productdModal').modal('hide');
-
-                $('.modal-backdrop').remove();
-                $('body').removeClass('modal-open');
-
-                $('#sizes').val([]).trigger('change.select2');
-                $('#colors').val([]).trigger('change.select2');
+                $('#productModal').modal('hide');
+                $('#couponModal').modal('hide');
+                $('#shippingModal').modal('hide');
             });
 
         });

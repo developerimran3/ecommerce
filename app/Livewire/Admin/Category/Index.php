@@ -27,6 +27,12 @@ class Index extends Component
 
     ];
 
+    public function create()
+    {
+        $this->resetInput();
+        $this->dispatch('open-modal');
+    }
+
     public function updatedName()
     {
         $this->validateOnly('name');
@@ -82,6 +88,8 @@ class Index extends Component
         $this->category_id = $category->id;
         $this->name = $category->name;
         $this->oldImage = $category->image;
+
+        $this->dispatch('open-modal');
     }
 
     public function update()

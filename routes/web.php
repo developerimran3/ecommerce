@@ -11,6 +11,8 @@ use App\Livewire\Admin\Profile;
 use App\Livewire\Admin\RolePermission;
 use App\Livewire\Admin\Shipping\ShippingAreaIndex;
 use App\Livewire\Admin\User\Index as UserIndex;
+use App\Livewire\Admin\Coupon\Index as CouponIndex;
+use App\Livewire\Admin\Payment\Index as PaymentIndex;
 use App\Livewire\Auth\Admin\ForgotPassword as AdminForgotPassword;
 use App\Livewire\Auth\Admin\Login as AdminLogin;
 use App\Livewire\Auth\Admin\Register as AdminRegister;
@@ -52,6 +54,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/role-permission', RolePermission::class)
         ->name('admin.role-permission');
+
+
+    Route::get('/coupon', CouponIndex::class)
+        ->name('admin.coupon');
+
+
+    Route::get('/payments', PaymentIndex::class)
+        ->name('admin.payment');
 });
 
 Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,Shop Manager,Editor,Contributor'])->group(function () {
@@ -83,13 +93,8 @@ Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,S
     Route::get('/orders/completed', OrderIndex::class)
         ->name('admin.orders.completed');
 
-
-
     Route::get('/shipping-areas', ShippingAreaIndex::class)
         ->name('admin.shipping');
-
-    // Route::get('/shipping-areas', ShippingAreaIndex::class)
-    //     ->name('admin.coupon');
 
     Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
         ->name('admin.invoice.download');
@@ -143,7 +148,6 @@ Route::middleware(['user.status'])->group(function () {
 
 
 
-
 Route::prefix('customer')->middleware(['auth', 'user.status', 'role:Customer'])->group(function () {
 
     Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
@@ -160,8 +164,6 @@ Route::prefix('customer')->middleware(['auth', 'user.status', 'role:Customer'])-
 
     Route::get('/change-password', PasswordChange::class)
         ->name('customer.password');
-
-
 
     Route::get('/logout', function () {
         Auth::logout();

@@ -51,9 +51,12 @@
                     <div class="profile-card">
                         <div class="card-title-area">
                             <h5> Personal Information </h5>
-                            <button class="btn edit-btn" data-toggle="modal" data-target="#editProfileModal">
+                            <button class="btn edit-btn" wire:click="edit({{ Auth::user()->id }})">
                                 <i class="fa fa-edit"></i> Edit Profile
                             </button>
+                            {{-- <button class="btn btn-sm btn-edit mr-2">
+                                <i class="fa fa-edit"></i>
+                            </button> --}}
                         </div>
 
                         <div class="info-list">
@@ -118,15 +121,13 @@
     </div>
 
     <!-- Edit Profile Modal -->
-
-    <div class="modal fade" id="editProfileModal" wire:ignore.self>
+    <div wire:ignore.self class="modal fade" id="editProfileModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Profile</h5>
                     <button type="button" class="btn-none close" data-dismiss="modal">&times;</button>
                 </div>
-
                 <div class="modal-body">
                     <form wire:submit.prevent="updateProfile">
                         <div class="form-group">

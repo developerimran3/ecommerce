@@ -554,7 +554,7 @@ body {
 }
 
 .table th {
-    background: linear-gradient(90deg, #7c3aed, #5b21b6);
+    background: #7c3aed;
     font-size: 14px;
     color: #fff;
     font-weight: 600;

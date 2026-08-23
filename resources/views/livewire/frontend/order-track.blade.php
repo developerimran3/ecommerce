@@ -40,9 +40,7 @@
                                     <ul>
                                         <li><span>Invoice ID:</span> {{ $order->invoice_no }} </li>
                                         <li><span>Date:</span> {{ $order->created_at->format('Y-m-d H:i:s') }} </li>
-                                        <li><span>Status:</span>
-                                            <p>{{ ucwords($order->order_status) }}</p>
-                                        </li>
+                                        <li><span>Status:</span> {{ ucwords($order->order_status) }} </li>
                                     </ul>
                                 </div>
                                 <table class="table table-bordered tracktable">
@@ -56,23 +54,52 @@
                                     <tbody>
                                         @foreach ($order->items as $item)
                                             <tr>
-                                                <td> {{ str($item->product->name)->limit(30) }} </td>
+                                                <td>
+                                                    {{ Str::limit($item->product?->name ?? 'Product', 30) }}
+                                                </td>
                                                 <td class="text-center"> {{ $item->qty }} </td>
-                                                <td class="text-right"> ৳ {{ number_format($item->subtotal, 2) }}
+                                                <td class="text-right">
+                                                    ৳ {{ number_format($item->subtotal, 2) }}
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
+
                                     <tfoot>
+                                        {{-- Subtotal --}}
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td class="tfoot_bg text-right"><strong>Delivery Charge:</strong> ৳ 150.00
+                                            <td class="tfoot_bg text-right">
+                                                <strong>Subtotal :</strong>
+                                                <span style="color: #008e74"> ৳
+                                                    {{ number_format($order->subtotal ?? 0, 2) }}</span>
                                             </td>
                                         </tr>
+
+                                        {{-- Delivery Charge --}}
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td class="tfoot_bg text-right"><strong>Total:</strong>
-                                                ৳ {{ number_format($order->grand_total, 2) }}
+                                            <td class="tfoot_bg text-right">
+                                                <strong>Delivery Charge :</strong>
+                                                ৳ {{ number_format($order->shipping ?? 0, 2) }}
+                                            </td>
+                                        </tr>
+                                        {{-- Discount --}}
+                                        @if ($order->discount > 0)
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td class="tfoot_bg text-right">
+                                                    <strong>Discount :</strong>
+                                                    ৳ {{ number_format($order->discount ?? 0, 2) }}
+                                                </td>
+                                            </tr>
+                                        @endif
+                                        {{-- Grand Total --}}
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td class="tfoot_bg text-right" style="color:#008e74">
+                                                <strong>Total :</strong>
+                                                <b> ৳ {{ number_format($order->grand_total ?? 0, 2) }}</b>
                                             </td>
                                         </tr>
                                     </tfoot>

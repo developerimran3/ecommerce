@@ -26,6 +26,11 @@ class Index extends Component
 
     public $search = '';
 
+    public function create()
+    {
+        $this->resetInput();
+        $this->dispatch('open-modal');
+    }
 
     public function resetInput()
     {
@@ -41,7 +46,7 @@ class Index extends Component
         $this->status = true;
     }
 
-    public function create()
+    public function store()
     {
         // Only Administrator can create user
         if (auth()->user()->role !== 'Administrator') {
@@ -84,6 +89,7 @@ class Index extends Component
         $this->email    = $user->email;
         $this->phone    = $user->phone;
         $this->role     = $user->role;
+        $this->dispatch('open-modal');
     }
 
     public function update()

@@ -73,17 +73,19 @@
                             Net Total
                         </td>
                         <td>
-                            ৳ {{ number_format($order->grand_total, 2) }}
+                            <b style="color: #008e74"> ৳ {{ number_format($order->subtotal, 2) }}</b>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="text-right">
-                            Discount
-                        </td>
-                        <td>
-                            ৳200
-                        </td>
-                    </tr>
+                    @if ($order->discount > 0)
+                        <tr>
+                            <td class="text-right">
+                                Discount
+                            </td>
+                            <td>
+                                ৳ {{ number_format($order->discount) }}
+                            </td>
+                        </tr>
+                    @endif
                     <tr>
                         <td class="text-right">
                             Shipping Cost

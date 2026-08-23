@@ -87,6 +87,6 @@ class RolePermission extends Component
             ->groupBy('module');
         return view('livewire.admin.role-permission', [
             'permissions' => $permissions,
-        ])->layout('layouts.admin');
+        ])->layout('layouts.admin', ['title' => 'Role Manage']);
     }
 }

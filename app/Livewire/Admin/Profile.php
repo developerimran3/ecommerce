@@ -23,6 +23,13 @@ class Profile extends Component
     public $address;
     public $image;
 
+
+
+    public function edit($id)
+    {
+        Auth::user($id);
+        $this->dispatch('open-modal');
+    }
     /** Update Profile */
     public function updateProfile()
     {

@@ -13,13 +13,12 @@
                                         <i class="fas fa-phone"></i>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                    name="phone" wire:model="phone" placeholder="Enter your  or phone">
+                                <input type="text" class="form-control @error('auth') is-invalid @enderror"
+                                    name="phone" wire:model="auth" placeholder="Enter your phone or email">
                             </div>
-                            @error('phone')
+                            @error('auth')
                                 <div class="text-danger small mb-3">{{ $message }}</div>
                             @enderror
-
 
                             <!-- Password Field -->
                             <div class="input-group mb-3">

@@ -5,90 +5,58 @@ namespace App\Livewire\Auth\Customer;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-use function Laravel\Prompts\title;
-
 class Login extends Component
 {
-    public $phone = '';
+    public $auth = '';
     public $password = '';
     public $remember = false;
 
     protected $rules = [
-        'phone'    => 'required|string',
-        'password' => 'required|min:6',
+        'auth'      => 'required|string',
+        'password'  => 'required|min:6',
     ];
 
     public function login()
     {
         $this->validate();
+        // Determine Email or Phone
+        $loginField = filter_var($this->auth, FILTER_VALIDATE_EMAIL)
+            ? 'email'
+            : 'phone';
 
-        /*
-        |--------------------------------------------------------------------------
-        | Customer Credentials
-        |--------------------------------------------------------------------------
-        */
-
+        //Customer Credentials
         $credentials = [
-            'phone'    => $this->phone,
-            'password' => $this->password,
-            'role'     => 'customer',
+            $loginField => $this->auth,
+            'password'  => $this->password,
+            'role'      => 'Customer',
         ];
 
-        /*
-        |--------------------------------------------------------------------------
-        | Login Attempt
-        |--------------------------------------------------------------------------
-        */
-
+        //Login Attempt
         if (!Auth::attempt($credentials, $this->remember)) {
-
-            $this->addError(
-                'phone',
-                'Invalid phone number or password.'
+            $this->dispatch(
+                'error',
+                message: 'Invalid email/phone or password.'
             );
-
             return;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Regenerate Session
-        |--------------------------------------------------------------------------
-        */
-
+        //Regenerate Session
         session()->regenerate();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Logged In User
-        |--------------------------------------------------------------------------
-        */
-
         $user = Auth::user();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Active User Check
-        |--------------------------------------------------------------------------
-        */
-
+        // Active User Check
         if ($user->status == 0) {
             Auth::logout();
             session()->invalidate();
             session()->regenerateToken();
-            $this->addError(
-                'phone',
-                'Your account is inactive. Please contact Administrator.'
+            $this->dispatch(
+                'error',
+                message: 'Your account is inactive. Please contact Administrator.'
             );
             return;
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Login Successful
-        |--------------------------------------------------------------------------
-        */
-
+        //Login Successful
         $this->dispatch(
             'success',
             message: 'Login successful.'
@@ -99,6 +67,8 @@ class Login extends Component
     public function render()
     {
         return view('livewire.auth.customer.login')
-            ->layout('layouts.frontend', ['title' => 'Customer Login']);
+            ->layout('layouts.frontend', [
+                'title' => 'Customer Login'
+            ]);
     }
 }

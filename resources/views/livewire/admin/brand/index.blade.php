@@ -2,8 +2,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="page-title mb-0">Brand List</h4>
         @if (auth()->user()->hasPermission('brand.create'))
-            <button class="btn btn-purple" data-toggle="modal" data-target="#brandModal" wire:click="resetInput">
-                <i class="fa fa-plus mr-1"></i> Add Brand </button>
+            <button class="btn btn-purple" wire:click="create"> <i class="fa fa-plus mr-1"></i> Add Brand </button>
         @endif
     </div>
 
@@ -78,8 +77,7 @@
                             <td>
                                 <div class="d-flex">
                                     @if (auth()->user()->hasPermission('brand.edit'))
-                                        <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
-                                            data-target="#brandModal" wire:click="edit({{ $brand->id }})">
+                                        <button class="btn btn-sm btn-edit mr-2" wire:click="edit({{ $brand->id }})">
                                             <i class="fa fa-edit"></i>
                                         </button>
                                     @endif
