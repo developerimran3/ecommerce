@@ -104,6 +104,7 @@ class Index extends Component
             auth()->user()->hasPermission('product.create'),
             403
         );
+
         $this->validate();
         $thumbnail = null;
         if ($this->thumbnail) {
@@ -263,6 +264,11 @@ class Index extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('products.delete'),
+            403
+        );
+
         $product = Product::with('images')
             ->findOrFail($id);
 
@@ -373,7 +379,6 @@ class Index extends Component
             'category',
             'brand',
         ])
-
             ->when($this->search, function ($query) {
 
                 $query->where(function ($q) {
@@ -384,7 +389,6 @@ class Index extends Component
             })
 
             ->when($this->filterCategory, function ($query) {
-
                 $query->where(
                     'category_id',
                     $this->filterCategory
@@ -392,7 +396,6 @@ class Index extends Component
             })
 
             ->when($this->filterBrand, function ($query) {
-
                 $query->where(
                     'brand_id',
                     $this->filterBrand
@@ -400,7 +403,6 @@ class Index extends Component
             })
 
             ->when($this->filterStatus !== '', function ($query) {
-
                 $query->where(
                     'status',
                     $this->filterStatus
@@ -408,7 +410,6 @@ class Index extends Component
             })
 
             ->latest()
-
             ->paginate(10);
 
         return view('livewire.admin.product.index', [

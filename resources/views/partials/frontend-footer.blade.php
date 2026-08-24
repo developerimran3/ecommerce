@@ -1,9 +1,6 @@
 <section class="features p-5 bg-white">
-
     <div class="container">
-
         <div class="row">
-
             <div class="col-md-3 col-6 mb-3">
                 <div class="feature-box">
                     <i class="fas fa-truck"></i>

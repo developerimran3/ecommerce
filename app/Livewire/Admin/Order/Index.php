@@ -45,6 +45,11 @@ class Index extends Component
 
     public function updateStatus($id, $status)
     {
+        abort_unless(
+            auth()->user()->hasPermission('orders.status'),
+            403
+        );
+
         $order = Order::findOrFail($id);
         $order->update([
             'order_status' => $status,
@@ -57,6 +62,11 @@ class Index extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('orders.delete'),
+            403
+        );
+
         $order = Order::findOrFail($id);
         if ($order->order_status === 'delivered') {
             $this->dispatch(

@@ -47,6 +47,11 @@ class ShippingAreaIndex extends Component
 
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('shipping.create'),
+            403
+        );
+
         $this->validate();
 
         ShippingArea::create([
@@ -77,6 +82,11 @@ class ShippingAreaIndex extends Component
 
     public function update()
     {
+        abort_unless(
+            auth()->user()->hasPermission('shipping.edit'),
+            403
+        );
+
         $this->validate();
         $shipping = ShippingArea::findOrFail($this->editId);
         $shipping->update([
@@ -95,6 +105,11 @@ class ShippingAreaIndex extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('shipping.delete'),
+            403
+        );
+
         ShippingArea::findOrFail($id)->delete();
 
         $this->dispatch(
@@ -105,6 +120,11 @@ class ShippingAreaIndex extends Component
 
     public function toggleStatus($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('shipping.status'),
+            403
+        );
+
         $shipping = ShippingArea::findOrFail($id);
 
         $shipping->update([

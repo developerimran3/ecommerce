@@ -14,7 +14,7 @@ class RolePermission extends Component
     public function mount()
     {
         abort_unless(
-            auth()->user()->hasPermission('permission.manage'),
+            auth()->user()->hasPermission('permission.view'),
             403
         );
         $this->loadPermissions();

@@ -14,16 +14,18 @@ class Index extends Component
 
     public function updateStatus($id, $status)
     {
-        $payment = Payment::findOrFail($id);
+        abort_unless(
+            auth()->user()->hasPermission('payments.status'),
+            403
+        );
 
+        $payment = Payment::findOrFail($id);
         $payment->update([
             'status' => $status,
         ]);
-
         $payment->order->update([
             'payment_status' => $status,
         ]);
-
         $this->dispatch(
             'success',
             message: 'Payment status updated successfully.'
@@ -33,6 +35,12 @@ class Index extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('payments.delete'),
+            403
+        );
+
+
         $payment = Payment::findOrFail($id);
         $payment->delete();
         $this->dispatch(

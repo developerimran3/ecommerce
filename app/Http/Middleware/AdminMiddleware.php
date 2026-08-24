@@ -8,22 +8,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
-     */
-    public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            return redirect()->route('home');
+            return redirect()->route('admin.login');
         }
+        $adminRoles = [
+            'Administrator',
+            'Editor',
+            'Contributor',
+            'Shop Manager',
+        ];
 
-        if (!in_array(auth()->user()->role, $roles)) {
-            abort(403, 'You do not have permission');
+        if (!in_array(auth()->user()->role, $adminRoles)) {
+            abort(403, 'Admin access denied.');
         }
-
-
         return $next($request);
     }
 }

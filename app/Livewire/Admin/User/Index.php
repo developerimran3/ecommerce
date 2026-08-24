@@ -48,6 +48,11 @@ class Index extends Component
 
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('users.create'),
+            403
+        );
+
         // Only Administrator can create user
         if (auth()->user()->role !== 'Administrator') {
             $this->dispatch(
@@ -94,6 +99,10 @@ class Index extends Component
 
     public function update()
     {
+        abort_unless(
+            auth()->user()->hasPermission('users.edit'),
+            403
+        );
         $currentUser = auth()->user();
         // Only Administrator and Editor can access
         if (!in_array($currentUser->role, ['Administrator', 'Editor'])) {
@@ -138,8 +147,13 @@ class Index extends Component
 
     public function changeStatus($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('users.status'),
+            403
+        );
+
         // Only Administrator can change status
-        if (auth()->user()->role !== 'Administrator' && auth()->user()->role !== 'Editor') {
+        if (auth()->user()->role !== 'Administrator') {
 
             $this->dispatch(
                 'error',
@@ -170,9 +184,13 @@ class Index extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('users.delete'),
+            403
+        );
+
         // Only Administrator can change status
         if (auth()->user()->role !== 'Administrator') {
-
             $this->dispatch(
                 'error',
                 message: 'You do not have permission to change user status.'

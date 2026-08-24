@@ -48,6 +48,12 @@ class Index extends Component
 
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('brand.create'),
+            403
+        );
+
+
         $this->validate();
         // Check if slug already exists
         $slug = Str::slug($this->name);
@@ -89,6 +95,11 @@ class Index extends Component
 
     public function update()
     {
+        abort_unless(
+            auth()->user()->hasPermission('brand.edit'),
+            403
+        );
+
         $brand = Brand::findOrFail($this->brand_id);
         $data = [
             'name' => $this->name,
@@ -124,6 +135,11 @@ class Index extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('brand.delete'),
+            403
+        );
+
         Brand::findOrFail($id)->delete();
         $this->dispatch(
             'success',

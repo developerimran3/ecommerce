@@ -52,8 +52,12 @@ class Index extends Component
 
     public function store()
     {
-        $this->validate();
+        abort_unless(
+            auth()->user()->hasPermission('categories.create'),
+            403
+        );
 
+        $this->validate();
         // Check if slug already exists
         $slug = Str::slug($this->name);
 
@@ -94,6 +98,12 @@ class Index extends Component
 
     public function update()
     {
+        abort_unless(
+            auth()->user()->hasPermission('categories.edit'),
+            403
+        );
+
+
         $category = Category::findOrFail($this->category_id);
 
         $data = [
@@ -114,6 +124,11 @@ class Index extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('categories.delete'),
+            403
+        );
+
         Category::findOrFail($id)->delete();
 
         $this->dispatch('success', message: 'Category deleted successfully.');

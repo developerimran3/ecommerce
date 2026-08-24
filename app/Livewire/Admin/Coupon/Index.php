@@ -47,6 +47,12 @@ class Index extends Component
     //
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('coupons.create'),
+            403
+        );
+
+
         $this->validate();
         if ($this->type === 'percent' && $this->value > 100) {
             $this->addError(
@@ -56,15 +62,15 @@ class Index extends Component
             return;
         }
         CouponModel::create([
-            'code' => strtoupper(trim($this->code)),
-            'type' => $this->type,
-            'value' => $this->value,
+            'code'           => strtoupper(trim($this->code)),
+            'type'           => $this->type,
+            'value'          => $this->value,
             'minimum_amount' => $this->minimum_amount,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'limit' => $this->limit,
-            'used' => 0,
-            'status' => $this->status,
+            'start_date'     => $this->start_date,
+            'end_date'       => $this->end_date,
+            'limit'          => $this->limit,
+            'used'           => 0,
+            'status'         => $this->status,
         ]);
 
         $this->resetForm();
@@ -93,15 +99,20 @@ class Index extends Component
 
     public function update()
     {
+        abort_unless(
+            auth()->user()->hasPermission('coupons.edit'),
+            403
+        );
+
         $this->validate([
-            'code' => 'required|string|max:50',
-            'type' => 'required|in:fixed,percent',
-            'value' => 'required|numeric|min:0',
+            'code'           => 'required|string|max:50',
+            'type'           => 'required|in:fixed,percent',
+            'value'          => 'required|numeric|min:0',
             'minimum_amount' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'limit' => 'nullable|integer|min:1',
-            'status' => 'boolean',
+            'start_date'     => 'required|date',
+            'end_date'       => 'required|date|after_or_equal:start_date',
+            'limit'          => 'nullable|integer|min:1',
+            'status'         => 'boolean',
         ]);
 
         if ($this->type === 'percent' && $this->value > 100) {
@@ -114,14 +125,14 @@ class Index extends Component
 
         $coupon = CouponModel::findOrFail($this->couponId);
         $coupon->update([
-            'code' => strtoupper(trim($this->code)),
-            'type' => $this->type,
-            'value' => $this->value,
+            'code'           => strtoupper(trim($this->code)),
+            'type'           => $this->type,
+            'value'          => $this->value,
             'minimum_amount' => $this->minimum_amount,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'limit' => $this->limit,
-            'status' => $this->status,
+            'start_date'     => $this->start_date,
+            'end_date'       => $this->end_date,
+            'limit'          => $this->limit,
+            'status'         => $this->status,
         ]);
         $this->resetForm();
         $this->dispatch('close-modal');
@@ -133,6 +144,11 @@ class Index extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('coupons.delete'),
+            403
+        );
+
         CouponModel::findOrFail($id)->delete();
         $this->dispatch(
             'success',
@@ -142,6 +158,11 @@ class Index extends Component
 
     public function toggleStatus($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('coupons.status'),
+            403
+        );
+
         $coupon = CouponModel::findOrFail($id);
         $coupon->update([
             'status' => !$coupon->status,

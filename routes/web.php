@@ -34,124 +34,53 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+//PUBLIC ROUTE
+Route::get('/', Home::class)->name('home');
+Route::get('/product/{slug}', ProductDetails::class)
+    ->name('product.details');
 
+Route::get('/checkout', CheckoutPage::class)
+    ->name('checkout');
 
-Route::get('/admin/login', AdminLogin::class)
-    ->name('admin.login');
+Route::get('/order-track', OrderTrack::class)
+    ->name('order.track');
 
-Route::get('/admin/register', AdminRegister::class)
-    ->name('admin.register');
+Route::middleware('guest')->group(function () {
+    //ADMIN GUEST ROUTES
+    Route::get('/admin/login', AdminLogin::class)
+        ->name('admin.login');
 
-Route::get('/admin/forgot-password', AdminForgotPassword::class)
-    ->name('admin.forgot.password');
+    Route::get('/admin/register', AdminRegister::class)
+        ->name('admin.register');
 
-Route::get('/admin/reset-password/{token}', AdminResetPassword::class)
-    ->name('admin.reset.password');
+    Route::get('/admin/forgot-password', AdminForgotPassword::class)
+        ->name('admin.forgot.password');
 
+    Route::get('/admin/reset-password/{token}', AdminResetPassword::class)
+        ->name('admin.reset.password');
 
+    //CUSTOMER GUEST ROUTES
+    Route::get('/customer/login', CustomerLogin::class)
+        ->name('customer.login');
 
-Route::middleware(['auth'])->group(function () {
+    Route::get('/customer/register', CustomerRegister::class)
+        ->name('customer.register');
 
-    Route::get('/admin/role-permission', RolePermission::class)
-        ->name('admin.role-permission');
+    Route::get('/customer/forgot-password', CustomerForgotPassword::class)
+        ->name('customer.forgot.password');
 
-
-    Route::get('/coupon', CouponIndex::class)
-        ->name('admin.coupon');
-
-
-    Route::get('/payments', PaymentIndex::class)
-        ->name('admin.payment');
-});
-
-Route::prefix('admin')->middleware(['auth', 'user.status', 'role:Administrator,Shop Manager,Editor,Contributor'])->group(function () {
-
-    Route::get('users/profile', Profile::class)
-        ->name('users.profile');
-
-    Route::get('/dashboard', Dashboard::class)
-        ->name('admin.dashboard');
-
-    Route::get('/categories', CategoryIndex::class)
-        ->name('admin.categories');
-
-    Route::get('/brands', BrandIndex::class)
-        ->name('admin.brands');
-
-    Route::get('/products', ProductIndex::class)
-        ->name('admin.products');
-
-    Route::get('/orders', OrderIndex::class)
-        ->name('admin.orders');
-
-    Route::get('/orders/pending', OrderIndex::class)
-        ->name('admin.orders.pending');
-
-    Route::get('/orders/cancelled', OrderIndex::class)
-        ->name('admin.orders.cancelled');
-
-    Route::get('/orders/completed', OrderIndex::class)
-        ->name('admin.orders.completed');
-
-    Route::get('/shipping-areas', ShippingAreaIndex::class)
-        ->name('admin.shipping');
-
-    Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
-        ->name('admin.invoice.download');
-
-    Route::get('/users', UserIndex::class)
-        ->name('admin.users');
-
-    Route::get('/reviews', UserIndex::class)
-        ->name('admin.reviews');
-
-    Route::get('/media', MediaIndex::class)
-        ->name('admin.media');
-
-    Route::get('/logout', function () {
-        Auth::logout();
-        return redirect('/admin/login');
-    })->name('admin.logout');
+    Route::get('/customer/reset-password/{token}', CustomerResetPassword::class)
+        ->name('customer.reset.password');
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| CUSTOMER PROTECTED ROUTES
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/customer/login', CustomerLogin::class)
-    ->name('customer.login');
-
-Route::get('/customer/register', CustomerRegister::class)
-    ->name('customer.register');
-
-Route::get('/customer/forgot-password', CustomerForgotPassword::class)
-    ->name('customer.forgot.password');
-
-Route::get('/customer/reset-password/{token}', CustomerResetPassword::class)
-    ->name('customer.reset.password');
-
-
-Route::middleware(['user.status'])->group(function () {
-
-    Route::get('/', Home::class)->name('home');
-
-    Route::get('/product/{slug}', ProductDetails::class)
-        ->name('product.details');
-
-    Route::get('/checkout', CheckoutPage::class)
-        ->name('checkout');
-
-    Route::get('/order-success/{order}', OrderSuccess::class)
-        ->name('order.success');
-
-    Route::get('/order-track', OrderTrack::class)
-        ->name('order.track');
-});
-
-
-
-Route::prefix('customer')->middleware(['auth', 'user.status', 'role:Customer'])->group(function () {
-
-    Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
-        ->name('customer.invoice.download');
+Route::prefix('customer')->middleware(['auth', 'active', 'customer',])->group(function () {
 
     Route::get('/my-account', MyAccount::class)
         ->name('account');
@@ -165,8 +94,99 @@ Route::prefix('customer')->middleware(['auth', 'user.status', 'role:Customer'])-
     Route::get('/change-password', PasswordChange::class)
         ->name('customer.password');
 
+    Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
+        ->name('customer.invoice.download');
+
+    Route::get('/order-success/{order}', OrderSuccess::class)
+        ->name('order.success');
+
     Route::get('/logout', function () {
         Auth::logout();
-        return redirect('/');
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('home');
     })->name('customer.logout');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN PROTECTED ROUTES
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function () {
+
+    Route::get('/dashboard', Dashboard::class)
+        ->name('admin.dashboard');
+
+    Route::get('users/profile', Profile::class)
+        ->name('users.profile');
+
+    Route::get('/categories', CategoryIndex::class)
+        ->middleware('permission:categories.view')
+        ->name('admin.categories');
+
+    Route::get('/brands', BrandIndex::class)
+        ->middleware('permission:brands.view')
+        ->name('admin.brands');
+
+    Route::get('/products', ProductIndex::class)
+        ->middleware('permission:products.view')
+        ->name('admin.products');
+
+    Route::get('/orders', OrderIndex::class)
+        ->middleware('permission:orders.view')
+        ->name('admin.orders');
+
+    Route::get('/orders/pending', OrderIndex::class)
+        ->middleware('permission:orders.view')
+        ->name('admin.orders.pending');
+
+    Route::get('/orders/cancelled', OrderIndex::class)
+        ->middleware('permission:orders.view')
+        ->name('admin.orders.cancelled');
+
+    Route::get('/orders/completed', OrderIndex::class)
+        ->middleware('permission:orders.view')
+        ->name('admin.orders.completed');
+
+    Route::get('/shipping-areas', ShippingAreaIndex::class)
+        ->middleware('permission:shipping.view')
+        ->name('admin.shipping');
+
+    Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
+        ->middleware('permission:invoices.view')
+        ->name('admin.invoice.download');
+
+    Route::get('/users', UserIndex::class)
+        ->middleware('permission:users.view')
+        ->name('admin.users');
+
+    Route::get('/reviews', UserIndex::class)
+        ->middleware('permission:reviews.view')
+        ->name('admin.reviews');
+
+    Route::get('/media', MediaIndex::class)
+        ->middleware('permission:media.view')
+        ->name('admin.media');
+
+    Route::get('/role-permissions', RolePermission::class)
+        ->middleware('role:Administrator')
+        ->name('admin.role-permissions');
+
+    Route::get('/coupon', CouponIndex::class)
+        ->middleware('permission:coupons.view')
+        ->name('admin.coupon');
+
+    Route::get('/payments', PaymentIndex::class)
+        ->middleware('permission:payments.view')
+        ->name('admin.payment');
+
+    Route::get('/logout', function () {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('admin.login');
+    })->name('admin.logout');
 });

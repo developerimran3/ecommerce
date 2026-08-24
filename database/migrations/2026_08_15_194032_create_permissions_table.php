@@ -19,54 +19,91 @@ return new class extends Migration
         });
 
         $permissions = [
-            // Product
-            ['name' => 'product.manage', 'module' => 'product',   'action' => 'manage'],
-            ['name' => 'product.create', 'module' => 'product',   'action' => 'create'],
-            ['name' => 'product.edit',   'module' => 'product',   'action' => 'edit'],
-            ['name' => 'product.delete', 'module' => 'product',   'action' => 'delete'],
 
-            // Category
-            ['name' => 'category.manage', 'module' => 'category', 'action' => 'manage'],
-            ['name' => 'category.create', 'module' => 'category', 'action' => 'create'],
-            ['name' => 'category.edit',   'module' => 'category', 'action' => 'edit'],
-            ['name' => 'category.delete', 'module' => 'category', 'action' => 'delete'],
-            ['name' => 'category.status', 'module' => 'category', 'action' => 'status'],
+            // categories
+            ['name' => 'categories.view',   'module' => 'categories', 'action' => 'view'],
+            ['name' => 'categories.create', 'module' => 'categories', 'action' => 'create'],
+            ['name' => 'categories.edit',   'module' => 'categories', 'action' => 'edit'],
+            ['name' => 'categories.delete', 'module' => 'categories', 'action' => 'delete'],
+            ['name' => 'categories.status', 'module' => 'categories', 'action' => 'status'],
 
             // Brand
-            ['name' => 'brand.manage', 'module' => 'brand', 'action' => 'manage'],
-            ['name' => 'brand.create', 'module' => 'brand', 'action' => 'create'],
-            ['name' => 'brand.edit',   'module' => 'brand', 'action' => 'edit'],
-            ['name' => 'brand.delete', 'module' => 'brand', 'action' => 'delete'],
-            ['name' => 'brand.status', 'module' => 'brand', 'action' => 'status'],
+            ['name' => 'brands.view',   'module' => 'brands', 'action' => 'view'],
+            ['name' => 'brands.create', 'module' => 'brands', 'action' => 'create'],
+            ['name' => 'brands.edit',   'module' => 'brands', 'action' => 'edit'],
+            ['name' => 'brands.delete', 'module' => 'brands', 'action' => 'delete'],
+            ['name' => 'brands.status', 'module' => 'brands', 'action' => 'status'],
 
-            // Tag
-            ['name' => 'tag.manage', 'module' => 'tag', 'action' => 'manage'],
-            ['name' => 'tag.create', 'module' => 'tag', 'action' => 'create'],
-            ['name' => 'tag.edit',   'module' => 'tag', 'action' => 'edit'],
-            ['name' => 'tag.delete', 'module' => 'tag', 'action' => 'delete'],
-            ['name' => 'tag.status', 'module' => 'tag', 'action' => 'status'],
+            // products
+            ['name' => 'products.view',   'module' => 'products',   'action' => 'view'],
+            ['name' => 'products.create', 'module' => 'products',   'action' => 'create'],
+            ['name' => 'products.edit',   'module' => 'products',   'action' => 'edit'],
+            ['name' => 'products.delete', 'module' => 'products',   'action' => 'delete'],
 
-            // order
-            ['name' => 'order.manage',   'module' => 'order', 'action' => 'manage'],
-            ['name' => 'order.invoice',  'module' => 'order', 'action' => 'invoice'],
-            ['name' => 'order.view',     'module' => 'order', 'action' => 'view'],
-            ['name' => 'order.delete',   'module' => 'order', 'action' => 'delete'],
-            ['name' => 'order.status',   'module' => 'order', 'action' => 'status'],
+            // tags
+            ['name' => 'tags.view',   'module' => 'tags', 'action' => 'view'],
+            ['name' => 'tags.create', 'module' => 'tags', 'action' => 'create'],
+            ['name' => 'tags.edit',   'module' => 'tags', 'action' => 'edit'],
+            ['name' => 'tags.delete', 'module' => 'tags', 'action' => 'delete'],
+            ['name' => 'tags.status', 'module' => 'tags', 'action' => 'status'],
+
+            // orders
+            ['name' => 'orders.create',   'module' => 'orders', 'action' => 'create'],
+            ['name' => 'orders.view',     'module' => 'orders', 'action' => 'view'],
+            ['name' => 'orders.edit',     'module' => 'orders', 'action' => 'edit'],
+            ['name' => 'orders.delete',   'module' => 'orders', 'action' => 'delete'],
+            ['name' => 'orders.status',   'module' => 'orders', 'action' => 'status'],
+
+            // Shipping
+            ['name' => 'shipping.view',   'module' => 'shipping', 'action' => 'view'],
+            ['name' => 'shipping.create', 'module' => 'shipping', 'action' => 'create'],
+            ['name' => 'shipping.edit',   'module' => 'shipping', 'action' => 'edit'],
+            ['name' => 'shipping.delete', 'module' => 'shipping', 'action' => 'delete'],
+            ['name' => 'shipping.status', 'module' => 'shipping', 'action' => 'status'],
 
             // User
-            ['name' => 'user.manage', 'module' => 'user', 'action' => 'manage'],
+            ['name' => 'user.view',   'module' => 'user', 'action' => 'view'],
             ['name' => 'user.create', 'module' => 'user', 'action' => 'create'],
             ['name' => 'user.edit',   'module' => 'user', 'action' => 'edit'],
             ['name' => 'user.delete', 'module' => 'user', 'action' => 'delete'],
             ['name' => 'user.status', 'module' => 'user', 'action' => 'status'],
 
+            // Coupons
+            ['name' => 'coupons.view',   'module' => 'coupons', 'action' => 'view'],
+            ['name' => 'coupons.create', 'module' => 'coupons', 'action' => 'create'],
+            ['name' => 'coupons.edit',   'module' => 'coupons', 'action' => 'edit'],
+            ['name' => 'coupons.delete', 'module' => 'coupons', 'action' => 'delete'],
+            ['name' => 'coupons.status', 'module' => 'coupons', 'action' => 'status'],
+
+            // Payments
+            ['name' => 'payments.view',   'module' => 'payments', 'action' => 'view'],
+            ['name' => 'payments.create', 'module' => 'payments', 'action' => 'create'],
+            ['name' => 'payments.edit',   'module' => 'payments', 'action' => 'edit'],
+            ['name' => 'payments.delete', 'module' => 'payments', 'action' => 'delete'],
+            ['name' => 'payments.status', 'module' => 'payments', 'action' => 'status'],
+
+            // reviews
+            ['name' => 'reviews.view',   'module' => 'reviews', 'action' => 'view'],
+            ['name' => 'reviews.create', 'module' => 'reviews', 'action' => 'create'],
+            ['name' => 'reviews.edit',   'module' => 'reviews', 'action' => 'edit'],
+            ['name' => 'reviews.delete', 'module' => 'reviews', 'action' => 'delete'],
+            ['name' => 'reviews.status', 'module' => 'reviews', 'action' => 'status'],
+
+            // Media
+            ['name' => 'media.view',   'module' => 'media', 'action' => 'view'],
+            ['name' => 'media.create', 'module' => 'media', 'action' => 'create'],
+            ['name' => 'media.edit',   'module' => 'media', 'action' => 'edit'],
+            ['name' => 'media.delete', 'module' => 'media', 'action' => 'delete'],
+
             // site Setting
-            ['name' => 'setting.manage',   'module' => 'setting', 'action' => 'manage'],
-            //review
-            ['name' => 'review.manage',   'module' => 'review', 'action' => 'manage'],
+            ['name' => 'setting.view',    'module' => 'setting', 'action' => 'view'],
+
+            //Invoice
+            ['name' => 'invoices.view',    'module' => 'invoices', 'action' => 'view'],
+            ['name' => 'invoices.download', 'module' => 'invoices', 'action' => 'download'],
 
             //permission
-            ['name' => 'permission.manage',   'module' => 'permission', 'action' => 'manage'],
+            ['name' => 'permission.view',     'module' => 'permission', 'action' => 'view'],
 
         ];
 
