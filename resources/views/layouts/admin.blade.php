@@ -35,7 +35,7 @@
             @include('partials.navbar')
 
             <!-- Content -->
-            <div class="container-fluid p-5">
+            <div class="container-fluid p-3">
                 {{ $slot ?? '' }}
                 @yield('content')
             </div>
@@ -204,6 +204,7 @@
         });
     </script>
     @livewireScripts
+
 </body>
 
 </html>

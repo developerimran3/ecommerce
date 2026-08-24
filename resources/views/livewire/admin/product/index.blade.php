@@ -2,65 +2,64 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="page-title">Products</h4>
 
-        @if (auth()->user()->hasPermission('product.create'))
+        @if (auth()->user()->hasPermission('products.create'))
             <button class="btn btn-purple" wire:click="create"> <i class="fas fa-shopping-cart"></i> Add Product </button>
         @endif
     </div>
 
     <div class="row">
         <div class="col-lg-12 mb-4">
-            <div class="table-card">
+            <div class="table-card p-4 bg-light">
                 <!-- Filter Area -->
-                <div class="p-4 border-bottom">
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <input type="text" class="form-control" placeholder="🔍 Search product..."
-                                wire:model.live="search">
-                        </div>
 
-                        <div class="col-md-3 mb-3">
-                            <select class="form-control" wire:model.live="filterCategory">
-                                <option value="">All Categories</option>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <input type="text" class="form-control" placeholder="🔍 Search product..."
+                            wire:model.live="search">
+                    </div>
 
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="col-md-3 mb-3">
+                        <select class="form-control" wire:model.live="filterCategory">
+                            <option value="">All Categories</option>
 
-                        <div class="col-md-3 mb-3">
-                            <select class="form-control" wire:model.live="filterBrand">
-                                <option value="">All Brands</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                                @foreach ($brands as $brand)
-                                    <option value="{{ $brand->id }}">
-                                        {{ $brand->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="col-md-3 mb-3">
+                        <select class="form-control" wire:model.live="filterBrand">
+                            <option value="">All Brands</option>
 
-                        <div class="col-md-2 mb-3">
-                            <select class="form-control" wire:model.live="filterStatus">
-                                <option value="">Status</option>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </div>
+                            @foreach ($brands as $brand)
+                                <option value="{{ $brand->id }}">
+                                    {{ $brand->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                        <div class="col-md-1 mb-3">
-                            <button class="btn btn-light border w-100" wire:click="clearFilters">
-                                <i class="fa fa-refresh"></i>
-                            </button>
-                        </div>
+                    <div class="col-md-2 mb-3">
+                        <select class="form-control" wire:model.live="filterStatus">
+                            <option value="">Status</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 mb-3">
+                        <button class="btn btn-light border w-100" wire:click="clearFilters">
+                            <i class="fa fa-refresh"></i>
+                        </button>
                     </div>
                 </div>
-                <!-- Table -->
 
+                <!-- Table -->
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover table-bordered mb-0">
                         <thead>
                             <tr>
                                 <th>SL</th>
@@ -73,7 +72,7 @@
                                 <th>Stock</th>
                                 <th>Status</th>
                                 <th>Publish</th>
-                                <th class="text-center">Action</th>
+                                <th width="130">Action</th>
                             </tr>
                         </thead>
 
@@ -99,31 +98,28 @@
                                     <td>{{ $product->stock }}</td>
                                     <td>
                                         @if ($product->status)
-                                            <span class="badge-status"> Active </span>
+                                            <span class="badge-success"> Active </span>
                                         @else
                                             <span class="badge-inactive"> Inactive </span>
                                         @endif
                                     </td>
                                     <td> {{ $product->created_at->format('d M Y') }}</td>
                                     <td>
-                                        <div class="actions">
-                                            @if (auth()->user()->hasPermission('product.edit'))
-                                                <button class="btn btn-sm btn-edit mr-2"
-                                                    wire:click="edit({{ $product->id }})">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                            @endif
+                                        <button wire:click="edit({{ $product->id }})" class="btn btn-sm btn-info">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
 
-                                            @if (auth()->user()->hasPermission('product.delete'))
-                                                <a class="btn btn-sm bg-danger-light"
-                                                    wire:click="delete({{ $product->id }})"
-                                                    wire:confirm="Are you sure? product Delete?">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            @endif
+                                        <button wire:click="delete({{ $product->id }})"
+                                            wire:confirm="Are you sure you want to delete this Product?"
+                                            class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
 
+                                        <button wire:click="toggleStatus({{ $product->id }})"
+                                            class="btn btn-sm btn-warning">
+                                            <i class="fas fa-power-off"></i>
+                                        </button>
 
-                                        </div>
                                     </td>
                                 </tr>
                             @empty
@@ -361,36 +357,3 @@
     </div>
 
 </div>
-@script
-    <script>
-        function initSelect2() {
-
-            $('#sizes').select2({
-                theme: 'bootstrap4',
-                width: '100%',
-                placeholder: 'Select Size'
-            });
-
-            $('#colors').select2({
-                theme: 'bootstrap4',
-                width: '100%',
-                placeholder: 'Select Color'
-            });
-
-            $('#sizes').off('change').on('change', function() {
-                $wire.set('sizes', $(this).val());
-            });
-
-            $('#colors').off('change').on('change', function() {
-                $wire.set('colors', $(this).val());
-            });
-        }
-
-        initSelect2();
-
-        Livewire.on('setSelect2Values', (data) => {
-            $('#sizes').val(data.sizes).trigger('change.select2');
-            $('#colors').val(data.colors).trigger('change.select2');
-        });
-    </script>
-@endscript

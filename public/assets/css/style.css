@@ -8,7 +8,7 @@
 
 body {
     font-family: "Inter", sans-serif;
-    background: #f5f7fb;
+    background: #c0ecf8;
     overflow-x: hidden;
     font-size: 14px;
 }
@@ -306,7 +306,7 @@ body {
     width: 260px;
     height: 100vh;
 
-    background: #fff;
+    background: #000000;
     border-right: 1px solid #eee;
 
     overflow-y: auto;
@@ -321,8 +321,8 @@ body {
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-    background: #cfcfcf;
-    border-radius: 10px;
+    background: #7c3aed;
+    border-radius: 60px;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover {
@@ -330,6 +330,7 @@ body {
 }
 
 .logo {
+    background-color: #fff;
     padding: 16px;
     border-bottom: 2px solid #eee;
 }
@@ -345,7 +346,7 @@ body {
     padding: 14px 18px;
     margin-bottom: 6px;
     border-radius: 10px;
-    color: #374151;
+    color: #ffffff;
     font-size: 14px;
     font-weight: 600;
     transition: 0.25s;
@@ -529,13 +530,6 @@ body {
 /* =======================
    Tables
 ======================= */
-
-.table-card {
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-}
 
 .table-header-purple {
     background: linear-gradient(90deg, #7c3aed, #5b21b6);
@@ -798,26 +792,8 @@ body {
 }
 
 /* =========================
-   BADGE
-========================= */
-
-.badge-inactive {
-    background: #fee2e2;
-    color: #dc2626;
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-/* =========================
    ACTION BUTTON
 ========================= */
-
-.actions {
-    display: flex;
-    gap: 8px;
-}
 
 .bg-success-light {
     background: #ecfdf5;
@@ -996,14 +972,6 @@ textarea.form-control {
     color: #fff;
 }
 
-.badge-inactive {
-    background: #fee2e2;
-    color: #dc2626;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
 /* proguct Add */
 
 .product-modal {
@@ -1139,6 +1107,19 @@ textarea.form-control {
 
 .order-total span {
     color: #059669;
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.badge-inactive {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .badge-status {

@@ -135,8 +135,13 @@ class Index extends Component
     }
 
 
-    public function changeStatus($id)
+    public function toggleStatus($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('categories.status'),
+            403
+        );
+
         $category = Category::findOrFail($id);
         $category->update([
             'status' => !$category->status,

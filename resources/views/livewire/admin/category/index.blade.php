@@ -1,110 +1,105 @@
 <div>
-    <div class="content container">
-        <!-- Page Header -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="page-title mb-0">Category List</h4>
-            @if (auth()->user()->hasPermission('category.create'))
-                <button class="btn btn-purple" wire:click="create">
-                    <i class="fas fa-th-list mr-1"></i> Add Category </button>
-            @endif
-        </div>
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="page-title mb-0">Category List</h4>
+        @if (auth()->user()->hasPermission('categories.create'))
+            <button class="btn btn-purple" wire:click="create">
+                <i class="fas fa-th-list mr-1"></i> Add Category </button>
+        @endif
+    </div>
 
-        <div class="table-card">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th width="60">#</th>
-                            <th>Image</th>
-                            <th>Category</th>
-                            <th>Slug</th>
-                            <th>Status Change</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($categories as $category)
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="table-card p-4 bg-light">
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered align-middle mb-0">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="category-img-wrapper">
-                                            @if ($category->image)
-                                                <img src="{{ asset('storage/' . $category->image) }}"
-                                                    class="category-img">
-                                            @else
-                                                <div class="category-placeholder">
-                                                    <i class="fa fa-image"></i>
-                                                </div>
-                                            @endif
+                                <th width="60">#</th>
+                                <th>Image</th>
+                                <th>Category</th>
+                                <th>Slug</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th width="130">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($categories as $category)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="category-img-wrapper">
+                                                @if ($category->image)
+                                                    <img src="{{ asset('storage/' . $category->image) }}"
+                                                        class="category-img">
+                                                @else
+                                                    <div class="category-placeholder">
+                                                        <i class="fa fa-image"></i>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ml-3">
-                                        <h6 class="mb-0 font-weight-bold">
-                                            {{ $category->name }}
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="text-muted">
-                                        {{ $category->slug }}
-                                    </span>
-                                </td>
-                                <td>
-                                    @if (auth()->user()->hasPermission('category.status'))
-                                        <div class="custom-control custom-switch d-inline-block"
-                                            style="transform: scale(1.4); transform-origin: left center;">
-                                            <input type="checkbox" class="custom-control-input"
-                                                id="status{{ $category->id }}" {{ $category->status ? 'checked' : '' }}
-                                                wire:click="changeStatus({{ $category->id }})">
-
-                                            <label class="custom-control-label" for="status{{ $category->id }}"></label>
+                                    </td>
+                                    <td>
+                                        <div class="ml-3">
+                                            <h6 class="mb-0 font-weight-bold">
+                                                {{ $category->name }}
+                                            </h6>
                                         </div>
-                                    @endif
-                                </td>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted">
+                                            {{ $category->slug }}
+                                        </span>
+                                    </td>
 
-                                <td>
-                                    {{ $category->created_at->format('d M Y') }}
-                                </td>
 
-                                <td>
-                                    @if ($category->status)
-                                        <span class="badge-status"> Active </span>
-                                    @else
-                                        <span class="badge-inactive"> Inactive </span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="d-flex">
-                                        @if (auth()->user()->hasPermission('category.edit'))
-                                            <button class="btn btn-sm btn-edit mr-2"
-                                                wire:click="edit({{ $category->id }})">
-                                                <i class="fa fa-edit"></i>
+                                    <td>
+                                        {{ $category->created_at->format('d M Y') }}
+                                    </td>
+
+                                    <td>
+                                        @if ($category->status)
+                                            <span class="badge-success"> Active </span>
+                                        @else
+                                            <span class="badge-inactive"> Inactive </span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (auth()->user()->hasPermission('categories.edit'))
+                                            <button wire:click="edit({{ $category->id }})" class="btn btn-sm btn-info">
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                         @endif
-                                        @if (auth()->user()->hasPermission('category.delete'))
-                                            <button class="btn btn-sm btn-delete"
-                                                wire:click="delete({{ $category->id }})"
-                                                wire:confirm="Delete this category?"> <i class="fa fa-trash"></i>
+                                        @if (auth()->user()->hasPermission('categories.delete'))
+                                            <button wire:click="delete({{ $category->id }})"
+                                                wire:confirm="Are you sure you want to delete this Category?"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-4"> No Data Found </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div class="p-3">
-                {{ $categories->links() }}
+                                        @if (auth()->user()->hasPermission('categories.status'))
+                                            <button wire:click="toggleStatus({{ $category->id }})"
+                                                class="btn btn-sm btn-warning">
+                                                <i class="fas fa-power-off"></i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4"> No Data Found </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3">
+                    {{ $categories->links() }}
+                </div>
             </div>
         </div>
 
@@ -162,3 +157,5 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>

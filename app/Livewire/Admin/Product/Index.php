@@ -262,6 +262,24 @@ class Index extends Component
     }
 
 
+    public function toggleStatus($id)
+    {
+        abort_unless(
+            auth()->user()->hasPermission('products.status'),
+            403
+        );
+
+        $product = Product::findOrFail($id);
+        $product->update([
+            'status' => !$product->status,
+        ]);
+        $this->dispatch(
+            'success',
+            message: 'Product status updated successfully.'
+        );
+    }
+
+
     public function delete($id)
     {
         abort_unless(

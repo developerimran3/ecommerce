@@ -118,10 +118,13 @@ class Index extends Component
         $this->resetInput();
     }
 
-
-
-    public function changeStatus($id)
+    public function toggleStatus($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('brands.status'),
+            403
+        );
+
         $brand = Brand::findOrFail($id);
         $brand->update([
             'status' => !$brand->status,
@@ -131,6 +134,9 @@ class Index extends Component
             message: 'Brand status updated successfully.'
         );
     }
+
+
+
 
 
     public function delete($id)

@@ -1,18 +1,16 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="page-title mb-0">User List</h4>
-        @if (auth()->user()->hasPermission('user.create'))
+        @if (auth()->user()->hasPermission('users.create'))
             <button class="btn btn-purple" wire:click="create">
                 <i class="fas fa-user-plus mr-1"></i> Add New User
             </button>
         @endif
-
     </div>
 
-    <div class="table-card">
-
+    <div class="table-card p-4 bg-light">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover table-bordered mb-0">
                 <thead>
                     <tr>
                         <th width="60">#</th>
@@ -20,7 +18,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Status Change</th>
+
                         <th>Role</th>
                         <th>Status</th>
                         <th>Date</th>
@@ -53,24 +51,13 @@
                             <td>
                                 <span class="text-muted">{{ $user->phone ?? 'N/A' }}</span>
                             </td>
-                            <td>
-                                @if (auth()->user()->hasPermission('user.status'))
-                                    <div class="custom-control custom-switch d-inline-block"
-                                        style="transform: scale(1.4); transform-origin: left center;">
-                                        <input type="checkbox" class="custom-control-input"
-                                            id="status{{ $user->id }}" {{ $user->status ? 'checked' : '' }}
-                                            wire:click="changeStatus({{ $user->id }})">
 
-                                        <label class="custom-control-label" for="status{{ $user->id }}"></label>
-                                    </div>
-                                @endif
-                            </td>
                             <td>
                                 <span class=" badge-primary p-1 px-2">{{ $user->role }}</span>
                             </td>
                             <td>
                                 @if ($user->status)
-                                    <span class="badge-status"> Active </span>
+                                    <span class="badge-success"> Active </span>
                                 @else
                                     <span class="badge-inactive"> Inactive </span>
                                 @endif
@@ -79,20 +66,25 @@
                                 {{ $user->created_at->format('d M Y') }}
                             </td>
                             <td>
-                                <div class="d-flex">
-                                    @if (auth()->user()->hasPermission('user.edit'))
-                                        <button class="btn btn-sm btn-edit mr-2"
-                                            wire:click="edit({{ $user->id }})">
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                    @endif
-                                    @if (auth()->user()->hasPermission('user.delete'))
-                                        <button class="btn btn-sm btn-delete" wire:click="delete({{ $user->id }})"
-                                            wire:confirm="Are you sure you want to delete this user?">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    @endif
-                                </div>
+                                @if (auth()->user()->hasPermission('users.edit'))
+                                    <button wire:click="edit({{ $user->id }})" class="btn btn-sm btn-info">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('users.delete'))
+                                    <button wire:click="delete({{ $user->id }})"
+                                        wire:confirm="Are you sure you want to delete this user?"
+                                        class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                @endif
+                                @if (auth()->user()->hasPermission('users.delete'))
+                                    <button wire:click="toggleStatus({{ $user->id }})"
+                                        class="btn btn-sm btn-warning">
+                                        <i class="fas fa-power-off"></i>
+                                    </button>
+                                @endif
                             </td>
                         </tr>
                     @empty

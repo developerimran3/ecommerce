@@ -9,8 +9,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 
-
-
 class Index extends Component
 {
     use WithPagination;
@@ -145,7 +143,7 @@ class Index extends Component
         $this->reset();
     }
 
-    public function changeStatus($id)
+    public function toggleStatus($id)
     {
         abort_unless(
             auth()->user()->hasPermission('users.status'),

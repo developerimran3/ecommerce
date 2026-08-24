@@ -1,35 +1,42 @@
 <div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="page-title">Orders</h4>
+
+        @if (auth()->user()->hasPermission('orders.create'))
+            <button class="btn btn-purple" wire:click="create"> <i class="fas fa-shopping-cart"></i> Add Orders </button>
+        @endif
+    </div>
+
     <div class="row">
         <div class="col-lg-12 mb-4">
-            <div class="table-card">
+            <div class="table-card p-4 bg-light">
                 <!-- Filter Area -->
-                <div class="p-4 border-bottom">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <input type="text" class="form-control" placeholder="🔍 Search invoice, name, phone..."
-                                wire:model.live="search">
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <select class="form-control" wire:model.live="status">
-                                <option value=""> All Status </option>
-                                <option value="pending"> Pending </option>
-                                <option value="confirmed"> Confirmed </option>
-                                <option value="processing"> Processing </option>
-                                <option value="shipped"> Shipped </option>
-                                <option value="delivered"> Delivered </option>
-                                <option value="cancelled"> Cancelled </option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 mb-3">
-                            <button class="btn btn-light border w-100" wire:click="clearFilters">
-                                <i class="fa fa-refresh"></i>
-                            </button>
-                        </div>
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <input type="text" class="form-control" placeholder="🔍 Search invoice, name, phone..."
+                            wire:model.live="search">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <select class="form-control" wire:model.live="status">
+                            <option value=""> All Status </option>
+                            <option value="pending"> Pending </option>
+                            <option value="confirmed"> Confirmed </option>
+                            <option value="processing"> Processing </option>
+                            <option value="shipped"> Shipped </option>
+                            <option value="delivered"> Delivered </option>
+                            <option value="cancelled"> Cancelled </option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mb-3">
+                        <button class="btn btn-light border w-100" wire:click="clearFilters">
+                            <i class="fa fa-refresh"></i>
+                        </button>
                     </div>
                 </div>
+
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover table-bordered mb-0">
                         <thead>
                             <tr>
                                 <th> SL </th>
@@ -74,7 +81,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $order->created_at->format('d M Y') }}
+                                        {{ $order->created_at->format('d M Y h:i A') }}
                                     </td>
                                     <td>
                                         <select class="form-control form-control-sm d-inline" style="width:120px"
@@ -101,31 +108,33 @@
                                     </td>
 
                                     <td>
-                                        <div class="d-flex">
-                                            @if (auth()->user()->hasPermission('order.invoice'))
-                                                <a href="{{ route('admin.invoice.download', $order->id) }}"
-                                                    target="_blank" class="btn btn-view btn-sm mr-2">
-                                                    <i class="fa-solid fa-download"></i>
-                                                </a>
-                                            @endif
-                                            @if (auth()->user()->hasPermission('order.view'))
-                                                <button class="btn btn-sm btn-edit mr-2" data-toggle="modal"
-                                                    data-target="#orderModal"
-                                                    wire:click="showOrder({{ $order->id }})">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
-                                            @endif
-                                            @if (auth()->user()->hasPermission('order.delete'))
-                                                <button class="btn btn-sm btn-delete"
-                                                    wire:click="delete({{ $order->id }})"
-                                                    wire:confirm="Are you sure you want to delete this user?">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            @endif
 
+                                        @if (auth()->user()->hasPermission('invoices.view'))
+                                            <a href="{{ route('admin.invoice.download', $order->id) }}" target="_blank"
+                                                class="btn btn-sm btn-view">
+                                                <i class="fa-solid fa-download"></i>
+                                            </a>
+                                        @endif
+                                        @if (auth()->user()->hasPermission('orders.view'))
+                                            <button class="btn btn-sm btn-edit" data-toggle="modal"
+                                                data-target="#orderModal" wire:click="showOrder({{ $order->id }})">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        @endif
 
+                                        @if (auth()->user()->hasPermission('orders.edit'))
+                                            <button wire:click="edit({{ $order->id }})" class="btn btn-sm btn-info">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        @endif
 
-                                        </div>
+                                        @if (auth()->user()->hasPermission('orders.delete'))
+                                            <button wire:click="delete({{ $order->id }})"
+                                                wire:confirm="Are you sure you want to delete this Order?"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
