@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Profile;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Component;
 
 
 use Illuminate\Support\Facades\Hash;
 
-
-
-class Profile extends Component
+class Index extends Component
 {
 
     use WithFileUploads;
@@ -126,9 +124,10 @@ class Profile extends Component
         $this->image   = null;
     }
 
+
     public function render()
     {
-        return view('livewire.admin.profile')
+        return view('livewire.admin.profile.index')
             ->layout('layouts.admin', ['title' => 'Profile']);
     }
 }

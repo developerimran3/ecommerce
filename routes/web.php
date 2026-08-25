@@ -3,16 +3,18 @@
 use App\Http\Controllers\InvoiceController;
 use App\Livewire\Admin\Brand\Index as BrandIndex;
 use App\Livewire\Admin\Category\Index as CategoryIndex;
+use App\Livewire\Admin\Coupon\Index as CouponIndex;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Media\Index as MediaIndex;
 use App\Livewire\Admin\Order\Index as OrderIndex;
-use App\Livewire\Admin\Product\Index as ProductIndex;
-use App\Livewire\Admin\Profile;
-use App\Livewire\Admin\RolePermission;
-use App\Livewire\Admin\Shipping\ShippingAreaIndex;
-use App\Livewire\Admin\User\Index as UserIndex;
-use App\Livewire\Admin\Coupon\Index as CouponIndex;
 use App\Livewire\Admin\Payment\Index as PaymentIndex;
+use App\Livewire\Admin\Product\Index as ProductIndex;
+use App\Livewire\Admin\Profile\Index as ProfileIndex;
+use App\Livewire\Admin\RolePermission\Index as Permission;
+use App\Livewire\Admin\Shipping\ShippingAreaIndex;
+use App\Livewire\Admin\User\CustomerManage;
+use App\Livewire\Admin\User\CustomerView;
+use App\Livewire\Admin\User\Index as UserIndex;
 use App\Livewire\Auth\Admin\ForgotPassword as AdminForgotPassword;
 use App\Livewire\Auth\Admin\Login as AdminLogin;
 use App\Livewire\Auth\Admin\Register as AdminRegister;
@@ -30,6 +32,7 @@ use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\OrderSuccess;
 use App\Livewire\Frontend\OrderTrack;
 use App\Livewire\Frontend\ProductDetails;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -120,7 +123,7 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
     Route::get('/dashboard', Dashboard::class)
         ->name('admin.dashboard');
 
-    Route::get('users/profile', Profile::class)
+    Route::get('users/profile', ProfileIndex::class)
         ->name('users.profile');
 
     Route::get('/categories', CategoryIndex::class)
@@ -171,7 +174,7 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
         ->middleware('permission:media.view')
         ->name('admin.media');
 
-    Route::get('/role-permissions', RolePermission::class)
+    Route::get('/role-permissions', Permission::class)
         ->middleware('role:Administrator')
         ->name('admin.role-permissions');
 
@@ -182,6 +185,17 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
     Route::get('/payments', PaymentIndex::class)
         ->middleware('permission:payments.view')
         ->name('admin.payment');
+
+    Route::get('/customers/manage', CustomerManage::class)
+        ->middleware('permission:customers.view')
+        ->name('admin.customers.manage');
+
+    Route::get('/customer/profile/{id}', CustomerView::class)
+        ->middleware('permission:customers.view')
+        ->name('admin.customer.view');
+
+
+
 
     Route::get('/logout', function () {
         Auth::logout();

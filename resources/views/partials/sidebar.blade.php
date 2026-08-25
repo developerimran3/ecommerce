@@ -275,7 +275,7 @@
                 $usersActive =
                     request()->routeIs('admin.users*') ||
                     request()->routeIs('admin.roles*') ||
-                    request()->routeIs('admin.customers*') ||
+                    request()->routeIs('admin.customers.manage') ||
                     request()->routeIs('users.profile*') ||
                     request()->routeIs('admin.role-permissions');
             @endphp
@@ -322,8 +322,8 @@
 
                     {{-- Customers --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.customers*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.customers.manage') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.customers.manage') ? 'active' : '' }}">
 
                             <i class="fas fa-user-friends"></i>
                             <span>Customers</span>

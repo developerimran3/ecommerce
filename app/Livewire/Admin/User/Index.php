@@ -230,6 +230,7 @@ class Index extends Component
     public function render()
     {
         $users = User::query()
+            ->where('role', '!=', 'Customer')
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where(
