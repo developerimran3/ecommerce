@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/frontend.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/frontend_responsive.css') }}">
     @livewireStyles
 </head>
 

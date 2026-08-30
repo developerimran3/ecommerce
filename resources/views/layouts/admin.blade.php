@@ -20,7 +20,8 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.responsive.css') }}">
     @livewireStyles
 </head>
 
@@ -189,6 +190,9 @@
                 $('#productModal').modal('show');
                 $('#couponModal').modal('show');
                 $('#shippingModal').modal('show');
+                $('#bannerCategoryModal').modal('show');
+                $('#bannerIndexModal').modal('show');
+                $('#courierModal').modal('show');
             });
 
             Livewire.on('close-modal', () => {
@@ -199,6 +203,9 @@
                 $('#productModal').modal('hide');
                 $('#couponModal').modal('hide');
                 $('#shippingModal').modal('hide');
+                $('#bannerCategoryModal').modal('hide');
+                $('#bannerIndexModal').modal('hide');
+                $('#courierModal').modal('hide');
             });
 
         });

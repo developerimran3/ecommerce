@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InvoiceController;
+use App\Livewire\Admin\Banner\BannerCategory;
 use App\Livewire\Admin\Brand\Index as BrandIndex;
 use App\Livewire\Admin\Category\Index as CategoryIndex;
 use App\Livewire\Admin\Coupon\Index as CouponIndex;
@@ -12,6 +13,8 @@ use App\Livewire\Admin\Product\Index as ProductIndex;
 use App\Livewire\Admin\Profile\Index as ProfileIndex;
 use App\Livewire\Admin\RolePermission\Index as Permission;
 use App\Livewire\Admin\Shipping\ShippingAreaIndex;
+use App\Livewire\Admin\SiteSetting\CourierSetting;
+use App\Livewire\Admin\SiteSetting\SmtpSetting;
 use App\Livewire\Admin\User\CustomerManage;
 use App\Livewire\Admin\User\CustomerView;
 use App\Livewire\Admin\User\Index as UserIndex;
@@ -27,18 +30,19 @@ use App\Livewire\Customer\Account as MyAccount;
 use App\Livewire\Customer\Order as MyOrders;
 use App\Livewire\Customer\PasswordChange;
 use App\Livewire\Customer\Profile as CustomerProfile;
+use App\Livewire\Frontend\Category\ProductCategory;
 use App\Livewire\Frontend\CheckoutPage;
 use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\OrderSuccess;
 use App\Livewire\Frontend\OrderTrack;
 use App\Livewire\Frontend\ProductDetails;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 //PUBLIC ROUTE
 Route::get('/', Home::class)->name('home');
+
 Route::get('/product/{slug}', ProductDetails::class)
     ->name('product.details');
 
@@ -47,6 +51,12 @@ Route::get('/checkout', CheckoutPage::class)
 
 Route::get('/order-track', OrderTrack::class)
     ->name('order.track');
+
+
+
+Route::get('/category/{slug}', ProductCategory::class)
+    ->name('category.products');
+
 
 Route::middleware('guest')->group(function () {
     //ADMIN GUEST ROUTES
@@ -194,7 +204,15 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
         ->middleware('permission:customers.view')
         ->name('admin.customer.view');
 
+    Route::get('/banner/categories', BannerCategory::class)
+        ->middleware('permission:customers.view')
+        ->name('admin.banner.categories');
 
+    Route::get('/smtp-settings', SmtpSetting::class)
+        ->name('admin.smtp.settings');
+
+    Route::get('/courier-setting', CourierSetting::class)
+        ->name('admin.courier.setting');
 
 
     Route::get('/logout', function () {

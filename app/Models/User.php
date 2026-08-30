@@ -55,7 +55,6 @@ class User extends Authenticatable
         if ($this->role === 'Administrator') {
             return true;
         }
-
         return RolePermission::where('role', $this->role)
             ->whereHas('permission', function ($query) use ($permission) {
                 $query->where('name', $permission);
@@ -67,7 +66,6 @@ class User extends Authenticatable
         if ($this->role === 'Administrator') {
             return true;
         }
-
         return RolePermission::where('role', $this->role)
             ->whereHas('permission', function ($query) use ($permissions) {
                 $query->whereIn('name', $permissions);

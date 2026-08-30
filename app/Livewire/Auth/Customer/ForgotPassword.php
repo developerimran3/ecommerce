@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Auth\Customer;
 
-use App\Mail\CustomerPasswordResetMail;
-use App\Models\User;
-use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Facades\Password;
+use App\Models\User;
+use App\Mail\CustomerPasswordResetMail;
+use App\Services\MailConfigService;
 use Livewire\Component;
+
 
 class ForgotPassword extends Component
 {
@@ -61,9 +63,11 @@ class ForgotPassword extends Component
         |--------------------------------------------------------------------------
         */
 
-        Mail::to($user->email)->send(
+        app(MailConfigService::class)->send(
+            $user->email,
             new CustomerPasswordResetMail($user, $token)
         );
+
 
         $this->dispatch(
             'success',

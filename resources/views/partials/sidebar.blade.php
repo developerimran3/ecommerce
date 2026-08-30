@@ -450,18 +450,6 @@
 
                         </a>
                     </li>
-
-                    {{-- SMTP --}}
-                    <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.smtp.server*') ? 'active' : '' }}">
-
-                            <i class="fas fa-envelope"></i>
-                            <span>SMTP Setup</span>
-
-                        </a>
-                    </li>
-
                 </ul>
             </li>
 
@@ -472,8 +460,8 @@
             @php
                 $apiActive =
                     request()->routeIs('admin.api*') ||
-                    request()->routeIs('admin.courier*') ||
-                    request()->routeIs('admin.smtp*') ||
+                    request()->routeIs('admin.courier.setting') ||
+                    request()->routeIs('admin.smtp.settings') ||
                     request()->routeIs('admin.gateway*') ||
                     request()->routeIs('admin.sms*');
             @endphp
@@ -496,8 +484,8 @@
 
                     {{-- Courier API --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.courier*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.courier.setting') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.courier.setting') ? 'active' : '' }}">
 
                             <i class="fas fa-shipping-fast"></i>
                             <span>Couriers API</span>
@@ -507,8 +495,8 @@
 
                     {{-- Mail SMTP --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.smtp*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.smtp.settings') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.smtp.settings') ? 'active' : '' }}">
 
                             <i class="fas fa-envelope"></i>
                             <span>Mail SMTP</span>
@@ -546,7 +534,7 @@
             {{-- Banner & Ads --}}
             {{-- ========================================================= --}}
             @php
-                $bannerActive = request()->routeIs('admin.banner*') || request()->routeIs('admin.ads*');
+                $bannerActive = request()->routeIs('admin.banner.categories') || request()->routeIs('admin.ads*');
             @endphp
 
             <li class="nav-item">
@@ -567,8 +555,8 @@
 
                     {{-- Banner Categories --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.banner.categories*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.banner.categories') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.banner.categories') ? 'active' : '' }}">
 
                             <i class="fas fa-folder"></i>
                             <span>Banner Categories</span>

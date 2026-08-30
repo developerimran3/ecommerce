@@ -70,7 +70,7 @@
                                 </td>
                                 <td>
                                     @if (auth()->user()->hasPermission('customers.view'))
-                                        <a href="{{ route('admin.customer.view', $customer->id) }}"
+                                        <a href="{{ route('admin.customer.view', $customer->id) }}" wire:navigate
                                             class="btn btn-sm btn-info" title="View Customer">
                                             <i class="fas fa-eye"></i>
                                         </a>

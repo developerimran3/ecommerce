@@ -64,47 +64,47 @@
                                         ৳ {{ number_format($order->grand_total, 2) }}
                                     </td>
                                     <td>
-                                        @if (auth()->user()->hasPermission('order.status'))
-                                            @if ($order->order_status == 'pending')
-                                                <span class="badge-status"> Pending </span>
-                                            @elseif($order->order_status == 'confirmed')
-                                                <span class="badge-info"> Confirmed </span>
-                                            @elseif($order->order_status == 'processing')
-                                                <span class="badge-warning"> Processing </span>
-                                            @elseif($order->order_status == 'shipped')
-                                                <span class="badge-primary"> Shipped </span>
-                                            @elseif($order->order_status == 'delivered')
-                                                <span class="badge-success"> Delivered </span>
-                                            @else
-                                                <span class="badge-inactive"> Cancelled </span>
-                                            @endif
+                                        @if ($order->order_status == 'pending')
+                                            <span class="badge-status"> Pending </span>
+                                        @elseif($order->order_status == 'confirmed')
+                                            <span class="badge-info"> Confirmed </span>
+                                        @elseif($order->order_status == 'processing')
+                                            <span class="badge-warning"> Processing </span>
+                                        @elseif($order->order_status == 'shipped')
+                                            <span class="badge-primary"> Shipped </span>
+                                        @elseif($order->order_status == 'delivered')
+                                            <span class="badge-success"> Delivered </span>
+                                        @else
+                                            <span class="badge-inactive"> Cancelled </span>
                                         @endif
                                     </td>
                                     <td>
                                         {{ $order->created_at->format('d M Y h:i A') }}
                                     </td>
                                     <td>
-                                        <select class="form-control form-control-sm d-inline" style="width:120px"
-                                            wire:change="updateStatus({{ $order->id }}, $event.target.value)">
-                                            <option value="pending" @selected($order->order_status == 'pending')>
-                                                Pending
-                                            </option>
-                                            <option value="confirmed" @selected($order->order_status == 'confirmed')>
-                                                Confirmed
-                                            </option>
-                                            <option value="processing" @selected($order->order_status == 'processing')>
-                                                Processing
-                                            </option>
-                                            <option value="shipped" @selected($order->order_status == 'shipped')>
-                                                Shipped
-                                            </option>
-                                            <option value="delivered" @selected($order->order_status == 'delivered')>
-                                                Delivered
-                                            </option>
-                                            <option value="cancelled" @selected($order->order_status == 'cancelled')>
-                                                Cancelled
-                                            </option>
-                                        </select>
+                                        @if (auth()->user()->hasPermission('order.status'))
+                                            <select class="form-control form-control-sm d-inline" style="width:120px"
+                                                wire:change="updateStatus({{ $order->id }}, $event.target.value)">
+                                                <option value="pending" @selected($order->order_status == 'pending')>
+                                                    Pending
+                                                </option>
+                                                <option value="confirmed" @selected($order->order_status == 'confirmed')>
+                                                    Confirmed
+                                                </option>
+                                                <option value="processing" @selected($order->order_status == 'processing')>
+                                                    Processing
+                                                </option>
+                                                <option value="shipped" @selected($order->order_status == 'shipped')>
+                                                    Shipped
+                                                </option>
+                                                <option value="delivered" @selected($order->order_status == 'delivered')>
+                                                    Delivered
+                                                </option>
+                                                <option value="cancelled" @selected($order->order_status == 'cancelled')>
+                                                    Cancelled
+                                                </option>
+                                            </select>
+                                        @endif
                                     </td>
 
                                     <td>

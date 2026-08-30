@@ -12,7 +12,7 @@ class Coupon extends Model
         'value',
         'minimum_order',
         'maximum_discount',
-        'usage_limit',
+        'limit',
         'used_count',
         'start_date',
         'end_date',

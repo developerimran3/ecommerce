@@ -20,9 +20,7 @@
 
                 <div class="profile-info">
                     <h3 class="text-uppercase"> {{ Auth::user()->name }} </h3>
-
                     <p> {{ Auth::user()->email }} </p>
-
                     <span class="role-badge">
                         {{ Auth::user()->role }}
                     </span>

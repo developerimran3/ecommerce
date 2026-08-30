@@ -68,7 +68,8 @@
                                 <th>Category</th>
                                 <th>Brand</th>
                                 <th>SKU</th>
-                                <th>Price</th>
+                                <th>R.Price</th>
+                                <th>Sale Price</th>
                                 <th>Stock</th>
                                 <th>Status</th>
                                 <th>Publish</th>
@@ -93,8 +94,12 @@
                                     <td>{{ $product->category?->name }}</td>
                                     <td>{{ $product->brand?->name }}</td>
                                     <td>{{ $product->sku }}</td>
+
+                                    <td>৳ {{ number_format($product->price, 2) }}</td>
+
                                     <td style="font-weight: bold; color: rgba(5, 150, 105, 1)">৳
-                                        {{ number_format($product->price, 2) }}</td>
+                                        {{ number_format($product->discount_price, 2) }}</td>
+
                                     <td>{{ $product->stock }}</td>
                                     <td>
                                         @if ($product->status)
@@ -296,15 +301,9 @@
 
 
                                 <div class="form-group mb-0">
-
                                     <label>Brand</label>
-
                                     <select class="form-control" wire:model="brand_id">
-
-                                        <option value="">
-                                            Select Brand
-                                        </option>
-
+                                        <option value=""> Select Brand </option>
                                         @foreach ($brands as $brand)
                                             <option value="{{ $brand->id }}">
                                                 {{ $brand->name }}

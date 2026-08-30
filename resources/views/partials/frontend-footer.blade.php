@@ -109,3 +109,53 @@
     </div>
 
 </footer>
+
+<!-- Mobile Bottom Navigation -->
+<div class="mobile-bottom-nav">
+
+    <a href="#" class="bottom-nav-item">
+        <i class="fas fa-bars"></i>
+        <span>Category</span>
+    </a>
+
+    <a href="#" class="bottom-nav-item">
+        <i class="fab fa-whatsapp"></i>
+        <span>Message</span>
+    </a>
+
+    <a href="{{ url('/') }}" class="bottom-nav-home">
+        <div class="home-circle">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+    </a>
+
+    <a href="{{ route('checkout') }}" class="bottom-nav-item cart-nav">
+        <i class="fas fa-shopping-cart"></i>
+
+        <span>
+            Cart
+            <small>(0)</small>
+        </span>
+    </a>
+
+    @if (Auth::check())
+        @if (Auth::user()->role == 'Customer')
+            <a href="{{ route('account') }}" wire:navigate class="bottom-nav-item">
+                <i class="fas fa-user"></i>
+                {{ ucwords(Str::limit(Auth::user()->name, 8)) }}
+            </a>
+        @else
+            <a href="{{ route('users.profile') }}" class="bottom-nav-item">
+                <i class="fas fa-user"></i>
+                {{ Str::limit(Auth::user()->name, 8) }}
+            </a>
+        @endif
+    @else
+        <a href="{{ route('customer.login') }}" wire:navigate class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            Login / Sign Up
+        </a>
+    @endif
+
+</div>

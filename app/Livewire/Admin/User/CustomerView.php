@@ -8,19 +8,24 @@ use Livewire\Component;
 class CustomerView extends Component
 {
 
-    public User $user;
+    public $customer;
+    public $orders;
 
-    public function mount(User $user)
+    public function mount($id)
     {
-        $this->user = $user;
-    }
+        $this->customer = User::findOrFail($id);
 
+        $this->orders = $this->customer->orders()
+            ->withCount('items')
+            ->latest()
+            ->get();
+    }
 
     public function render()
     {
         return view('livewire.admin.user.customer-view')
             ->layout('layouts.admin', [
-                'title' => 'Customer Details'
+                'title' => 'Customer Profile'
             ]);
     }
 }

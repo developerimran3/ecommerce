@@ -1,0 +1,154 @@
+@media (max-width: 767px) {
+    .card-body {
+        padding: 15px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .table thead th,
+    .table tbody td {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .product-img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .sidebar {
+        left: -280px;
+        margin-left: 0;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .topbar {
+        padding: 15px;
+    }
+    .wrapper {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        z-index: 9999;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 10px;
+        background: #7c3aed;
+        color: #fff;
+    }
+
+    .topbar {
+        padding: 15px;
+    }
+
+    .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .topbar-buttons .btn {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .topbar-buttons .btn-text {
+        display: none;
+    }
+
+    .topbar-buttons i {
+        margin: 0 !important;
+    }
+
+    .container-fluid {
+        padding: 15px !important;
+    }
+
+    .col-md-6.col-lg-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+    .stat-card h2 {
+        font-size: 22px;
+    }
+
+    .stat-card p {
+        font-size: 11px;
+    }
+
+    .icon-box {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icon-box i {
+        font-size: 14px !important;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+}
+@media (max-width: 768px) {
+    .profile-cover {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .info-item {
+        display: block;
+    }
+
+    .info-item strong {
+        display: block;
+
+        margin-top: 8px;
+    }
+}
