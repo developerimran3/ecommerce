@@ -18,7 +18,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-
                         <th>Role</th>
                         <th>Status</th>
                         <th>Date</th>
@@ -111,7 +110,7 @@
                     </button>
                 </div>
                 <div class="modal-body p-4">
-                    <form wire:submit.prevent="{{ $user_id ? 'update' : 'create' }}">
+                    <form wire:submit.prevent="{{ $user_id ? 'update' : 'store' }}">
                         <div class="form-group">
                             <label>User Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control text-capitalize" name="name" wire:model="name"

@@ -18,6 +18,7 @@ class Index extends Component
     public $image;
     public $oldImage;
     public $status = true;
+    public $front_view = true;
     public $search = '';
     public $category_id;
 
@@ -48,6 +49,7 @@ class Index extends Component
         ]);
 
         $this->status = true;
+        $this->front_view = true;
     }
 
     public function store()
@@ -78,6 +80,7 @@ class Index extends Component
             'slug' => $slug,
             'image' => $imageName,
             'status' => $this->status,
+            'front_view' => $this->front_view,
         ]);
 
         $this->dispatch('success', message: 'Category created successfully.');
@@ -92,6 +95,7 @@ class Index extends Component
         $this->category_id = $category->id;
         $this->name = $category->name;
         $this->oldImage = $category->image;
+        $this->front_view = $category->front_view;
 
         $this->dispatch('open-modal');
     }
@@ -108,6 +112,7 @@ class Index extends Component
 
         $data = [
             'name' => $this->name,
+            'front_view' => $this->front_view,
             'slug' => Str::slug($this->name),
         ];
 

@@ -207,28 +207,37 @@
                             </div>
                             <div class="wc-card mb-4">
                                 <div class="row">
-                                    <div class="col-md-6" wire:ignore>
-                                        <label>Size</label>
 
-                                        <select id="sizes" class="form-control" multiple>
-                                            <option value="S">S</option>
-                                            <option value="M">M</option>
-                                            <option value="L">L</option>
-                                            <option value="XL">XL</option>
-                                            <option value="XXL">XXL</option>
-                                        </select>
+                                    {{-- Size --}}
+                                    <div class="col-md-6">
+                                        <label>Size</label>
+                                        <div class="multi-select-box">
+                                            <div id="sizeDropdown" class="multi-dropdown">
+                                                @foreach ($sizes as $size)
+                                                    <label class="multi-option">
+                                                        <input type="checkbox" value="{{ $size }}"
+                                                            wire:model="sizes" multiple>
+                                                        <span>{{ $size->name }}</span>
+                                                    </label>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="col-md-6" wire:ignore>
+                                    {{-- Color --}}
+                                    <div class="col-md-6">
                                         <label>Color</label>
-
-                                        <select id="colors" class="form-control" multiple>
-                                            <option value="Red">Red</option>
-                                            <option value="Blue">Blue</option>
-                                            <option value="Black">Black</option>
-                                            <option value="White">White</option>
-                                            <option value="Green">Green</option>
-                                        </select>
+                                        <div class="multi-select-box">
+                                            <div id="sizeDropdown" class="multi-dropdown">
+                                                @foreach ($colors as $color)
+                                                    <label class="multi-option">
+                                                        <input type="checkbox" value="{{ $color }}"
+                                                            wire:model="sizes" multiple>
+                                                        <span>{{ $color->name }}</span>
+                                                    </label>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -286,10 +295,11 @@
                                 </div>
                             </div>
                             <div class="wc-card mb-4">
-                                <div class="form-group mb-0 ">
-                                    <label>Category</label>
-                                    <select class="form-control" wire:model="category_id">
-                                        <option value=""> Select Category </option>
+                                <div class="form-group mb-0" wire:ignore>
+                                    <label for="category_id">Category</label>
+                                    <select id="category_id" class="form-control">
+                                        <option value="">Select..</option>
+
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">
                                                 {{ $category->name }}
@@ -299,13 +309,14 @@
                                 </div>
 
 
+                                <div class="form-group mb-0" wire:ignore>
+                                    <label for="brand_id">Brand</label>
 
-                                <div class="form-group mb-0">
-                                    <label>Brand</label>
-                                    <select class="form-control" wire:model="brand_id">
-                                        <option value=""> Select Brand </option>
+                                    <select id="brand_id" class="form-control">
+                                        <option value="">Select Brand..</option>
+
                                         @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">
+                                            <option value="{{ $brand->id }}" @selected($brand_id == $brand->id)>
                                                 {{ $brand->name }}
                                             </option>
                                         @endforeach
@@ -356,3 +367,123 @@
     </div>
 
 </div>
+@push('scripts')
+    <script>
+        document.addEventListener('livewire:init', function() {
+
+            function getLivewireComponent(element) {
+
+                const componentElement = element.closest('[wire\\:id]');
+
+                if (!componentElement) {
+                    return null;
+                }
+
+                return Livewire.find(
+                    componentElement.getAttribute('wire:id')
+                );
+            }
+
+
+            function initSelect2() {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Category
+                |--------------------------------------------------------------------------
+                */
+
+                const category = $('#category_id');
+
+                if (category.length) {
+
+                    if (category.hasClass('select2-hidden-accessible')) {
+                        category.select2('destroy');
+                    }
+
+                    category.select2({
+                        width: '100%',
+                        placeholder: 'Select Category..',
+                        allowClear: true
+                    });
+
+                    category.off('change.category');
+
+                    category.on('change.category', function() {
+
+                        const component = getLivewireComponent(this);
+
+                        if (component) {
+                            component.set(
+                                'category_id',
+                                $(this).val()
+                            );
+                        }
+                    });
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Brand
+                |--------------------------------------------------------------------------
+                */
+
+                const brand = $('#brand_id');
+
+                if (brand.length) {
+
+                    if (brand.hasClass('select2-hidden-accessible')) {
+                        brand.select2('destroy');
+                    }
+
+                    brand.select2({
+                        width: '100%',
+                        placeholder: 'Select Brand..',
+                        allowClear: true
+                    });
+
+                    brand.off('change.brand');
+
+                    brand.on('change.brand', function() {
+
+                        const component = getLivewireComponent(this);
+
+                        if (component) {
+                            component.set(
+                                'brand_id',
+                                $(this).val()
+                            );
+                        }
+                    });
+                }
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Initial Load
+            |--------------------------------------------------------------------------
+            */
+
+            initSelect2();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Livewire DOM Update
+            |--------------------------------------------------------------------------
+            */
+
+            Livewire.hook('morph.updated', () => {
+
+                setTimeout(function() {
+                    initSelect2();
+                }, 50);
+
+            });
+
+        });
+    </script>
+@endpush

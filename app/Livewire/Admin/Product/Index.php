@@ -4,8 +4,10 @@ namespace App\Livewire\Admin\Product;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Size;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -26,18 +28,17 @@ class Index extends Component
     public $category_id;
     public $brand_id;
     public $name;
-    public $sizes = [];
-    public $colors = [];
+    public $size_id;
+    public $color_id;
     public $sku;
     public $thumbnail;
     public $gallery = [];
     public $price;
     public $discount_price;
     public $stock = 0;
-    public $stock_status;
     public $short_description;
     public $description;
-    public $featured = false;
+    public $hot_deals = false;
     public $status = true;
     public $oldThumbnail;
     public $oldGallery = [];
@@ -62,37 +63,18 @@ class Index extends Component
     {
         $this->reset();
 
-        $this->featured = false;
+        $this->hot_deals = false;
         $this->status = true;
 
-        $this->sizes = [];
-        $this->colors = [];
+        $this->size_id;
+        $this->color_id;
 
         $this->oldGallery = [];
-
-        $this->dispatch('resetSelect2');
-    }
-
-    public function updatedSizes($value)
-    {
-        $this->sizes = $value;
-    }
-
-    public function updatedColors($value)
-    {
-        $this->colors = $value;
-    }
-
-    public function mount()
-    {
-        $this->sizes = [];
-        $this->colors = [];
     }
 
     public function create()
     {
         $this->resetInput();
-
         $this->dispatch('open-modal');
     }
 
@@ -115,20 +97,26 @@ class Index extends Component
             'category_id'       => $this->category_id,
             'brand_id'          => $this->brand_id,
             'name'              => $this->name,
-            'sizes'             => json_encode($this->sizes),
-            'colors'            => json_encode($this->colors),
             'slug'              => Str::slug($this->name),
             'sku'               => $this->sku,
             'thumbnail'         => $thumbnail,
             'price'             => $this->price,
             'discount_price'    => $this->discount_price,
             'stock'             => $this->stock,
-            'stock_status'      => $this->stock_status,
             'short_description' => $this->short_description,
             'description'       => $this->description,
-            'featured'          => $this->featured,
+            'hot_deals'         => $this->hot_deals,
             'status'            => $this->status,
         ]);
+
+        $product->colors()->sync(
+            $this->color_id ?? []
+        );
+
+
+        $product->sizes()->sync(
+            $this->size_id ?? []
+        );
 
         foreach ($this->gallery as $image) {
             ProductImage::create([
@@ -142,9 +130,7 @@ class Index extends Component
             message: 'Product created successfully.'
         );
         $this->dispatch('close-modal');
-
         $this->resetInput();
-        $this->dispatch('resetSelect2');
     }
 
 
@@ -155,6 +141,7 @@ class Index extends Component
         $this->product_id = $product->id;
         $this->category_id = $product->category_id;
         $this->brand_id = $product->brand_id;
+
         $this->name = $product->name;
         $this->sku = $product->sku;
         $this->price = $product->price;
@@ -162,13 +149,20 @@ class Index extends Component
         $this->stock = $product->stock;
         $this->short_description = $product->short_description;
         $this->description = $product->description;
-        $this->featured = $product->featured;
+        $this->hot_deals = $product->hot_deals;
         $this->status = $product->status;
         $this->oldThumbnail = $product->thumbnail;
         $this->oldGallery = $product->images;
 
-        $this->sizes = json_decode($product->sizes, true) ?? [];
-        $this->colors = json_decode($product->colors, true) ?? [];
+        $this->color_id = $product->colors
+            ->pluck('id')
+            ->map(fn($id) => (string) $id)
+            ->toArray();
+
+        $this->size_id = $product->sizes
+            ->pluck('id')
+            ->map(fn($id) => (string) $id)
+            ->toArray();
 
         $this->dispatch('open-modal');
     }
@@ -208,21 +202,28 @@ class Index extends Component
         $product->update([
             'category_id'       => $this->category_id,
             'brand_id'          => $this->brand_id,
+            'color_id'          => $this->color_id,
+            'size_id'           => $this->size_id,
             'name'              => $this->name,
-            'sizes'             => json_encode($this->sizes),
-            'colors'            => json_encode($this->colors),
             'slug'              => Str::slug($this->name),
             'sku'               => $this->sku,
             'thumbnail'         => $thumbnail,
             'price'             => $this->price,
             'discount_price'    => $this->discount_price,
             'stock'             => $this->stock,
-            'stock_status'      => $this->stock_status,
             'short_description' => $this->short_description,
             'description'       => $this->description,
-            'featured'          => $this->featured,
+            'hot_deals'         => $this->hot_deals,
             'status'            => $this->status,
         ]);
+
+        $product->colors()->sync(
+            $this->color_id ?? []
+        );
+
+        $product->sizes()->sync(
+            $this->size_id ?? []
+        );
 
         foreach ($this->gallery as $image) {
             $path = $image->store(
@@ -239,21 +240,15 @@ class Index extends Component
             'success',
             message: 'Product updated successfully.'
         );
-
         $this->resetInput();
-        $this->dispatch('resetSelect2');
     }
 
     public function removeImage($id)
     {
         $image = ProductImage::find($id);
-
         if ($image) {
-
             Storage::disk('public')->delete($image->image);
-
             $image->delete();
-
             $this->oldGallery = ProductImage::where(
                 'product_id',
                 $this->product_id
@@ -379,17 +374,7 @@ class Index extends Component
     }
 
 
-    public function changeStatus($id)
-    {
-        $products = Product::findOrFail($id);
-        $products->update([
-            'status' => !$products->status,
-        ]);
-        $this->dispatch(
-            'success',
-            message: 'Products status updated successfully.'
-        );
-    }
+
 
     public function render()
     {
@@ -434,6 +419,8 @@ class Index extends Component
             'products' => $products,
             'categories' => Category::all(),
             'brands' => Brand::all(),
+            'colors' => Color::all(),
+            'sizes' => Size::all(),
         ])
             ->layout('layouts.admin', ['title' => 'Product']);
     }

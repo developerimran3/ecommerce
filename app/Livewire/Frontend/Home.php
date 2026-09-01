@@ -45,14 +45,52 @@ class Home extends Component
 
     public function render()
     {
-        return view('livewire.frontend.home', [
+        /*
+        |--------------------------------------------------------------------------
+        | ALL ACTIVE CATEGORIES
+        |--------------------------------------------------------------------------
+        | Category Menu + Category Slider
+        */
 
-            'products' => Product::where('status', true)
-                ->latest()
-                ->paginate(12),
-            'categories' => Category::where('status', true)->get(),
+        $categories = Category::where('status', true)
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | HOME PRODUCT CATEGORIES
+        |--------------------------------------------------------------------------
+        | Only fontview = 1
+        */
+
+        $frontCategory = Category::where('status', true)
+            ->where('front_view', true)
+            ->get();
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | HOT DEAL PRODUCTS
+        |--------------------------------------------------------------------------
+        */
+
+        $products = Product::where('status', true)
+            ->where('hot_deals', true)
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('livewire.frontend.home', [
+            // All category
+            'categories' => $categories,
+            // Only front_view category
+            'frontCategory' => $frontCategory,
+            // Hot deals
+            'products' => $products,
         ])->layout('layouts.frontend', [
-            'title' => 'The Kindom Of Fashion',
+            'title' => 'Home',
         ]);
     }
 }

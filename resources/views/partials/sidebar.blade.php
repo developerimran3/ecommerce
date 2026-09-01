@@ -21,7 +21,7 @@
             </li>
             {{-- Orders --}}
             @php
-                $ordersActive = request()->routeIs('admin.orders*');
+                $ordersActive = request()->routeIs('admin.orders*') || request()->routeIs('admin.payment*');
             @endphp
 
             <li class="nav-item">
@@ -83,6 +83,15 @@
 
                         </a>
                     </li>
+                    {{-- Payment --}}
+                    <li>
+                        <a href="{{ route('admin.payment') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.payment*') ? 'active' : '' }}">
+                            <i class="fas fa-credit-card"></i>
+                            <span>Payment</span>
+
+                        </a>
+                    </li>
 
                 </ul>
             </li>
@@ -92,9 +101,10 @@
                     request()->routeIs('admin.products*') ||
                     request()->routeIs('admin.categories*') ||
                     request()->routeIs('admin.brands*') ||
-                    request()->routeIs('admin.colors*') ||
                     request()->routeIs('admin.coupon*') ||
-                    request()->routeIs('admin.sizes*');
+                    request()->routeIs('admin.shipping*') ||
+                    request()->routeIs('admin.products.color') ||
+                    request()->routeIs('admin.products.size');
             @endphp
 
             <li class="nav-item">
@@ -133,16 +143,16 @@
 
                     {{-- Colors --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.colors*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.products.color') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.products.color') ? 'active' : '' }}">
                             <i class="fas fa-palette"></i>
                             <span>Colors</span>
                         </a>
                     </li>
                     {{-- Sizes --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.sizes*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.products.size') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.products.size') ? 'active' : '' }}">
                             <i class="fas fa-ruler-combined"></i>
                             <span>Sizes</span>
                         </a>
@@ -158,6 +168,16 @@
                         </a>
                     </li>
 
+                    {{-- Shipping --}}
+                    <li>
+                        <a href="{{ route('admin.shipping') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.shipping*') ? 'active' : '' }}">
+
+                            <i class="fas fa-truck"></i>
+                            <span>Shipping Charge</span>
+
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -274,60 +294,25 @@
             @php
                 $usersActive =
                     request()->routeIs('admin.users*') ||
-                    request()->routeIs('admin.roles*') ||
-                    request()->routeIs('admin.customers.manage') ||
                     request()->routeIs('users.profile*') ||
+                    request()->routeIs('admin.customers.manage') ||
                     request()->routeIs('admin.role-permissions');
             @endphp
 
             <li class="nav-item">
-
                 <a href="javascript:void(0)" class="nav-link menu-toggle {{ $usersActive ? 'active' : '' }}">
-
                     <i class="fas fa-users"></i>
-
-                    <span class="flex-grow-1">
-                        Users
-                    </span>
-
+                    <span class="flex-grow-1"> Users </span>
                     <i class="fas fa-chevron-down arrow {{ $usersActive ? 'rotate' : '' }}"></i>
-
                 </a>
-
                 <ul class="submenu {{ $usersActive ? 'open' : '' }}">
 
                     {{-- Users --}}
                     <li>
                         <a href="{{ route('admin.users') }}" wire:navigate.hover
                             class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-
                             <i class="fas fa-user"></i>
                             <span>User</span>
-
-                        </a>
-                    </li>
-
-                    {{-- Roles --}}
-                    <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.roles*') ? 'active' : '' }}">
-
-                            <i class="fas fa-user-tag"></i>
-                            <span>Role</span>
-
-                        </a>
-                    </li>
-
-
-
-                    {{-- Customers --}}
-                    <li>
-                        <a href="{{ route('admin.customers.manage') }}" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.customers.manage') ? 'active' : '' }}">
-
-                            <i class="fas fa-user-friends"></i>
-                            <span>Customers</span>
-
                         </a>
                     </li>
 
@@ -335,10 +320,17 @@
                     <li>
                         <a href="{{ route('users.profile') }}" wire:navigate.hover
                             class="{{ request()->routeIs('users.profile*') ? 'active' : '' }}">
-
                             <i class="fas fa-user-circle"></i>
                             <span>Profile</span>
+                        </a>
+                    </li>
 
+                    {{-- Customers --}}
+                    <li>
+                        <a href="{{ route('admin.customers.manage') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.customers.manage') ? 'active' : '' }}">
+                            <i class="fas fa-user-friends"></i>
+                            <span>Customers</span>
                         </a>
                     </li>
 
@@ -346,13 +338,10 @@
                     <li>
                         <a href="{{ route('admin.role-permissions') }}" wire:navigate.hover
                             class="{{ request()->routeIs('admin.role-permissions') ? 'active' : '' }}">
-
                             <i class="fas fa-key"></i>
                             <span>Permission</span>
-
                         </a>
                     </li>
-
                 </ul>
             </li>
 
@@ -363,8 +352,6 @@
             @php
                 $settingsActive =
                     request()->routeIs('admin.settings*') ||
-                    request()->routeIs('admin.shipping*') ||
-                    request()->routeIs('admin.payment*') ||
                     request()->routeIs('admin.smpt.server*') ||
                     request()->routeIs('admin.smtp.server*');
             @endphp
@@ -425,28 +412,6 @@
 
                             <i class="fas fa-file-alt"></i>
                             <span>Create Page</span>
-
-                        </a>
-                    </li>
-
-                    {{-- Shipping --}}
-                    <li>
-                        <a href="{{ route('admin.shipping') }}" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.shipping*') ? 'active' : '' }}">
-
-                            <i class="fas fa-truck"></i>
-                            <span>Shipping Charge</span>
-
-                        </a>
-                    </li>
-
-                    {{-- Payment --}}
-                    <li>
-                        <a href="{{ route('admin.payment') }}" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.payment*') ? 'active' : '' }}">
-
-                            <i class="fas fa-credit-card"></i>
-                            <span>Payment</span>
 
                         </a>
                     </li>

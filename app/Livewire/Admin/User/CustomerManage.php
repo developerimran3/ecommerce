@@ -21,7 +21,6 @@ class CustomerManage extends Component
         $customer = User::findOrFail($id);
         // নিজের status নিজে change করতে পারবে না
         if ($customer->id === auth()->id()) {
-
             $this->dispatch(
                 'error',
                 message: 'You cannot change your own status.'

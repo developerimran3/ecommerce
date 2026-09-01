@@ -28,7 +28,8 @@
     @include('partials.frontend-footer')
 
     <div class="copyright">
-        Copyright © 2026 PHPX SHOP | All Rights Reserved
+        Copyright © 2026 GENIUS SHOP | All Rights Reserved, Design & Developed By <a style="color: #008e74"
+            href="https://developerimran.com"><b>Developer Imran</b></a>
     </div>
     <!-- WhatsApp -->
     <a href="#" class="whatsapp">

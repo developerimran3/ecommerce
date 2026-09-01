@@ -11,6 +11,7 @@ class Category extends Model
         'slug',
         'image',
         'status',
+        'front_view',
     ];
 
     public function products()

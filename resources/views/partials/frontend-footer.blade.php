@@ -50,7 +50,7 @@
 
             <div class="col-md-3">
 
-                <img src="images/logo.png" height="55">
+                <img src="{{ asset('assets/img/white_logo.png') }}" class="footer_image">
 
                 <p class="mt-3">
                     8050 Goshairhat, Dhaka
@@ -98,9 +98,9 @@
 
             <div class="col-md-3">
 
-                <h5>Download App</h5>
+                {{-- <h5>Download App</h5>
 
-                <img src="images/google-play.png" width="160">
+                <img src="images/google-play.png" width="160"> --}}
 
             </div>
 

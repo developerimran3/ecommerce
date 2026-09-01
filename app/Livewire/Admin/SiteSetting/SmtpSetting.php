@@ -8,13 +8,13 @@ use Livewire\Component;
 class SmtpSetting extends Component
 {
     public $name = 'smtp';
-    public $host;
+    public $host = 'smtp.gmail.com';
     public $port = 587;
-    public $username;
-    public $password;
-    public $encryption = 'tls';
-    public $from_email;
-    public $from_name;
+    public $username = 'geniusfashion.ptk@gmail.com';
+    public $password = 'erjj opob cbuo rprn';
+    public $encryption = 'ssl';
+    public $from_email = 'geniusfashion.ptk@gmail.com';
+    public $from_name = 'Genius Shop';
 
     public function mount()
     {

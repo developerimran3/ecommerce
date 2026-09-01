@@ -43,13 +43,16 @@
                                             </div>
                                         </div>
                                     </td>
+
                                     <td>
                                         <div class="ml-3">
-                                            <h6 class="mb-0 font-weight-bold">
+                                            <h6
+                                                class="mb-0 font-weight-bold {{ $category->front_view ? 'front-view-active' : '' }}">
                                                 {{ $category->name }}
                                             </h6>
                                         </div>
                                     </td>
+
                                     <td>
                                         <span class="text-muted">
                                             {{ $category->slug }}
@@ -142,6 +145,12 @@
                                         wire:model="status">
                                     <label class="custom-control-label" for="status"> Active </label>
                                 </div>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input style="font-size: 30px" type="checkbox" class="custom-control-input"
+                                    id="front_view" wire:model="front_view">
+                                <label class="custom-control-label" for="front_view"> Front View </label>
                             </div>
 
                             <div class="modal-footer">

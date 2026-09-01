@@ -9,7 +9,9 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Media\Index as MediaIndex;
 use App\Livewire\Admin\Order\Index as OrderIndex;
 use App\Livewire\Admin\Payment\Index as PaymentIndex;
+use App\Livewire\Admin\Product\Color;
 use App\Livewire\Admin\Product\Index as ProductIndex;
+use App\Livewire\Admin\Product\Size;
 use App\Livewire\Admin\Profile\Index as ProfileIndex;
 use App\Livewire\Admin\RolePermission\Index as Permission;
 use App\Livewire\Admin\Shipping\ShippingAreaIndex;
@@ -133,21 +135,36 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
     Route::get('/dashboard', Dashboard::class)
         ->name('admin.dashboard');
 
-    Route::get('users/profile', ProfileIndex::class)
-        ->name('users.profile');
-
-    Route::get('/categories', CategoryIndex::class)
-        ->middleware('permission:categories.view')
-        ->name('admin.categories');
-
-    Route::get('/brands', BrandIndex::class)
-        ->middleware('permission:brands.view')
-        ->name('admin.brands');
-
+    // products
     Route::get('/products', ProductIndex::class)
         ->middleware('permission:products.view')
         ->name('admin.products');
 
+    Route::get('/products/categories', CategoryIndex::class)
+        ->middleware('permission:categories.view')
+        ->name('admin.categories');
+
+    Route::get('/products/brands', BrandIndex::class)
+        ->middleware('permission:brands.view')
+        ->name('admin.brands');
+
+    Route::get('/products/shipping-areas', ShippingAreaIndex::class)
+        ->middleware('permission:shipping.view')
+        ->name('admin.shipping');
+
+    Route::get('/products/size', Size::class)
+        ->middleware('permission:sizes.view')
+        ->name('admin.products.size');
+
+    Route::get('/products/color', Color::class)
+        ->middleware('permission:colors.view')
+        ->name('admin.products.color');
+
+    Route::get('/products/coupon', CouponIndex::class)
+        ->middleware('permission:coupons.view')
+        ->name('admin.coupon');
+
+    // Orders
     Route::get('/orders', OrderIndex::class)
         ->middleware('permission:orders.view')
         ->name('admin.orders');
@@ -164,37 +181,21 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
         ->middleware('permission:orders.view')
         ->name('admin.orders.completed');
 
-    Route::get('/shipping-areas', ShippingAreaIndex::class)
-        ->middleware('permission:shipping.view')
-        ->name('admin.shipping');
+    Route::get('/orders/payments', PaymentIndex::class)
+        ->middleware('permission:payments.view')
+        ->name('admin.payment');
 
-    Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
+    Route::get('/orders/invoice/download/{id}', [InvoiceController::class, 'download'])
         ->middleware('permission:invoices.view')
         ->name('admin.invoice.download');
 
+    // users Profile
     Route::get('/users', UserIndex::class)
         ->middleware('permission:users.view')
         ->name('admin.users');
 
-    Route::get('/reviews', UserIndex::class)
-        ->middleware('permission:reviews.view')
-        ->name('admin.reviews');
-
-    Route::get('/media', MediaIndex::class)
-        ->middleware('permission:media.view')
-        ->name('admin.media');
-
-    Route::get('/role-permissions', Permission::class)
-        ->middleware('role:Administrator')
-        ->name('admin.role-permissions');
-
-    Route::get('/coupon', CouponIndex::class)
-        ->middleware('permission:coupons.view')
-        ->name('admin.coupon');
-
-    Route::get('/payments', PaymentIndex::class)
-        ->middleware('permission:payments.view')
-        ->name('admin.payment');
+    Route::get('/users/profile', ProfileIndex::class)
+        ->name('users.profile');
 
     Route::get('/customers/manage', CustomerManage::class)
         ->middleware('permission:customers.view')
@@ -204,17 +205,33 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
         ->middleware('permission:customers.view')
         ->name('admin.customer.view');
 
-    Route::get('/banner/categories', BannerCategory::class)
-        ->middleware('permission:customers.view')
-        ->name('admin.banner.categories');
+    Route::get('/users/role-permissions', Permission::class)
+        ->middleware('role:Administrator')
+        ->name('admin.role-permissions');
+
+    // review
+    Route::get('/reviews', UserIndex::class)
+        ->middleware('permission:reviews.view')
+        ->name('admin.reviews');
+
+    // API Int setting
+    Route::get('/courier-setting', CourierSetting::class)
+        ->name('admin.courier.setting');
 
     Route::get('/smtp-settings', SmtpSetting::class)
         ->name('admin.smtp.settings');
 
-    Route::get('/courier-setting', CourierSetting::class)
-        ->name('admin.courier.setting');
+    // banner And Ads
+    Route::get('/banner/categories', BannerCategory::class)
+        ->middleware('permission:customers.view')
+        ->name('admin.banner.categories');
 
+    // media
+    Route::get('/media', MediaIndex::class)
+        ->middleware('permission:media.view')
+        ->name('admin.media');
 
+    // Log Out
     Route::get('/logout', function () {
         Auth::logout();
         request()->session()->invalidate();

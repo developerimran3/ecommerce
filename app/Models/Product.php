@@ -10,28 +10,23 @@ class Product extends Model
         'category_id',
         'brand_id',
         'tag_id',
+        'color_id',
+        'size_id',
         'name',
         'slug',
         'sku',
-        'sizes',
-        'colors',
         'thumbnail',
         'price',
         'discount_price',
         'stock',
-        'stock_status',
         'short_description',
         'description',
-        'featured',
         'status',
         'hot_deals',
     ];
 
 
     protected $casts = [
-        'sizes' => 'array',
-        'colors' => 'array',
-        'featured' => 'boolean',
         'status' => 'boolean',
         'hot_deals' => 'boolean',
         'stock_status' => 'boolean',
@@ -56,7 +51,15 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class);
+    }
 
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class);
+    }
 
 
 

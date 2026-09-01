@@ -136,9 +136,6 @@ class Index extends Component
     }
 
 
-
-
-
     public function delete($id)
     {
         abort_unless(

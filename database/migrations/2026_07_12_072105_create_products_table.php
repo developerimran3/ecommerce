@@ -21,18 +21,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('sku')->unique();
-            $table->json('sizes')->nullable();
-            $table->json('colors')->nullable();
             $table->string('thumbnail')->nullable();
             $table->decimal('price', 12, 2);
             $table->decimal('discount_price', 12, 2)->nullable();
             $table->integer('stock')->default(0);
-            $table->boolean('stock_status')->default(false);
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();
-            $table->boolean('featured')->default(false);
             $table->boolean('status')->default(true);
-            $table->boolean('hot_deals')->default(true);
+            $table->boolean('hot_deals')->default(false);
             $table->timestamps();
         });
     }
