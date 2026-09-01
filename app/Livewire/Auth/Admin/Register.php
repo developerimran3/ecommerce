@@ -10,7 +10,6 @@ class Register extends Component
 {
     public $name = '';
     public $email = '';
-    public $phone = '';
     public $password = '';
     public $password_confirmation = '';
     public $role = '';
@@ -18,7 +17,6 @@ class Register extends Component
     protected $rules = [
         'name'     => 'required|string|max:255',
         'email'    => 'required|email|max:255|unique:users,email',
-        'phone'    => 'required|string|max:20',
         'password' => 'required|min:8|confirmed',
         'role'     => 'required|in:Administrator,Editor,Shop Manager,Contributor',
     ];
@@ -26,17 +24,14 @@ class Register extends Component
     public function register()
     {
         $this->validate();
-
         // Only one Administrator
         if ($this->role === 'Administrator') {
-
             $adminExists = User::where('role', 'Administrator')->exists();
             if ($adminExists) {
                 $this->dispatch(
                     'error',
                     message: 'Administrator account already exists. Only one Administrator is allowed.'
                 );
-
                 return;
             }
         }
@@ -44,7 +39,6 @@ class Register extends Component
         User::create([
             'name'     => $this->name,
             'email'    => $this->email,
-            'phone'    => $this->phone,
             'password' => Hash::make($this->password),
             'role'     => $this->role,
         ]);
@@ -52,7 +46,6 @@ class Register extends Component
         $roleName = $this->name . ' New account created successfully.';
 
         $this->reset();
-
         // Toastr event
         $this->dispatch(
             'success',

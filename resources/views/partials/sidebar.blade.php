@@ -116,7 +116,7 @@
                 <ul class="submenu {{ $productsActive ? 'open' : '' }}">
                     {{-- Products --}}
                     <li>
-                        <a href="{{ route('admin.products') }}" wire:navigate.hover
+                        <a href="{{ route('admin.products') }}"
                             class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">
                             <i class="fas fa-box-open"></i>
                             <span>Products Manage</span>

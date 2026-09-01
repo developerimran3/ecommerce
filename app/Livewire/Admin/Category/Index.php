@@ -18,7 +18,7 @@ class Index extends Component
     public $image;
     public $oldImage;
     public $status = true;
-    public $front_view = true;
+    public $front_view = false;
     public $search = '';
     public $category_id;
 
@@ -49,7 +49,7 @@ class Index extends Component
         ]);
 
         $this->status = true;
-        $this->front_view = true;
+        $this->front_view = false;
     }
 
     public function store()

@@ -5,15 +5,16 @@ namespace App\Livewire\Admin\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\ColorProduct;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductSize;
 use App\Models\Size;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-
-use Illuminate\Support\Facades\Storage;
 
 class Index extends Component
 {
@@ -24,51 +25,93 @@ class Index extends Component
     public $filterCategory = '';
     public $filterBrand = '';
     public $filterStatus = '';
+
     public $product_id;
+
     public $category_id;
     public $brand_id;
+
     public $name;
-    public $size_id;
-    public $color_id;
+
+    public $size_id = [];
+    public $color_id = [];
+
     public $sku;
     public $thumbnail;
     public $gallery = [];
+
     public $price;
     public $discount_price;
     public $stock = 0;
+
     public $short_description;
     public $description;
+
     public $hot_deals = false;
     public $status = true;
+
     public $oldThumbnail;
     public $oldGallery = [];
+
 
     protected function rules()
     {
         return [
-            'category_id'       => 'required',
-            'brand_id'          => 'nullable',
-            'name'              => 'required|min:2',
-            'sku'               => 'required|unique:products,sku,' . $this->product_id,
-            'thumbnail'         => 'nullable|image|max:2048',
-            'gallery.*'         => 'nullable|image|max:2048',
-            'price'             => 'required|numeric',
-            'discount_price'    => 'nullable|numeric',
-            'stock'             => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
+
+            'brand_id' => 'nullable|exists:brands,id',
+
+            'name' => 'required|string|min:2|max:255',
+
+            'sku' => 'required|string|max:255|unique:products,sku,' . $this->product_id,
+
+            'color_id' => 'nullable|array',
+            'color_id.*' => 'exists:colors,id',
+
+            'size_id' => 'nullable|array',
+            'size_id.*' => 'exists:sizes,id',
+
+            'thumbnail' => 'nullable|image|max:2048',
+
+            'gallery.*' => 'nullable|image|max:2048',
+
+            'price' => 'required|numeric|min:0',
+
+            'discount_price' => 'nullable|numeric|min:0',
+
+            'stock' => 'required|integer|min:0',
         ];
     }
 
 
     public function resetInput()
     {
-        $this->reset();
+        $this->reset([
+            'product_id',
+            'category_id',
+            'brand_id',
+            'name',
+            'size_id',
+            'color_id',
+            'sku',
+            'thumbnail',
+            'gallery',
+            'price',
+            'discount_price',
+            'stock',
+            'short_description',
+            'description',
+            'oldThumbnail',
+            'oldGallery',
+        ]);
 
         $this->hot_deals = false;
         $this->status = true;
 
-        $this->size_id;
-        $this->color_id;
+        $this->size_id = [];
+        $this->color_id = [];
 
+        $this->gallery = [];
         $this->oldGallery = [];
     }
 
@@ -79,7 +122,6 @@ class Index extends Component
     }
 
 
-
     public function store()
     {
         abort_unless(
@@ -88,85 +130,161 @@ class Index extends Component
         );
 
         $this->validate();
+
+        /*
+    |--------------------------------------------------------------------------
+    | Thumbnail
+    |--------------------------------------------------------------------------
+    */
+
         $thumbnail = null;
+
         if ($this->thumbnail) {
-            $thumbnail = $this->thumbnail->store('products', 'public');
+            $thumbnail = $this->thumbnail->store(
+                'products',
+                'public'
+            );
         }
 
+        /*
+    |--------------------------------------------------------------------------
+    | Product Create
+    |--------------------------------------------------------------------------
+    */
+
         $product = Product::create([
-            'category_id'       => $this->category_id,
-            'brand_id'          => $this->brand_id,
-            'name'              => $this->name,
-            'slug'              => Str::slug($this->name),
-            'sku'               => $this->sku,
-            'thumbnail'         => $thumbnail,
-            'price'             => $this->price,
-            'discount_price'    => $this->discount_price,
-            'stock'             => $this->stock,
+            'category_id' => $this->category_id,
+            'brand_id' => $this->brand_id,
+
+            'name' => $this->name,
+
+            'slug' => Str::slug($this->name),
+
+            'sku' => $this->sku,
+
+            'thumbnail' => $thumbnail,
+
+            'price' => $this->price,
+
+            'discount_price' => $this->discount_price,
+
+            'stock' => $this->stock,
+
             'short_description' => $this->short_description,
-            'description'       => $this->description,
-            'hot_deals'         => $this->hot_deals,
-            'status'            => $this->status,
+
+            'description' => $this->description,
+
+            'hot_deals' => $this->hot_deals,
+
+            'status' => $this->status,
         ]);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Product Colors
+    |--------------------------------------------------------------------------
+    */
 
         $product->colors()->sync(
             $this->color_id ?? []
         );
 
+        /*
+    |--------------------------------------------------------------------------
+    | Product Sizes
+    |--------------------------------------------------------------------------
+    */
 
         $product->sizes()->sync(
             $this->size_id ?? []
         );
 
+        /*
+    |--------------------------------------------------------------------------
+    | Gallery
+    |--------------------------------------------------------------------------
+    */
+
         foreach ($this->gallery as $image) {
+
             ProductImage::create([
-                'product_id'    => $product->id,
-                'image'         => $image->store('products/gallery', 'public'),
+                'product_id' => $product->id,
+
+                'image' => $image->store(
+                    'products/gallery',
+                    'public'
+                ),
             ]);
         }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Success
+    |--------------------------------------------------------------------------
+    */
 
         $this->dispatch(
             'success',
             message: 'Product created successfully.'
         );
+
         $this->dispatch('close-modal');
+
         $this->resetInput();
     }
 
 
-
     public function edit($id)
     {
-        $product = Product::with('images')->findOrFail($id);
+        $product = Product::with([
+            'images',
+            'colors',
+            'sizes',
+        ])->findOrFail($id);
+
         $this->product_id = $product->id;
+
         $this->category_id = $product->category_id;
+
         $this->brand_id = $product->brand_id;
 
         $this->name = $product->name;
+
         $this->sku = $product->sku;
+
         $this->price = $product->price;
+
         $this->discount_price = $product->discount_price;
+
         $this->stock = $product->stock;
+
         $this->short_description = $product->short_description;
+
         $this->description = $product->description;
+
         $this->hot_deals = $product->hot_deals;
+
         $this->status = $product->status;
+
         $this->oldThumbnail = $product->thumbnail;
+
         $this->oldGallery = $product->images;
+
 
         $this->color_id = $product->colors
             ->pluck('id')
-            ->map(fn($id) => (string) $id)
             ->toArray();
 
         $this->size_id = $product->sizes
             ->pluck('id')
-            ->map(fn($id) => (string) $id)
             ->toArray();
+
+        $this->gallery = [];
+
+        $this->thumbnail = null;
 
         $this->dispatch('open-modal');
     }
-
 
     public function update()
     {
@@ -174,48 +292,97 @@ class Index extends Component
             auth()->user()->hasPermission('product.edit'),
             403
         );
+
         $this->validate([
-            'category_id'   => 'required',
-            'name'          => 'required|min:2',
-            'sku'           => 'required|unique:products,sku,' . $this->product_id,
-            'price'         => 'required|numeric',
-            'stock'         => 'required|integer',
-            'thumbnail'     => 'nullable|image|max:2048',
-            'gallery.*'     => 'nullable|image|max:2048',
+            'category_id' => 'required|exists:categories,id',
+
+            'brand_id' => 'nullable|exists:brands,id',
+
+            'name' => 'required|string|min:2|max:255',
+
+            'sku' => 'required|string|max:255|unique:products,sku,' . $this->product_id,
+
+            'color_id' => 'nullable|array',
+            'color_id.*' => 'exists:colors,id',
+
+            'size_id' => 'nullable|array',
+            'size_id.*' => 'exists:sizes,id',
+
+            'price' => 'required|numeric|min:0',
+
+            'discount_price' => 'nullable|numeric|min:0',
+
+            'stock' => 'required|integer|min:0',
+
+            'thumbnail' => 'nullable|image|max:2048',
+
+            'gallery.*' => 'nullable|image|max:2048',
         ]);
 
-        $product = Product::findOrFail($this->product_id);
+        $product = Product::findOrFail(
+            $this->product_id
+        );
+
+        /*
+    |--------------------------------------------------------------------------
+    | Thumbnail
+    |--------------------------------------------------------------------------
+    */
 
         $thumbnail = $product->thumbnail;
 
         if ($this->thumbnail) {
+
             if (
                 $thumbnail &&
                 Storage::disk('public')->exists($thumbnail)
             ) {
-                Storage::disk('public')->delete($thumbnail);
+                Storage::disk('public')->delete(
+                    $thumbnail
+                );
             }
-            $thumbnail = $this->thumbnail
-                ->store('products', 'public');
+
+            $thumbnail = $this->thumbnail->store(
+                'products',
+                'public'
+            );
         }
 
+        /*
+    |--------------------------------------------------------------------------
+    | Update Product
+    |--------------------------------------------------------------------------
+    */
+
         $product->update([
-            'category_id'       => $this->category_id,
-            'brand_id'          => $this->brand_id,
-            'color_id'          => $this->color_id,
-            'size_id'           => $this->size_id,
-            'name'              => $this->name,
-            'slug'              => Str::slug($this->name),
-            'sku'               => $this->sku,
-            'thumbnail'         => $thumbnail,
-            'price'             => $this->price,
-            'discount_price'    => $this->discount_price,
-            'stock'             => $this->stock,
+
+            'category_id' => $this->category_id,
+
+            'brand_id' => $this->brand_id,
+
+            'name' => $this->name,
+
+            'slug' => Str::slug($this->name),
+
+            'sku' => $this->sku,
+
+            'thumbnail' => $thumbnail,
+
+            'price' => $this->price,
+
+            'discount_price' => $this->discount_price,
+
+            'stock' => $this->stock,
+
             'short_description' => $this->short_description,
-            'description'       => $this->description,
-            'hot_deals'         => $this->hot_deals,
-            'status'            => $this->status,
+
+            'description' => $this->description,
+
+            'hot_deals' => $this->hot_deals,
+
+            'status' => $this->status,
         ]);
+
 
         $product->colors()->sync(
             $this->color_id ?? []
@@ -225,23 +392,42 @@ class Index extends Component
             $this->size_id ?? []
         );
 
+        /*
+    |--------------------------------------------------------------------------
+    | New Gallery Images
+    |--------------------------------------------------------------------------
+    */
+
         foreach ($this->gallery as $image) {
-            $path = $image->store(
-                'products/gallery',
-                'public'
-            );
+
             ProductImage::create([
-                'product_id'    => $product->id,
-                'image'         => $path,
+
+                'product_id' => $product->id,
+
+                'image' => $image->store(
+                    'products/gallery',
+                    'public'
+                ),
             ]);
         }
-        $this->dispatch('close-modal');
+
+        /*
+    |--------------------------------------------------------------------------
+    | Success
+    |--------------------------------------------------------------------------
+    */
+
         $this->dispatch(
             'success',
             message: 'Product updated successfully.'
         );
+
+        $this->dispatch('close-modal');
+
         $this->resetInput();
     }
+
+
 
     public function removeImage($id)
     {

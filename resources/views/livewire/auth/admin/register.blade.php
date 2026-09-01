@@ -35,22 +35,6 @@
                             @error('email')
                                 <div class="text-danger small mb-3">{{ $message }}</div>
                             @enderror
-
-                            <!--  Phone -->
-                            <label>Phone No</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-phone"></i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                    name="phone" wire:model="phone" placeholder="Enter your phone">
-                            </div>
-                            @error('phone')
-                                <div class="text-danger small mb-3">{{ $message }}</div>
-                            @enderror
-
                             <!--  Role -->
                             <label>Role</label>
                             <div class="input-group mb-3">

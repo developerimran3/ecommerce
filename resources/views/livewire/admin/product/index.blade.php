@@ -210,34 +210,73 @@
 
                                     {{-- Size --}}
                                     <div class="col-md-6">
-                                        <label>Size</label>
+
+                                        <label class="font-weight-bold">
+                                            Size
+                                        </label>
+
                                         <div class="multi-select-box">
-                                            <div id="sizeDropdown" class="multi-dropdown">
+
+                                            <div class="multi-dropdown">
+
                                                 @foreach ($sizes as $size)
                                                     <label class="multi-option">
-                                                        <input type="checkbox" value="{{ $size }}"
-                                                            wire:model="sizes" multiple>
-                                                        <span>{{ $size->name }}</span>
+
+                                                        <input type="checkbox" value="{{ $size->id }}"
+                                                            wire:model="size_id">
+
+                                                        <span>
+                                                            {{ $size->name }}
+                                                        </span>
+
                                                     </label>
                                                 @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
 
+                                            </div>
+
+                                        </div>
+
+                                        @error('size_id')
+                                            <small class="text-danger">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
+
+                                    </div>
                                     {{-- Color --}}
                                     <div class="col-md-6">
-                                        <label>Color</label>
+
+                                        <label class="font-weight-bold">
+                                            Color
+                                        </label>
+
                                         <div class="multi-select-box">
-                                            <div id="sizeDropdown" class="multi-dropdown">
+
+                                            <div class="multi-dropdown">
+
                                                 @foreach ($colors as $color)
                                                     <label class="multi-option">
-                                                        <input type="checkbox" value="{{ $color }}"
-                                                            wire:model="sizes" multiple>
-                                                        <span>{{ $color->name }}</span>
+
+                                                        <input type="checkbox" value="{{ $color->id }}"
+                                                            wire:model="color_id">
+
+                                                        <span>
+                                                            {{ $color->name }}
+                                                        </span>
+
                                                     </label>
                                                 @endforeach
+
                                             </div>
+
                                         </div>
+
+                                        @error('color_id')
+                                            <small class="text-danger">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
+
                                     </div>
                                 </div>
                             </div>
