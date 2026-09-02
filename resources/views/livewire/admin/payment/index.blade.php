@@ -40,7 +40,7 @@
                             @forelse($payments as $payment)
                                 <tr>
                                     <td> {{ $payments->firstItem() + $loop->index }} </td>
-                                    <td> {{ $payment->order?->invoice_no }} </td>
+                                    <td> <b> {{ $payment->order?->invoice_no }}</b> </td>
                                     <td> {{ $payment->order?->name }} </td>
                                     <td> {{ $payment->order?->phone }} </td>
                                     <td> {{ strtoupper($payment->method) }} </td>

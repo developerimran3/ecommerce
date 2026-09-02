@@ -499,7 +499,7 @@
             {{-- Banner & Ads --}}
             {{-- ========================================================= --}}
             @php
-                $bannerActive = request()->routeIs('admin.banner.categories') || request()->routeIs('admin.ads*');
+                $bannerActive = request()->routeIs('admin.banner.categories') || request()->routeIs('admin.banner');
             @endphp
 
             <li class="nav-item">
@@ -531,8 +531,8 @@
 
                     {{-- Banners & Ads --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.banner*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.banner') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.banner') ? 'active' : '' }}">
 
                             <i class="fas fa-ad"></i>
                             <span>Banners & Ads</span>

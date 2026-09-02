@@ -12,6 +12,7 @@ class BannerCategory extends Component
     protected $paginationTheme = 'bootstrap';
     public $category_id = null;
     public $name = '';
+    public $placement;
     public $status = true;
 
     /*
@@ -36,15 +37,14 @@ class BannerCategory extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required|string|max:255|unique:banner_categories,name',
-        ], [
-            'name.required' => 'Category name is required.',
-            'name.unique' => 'This category already exists.',
+            'name'      => 'required|string|max:255|unique:banner_categories,name',
+            'placement' => 'required|in:main_slider,promo_banner,footer_banner',
         ]);
 
         BannerCategories::create([
-            'name' => $this->name,
-            'status' => $this->status ? 1 : 0,
+            'name'      => $this->name,
+            'placement' => $this->placement,
+            'status'    => $this->status ? 1 : 0,
         ]);
 
         $this->resetInput();
@@ -67,6 +67,7 @@ class BannerCategory extends Component
         $category = BannerCategories::findOrFail($id);
         $this->category_id = $category->id;
         $this->name = $category->name;
+        $this->placement = $category->placement;
         $this->status = (bool) $category->status;
         $this->dispatch('open-modal');
     }
@@ -80,19 +81,27 @@ class BannerCategory extends Component
 
     public function update()
     {
-        $this->validate([
-            'name' => 'required|string|max:255|unique:banner_categories,name,' . $this->category_id,
-        ], [
-            'name.required' => 'Category name is required.',
-            'name.unique' => 'This category already exists.',
-        ]);
+        $this->validate(
+            [
+                'name' => 'required|string|max:255|unique:banner_categories,name,' . $this->category_id,
+            ],
+            [
+                'name.required' => 'Category name is required.',
+                'name.unique' => 'This category already exists.',
+            ],
+
+            ['placement' => 'required|in:main_slider,promo_banner,footer_banner']
+        );
 
         $category = BannerCategories::findOrFail(
             $this->category_id
         );
 
         $category->update([
-            'name' => $this->name,
+            'name'      => $this->name,
+            'placement' => $this->placement,
+            'status'    => $this->status,
+
         ]);
 
         $this->resetInput();
@@ -113,9 +122,7 @@ class BannerCategory extends Component
     public function delete($id)
     {
         $category = BannerCategories::findOrFail($id);
-
         $category->delete();
-
         session()->flash(
             'success',
             'Banner category deleted successfully.'
@@ -146,6 +153,7 @@ class BannerCategory extends Component
     {
         $this->category_id = null;
         $this->name = '';
+        $this->placement = '';
         $this->status = true;
         $this->resetValidation();
     }

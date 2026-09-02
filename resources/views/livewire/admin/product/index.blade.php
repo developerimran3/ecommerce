@@ -210,73 +210,40 @@
 
                                     {{-- Size --}}
                                     <div class="col-md-6">
-
-                                        <label class="font-weight-bold">
-                                            Size
-                                        </label>
-
+                                        <label class="font-weight-bold"> Size </label>
                                         <div class="multi-select-box">
-
                                             <div class="multi-dropdown">
-
                                                 @foreach ($sizes as $size)
                                                     <label class="multi-option">
-
                                                         <input type="checkbox" value="{{ $size->id }}"
                                                             wire:model="size_id">
-
-                                                        <span>
-                                                            {{ $size->name }}
-                                                        </span>
-
+                                                        <span> {{ $size->name }} </span>
                                                     </label>
                                                 @endforeach
-
                                             </div>
-
                                         </div>
-
                                         @error('size_id')
-                                            <small class="text-danger">
-                                                {{ $message }}
-                                            </small>
+                                            <small class="text-danger"> {{ $message }} </small>
                                         @enderror
 
                                     </div>
                                     {{-- Color --}}
                                     <div class="col-md-6">
-
-                                        <label class="font-weight-bold">
-                                            Color
-                                        </label>
-
+                                        <label class="font-weight-bold"> Color </label>
                                         <div class="multi-select-box">
-
                                             <div class="multi-dropdown">
-
                                                 @foreach ($colors as $color)
                                                     <label class="multi-option">
-
                                                         <input type="checkbox" value="{{ $color->id }}"
                                                             wire:model="color_id">
-
-                                                        <span>
-                                                            {{ $color->name }}
-                                                        </span>
-
+                                                        <span> {{ $color->name }} </span>
                                                     </label>
                                                 @endforeach
-
                                             </div>
-
                                         </div>
-
                                         @error('color_id')
-                                            <small class="text-danger">
-                                                {{ $message }}
-                                            </small>
+                                            <small class="text-danger"> {{ $message }} </small>
                                         @enderror
-
                                     </div>
                                 </div>
                             </div>

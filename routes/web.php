@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InvoiceController;
 use App\Livewire\Admin\Banner\BannerCategory;
+use App\Livewire\Admin\Banner\BannerIndex;
 use App\Livewire\Admin\Brand\Index as BrandIndex;
 use App\Livewire\Admin\Category\Index as CategoryIndex;
 use App\Livewire\Admin\Coupon\Index as CouponIndex;
@@ -38,6 +39,7 @@ use App\Livewire\Frontend\Home;
 use App\Livewire\Frontend\OrderSuccess;
 use App\Livewire\Frontend\OrderTrack;
 use App\Livewire\Frontend\ProductDetails;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -225,6 +227,10 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
     Route::get('/banner/categories', BannerCategory::class)
         ->middleware('permission:customers.view')
         ->name('admin.banner.categories');
+
+    Route::get('/banner', BannerIndex::class)
+        ->middleware('permission:customers.view')
+        ->name('admin.banner');
 
     // media
     Route::get('/media', MediaIndex::class)

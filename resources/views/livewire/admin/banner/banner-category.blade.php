@@ -18,6 +18,8 @@
                             <tr>
                                 <th width="60">#</th>
                                 <th>Name</th>
+                                <th>Slug</th>
+                                <th>Placement</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th width="130">Action</th>
@@ -36,6 +38,13 @@
                                         </div>
                                     </td>
 
+                                    <td>
+                                        {{ $category->slug }}
+                                    </td>
+
+                                    <td>
+                                        {{ $category->placement }}
+                                    </td>
 
 
                                     <td>
@@ -107,6 +116,19 @@
                                 @enderror
                             </div>
 
+                            {{-- Placement --}}
+                            <div class="form-group">
+                                <label> Placement <span class="text-danger">*</span> </label>
+                                <select class="form-control" wire:model="placement">
+                                    <option value=""> -- Select Placement -- </option>
+                                    <option value="main_slider"> Main Slider </option>
+                                    <option value="promo_banner"> Promo Banner </option>
+                                    <option value="footer_banner"> Footer Banner </option>
+                                </select>
+                                @error('placement')
+                                    <small class="text-danger"> {{ $message }} </small>
+                                @enderror
+                            </div>
                             <div class="{{ $category_id ? 'd-none' : '' }}">
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="status"

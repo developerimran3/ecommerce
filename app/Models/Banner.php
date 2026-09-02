@@ -7,12 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Banner extends Model
 {
     protected $fillable = [
-        'name',
+        'banner_category_id',
+        'image',
         'status',
+    ];
+
+    protected $casts = [
+        'status' => 'boolean',
     ];
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(
+            BannerCategory::class,
+            'banner_category_id'
+        );
     }
 }
