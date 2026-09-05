@@ -241,48 +241,33 @@ class Index extends Component
             'colors',
             'sizes',
         ])->findOrFail($id);
-
         $this->product_id = $product->id;
-
         $this->category_id = $product->category_id;
-
         $this->brand_id = $product->brand_id;
-
         $this->name = $product->name;
-
         $this->sku = $product->sku;
-
         $this->price = $product->price;
-
         $this->discount_price = $product->discount_price;
-
         $this->stock = $product->stock;
-
         $this->short_description = $product->short_description;
-
         $this->description = $product->description;
-
         $this->hot_deals = $product->hot_deals;
-
         $this->status = $product->status;
-
         $this->oldThumbnail = $product->thumbnail;
-
         $this->oldGallery = $product->images;
 
-
-        $this->color_id = $product->colors
-            ->pluck('id')
+        // Existing colors
+        $this->color_id = $product->colors()
+            ->pluck('colors.id')
             ->toArray();
 
-        $this->size_id = $product->sizes
-            ->pluck('id')
+        // Existing sizes
+        $this->size_id = $product->sizes()
+            ->pluck('sizes.id')
             ->toArray();
 
         $this->gallery = [];
-
         $this->thumbnail = null;
-
         $this->dispatch('open-modal');
     }
 
