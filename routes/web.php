@@ -44,6 +44,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+use Illuminate\Support\Facades\Artisan;
+
+Route::middleware('auth')->get('/create-storage-link', function () {
+
+    Artisan::call('storage:link');
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Storage link created successfully.',
+        'output' => Artisan::output(),
+    ]);
+});
 //PUBLIC ROUTE
 Route::get('/', Home::class)->name('home');
 

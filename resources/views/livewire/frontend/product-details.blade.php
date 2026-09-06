@@ -23,24 +23,26 @@
                                     </div>
                                 @endif
 
-                                {{-- Main Gallery (Big Image) --}}
-                                <div class="details_slider owl-carousel">
-                                    @foreach ($product->images as $image)
-                                        <div class="item">
-                                            <img src="{{ asset('storage/' . $image->image) }}" class="img-fluid"
-                                                alt="{{ $product->name }}">
-                                        </div>
-                                    @endforeach
-                                </div>
+                                <div wire:ignore>
+                                    <div class="details_slider owl-carousel">
+                                        @foreach ($product->images as $image)
+                                            <div class="item">
+                                                <img src="{{ asset('storage/' . $image->image) }}" class="img-fluid"
+                                                    alt="{{ $product->name }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
 
-                                {{-- Thumbnails --}}
-                                <div class="indicator_thumb d-flex flex-wrap">
-                                    @foreach ($product->images as $key => $image)
-                                        <div class="indicator-item" data-id="{{ $key }}">
-                                            <img src="{{ asset('storage/' . $image->image) }}"
-                                                style="width: 75px; height: 75px; object-fit: cover; cursor: pointer;">
-                                        </div>
-                                    @endforeach
+                                    {{-- Thumbnails --}}
+                                    <div class="indicator_thumb d-flex flex-wrap mt-2">
+                                        @foreach ($product->images as $key => $image)
+                                            <div class="indicator-item mr-2 mb-2" data-id="{{ $key }}">
+                                                <img src="{{ asset('storage/' . $image->image) }}"
+                                                    style="width:75px; height:75px; object-fit:cover; cursor:pointer;"
+                                                    alt="{{ $product->name }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 
@@ -158,8 +160,6 @@
                                                 </div>
 
                                             </form>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -171,3 +171,51 @@
         </div>
     </div>
 </div>
+@push('scripts')
+    <script>
+        function initProductGallery() {
+
+            let $slider = $('.details_slider');
+
+            if (!$slider.length) {
+                return;
+            }
+
+            // Already initialized হলে destroy
+            if ($slider.hasClass('owl-loaded')) {
+                $slider.trigger('destroy.owl.carousel');
+                $slider.removeClass('owl-loaded');
+                $slider.find('.owl-stage-outer').children().unwrap();
+            }
+
+            $slider.owlCarousel({
+                items: 1,
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: false,
+                autoplay: false,
+                smartSpeed: 500
+            });
+
+            // Thumbnail click
+            $('.indicator-item').off('click').on('click', function() {
+
+                let index = $(this).data('id');
+
+                $slider.trigger('to.owl.carousel', [index, 500]);
+
+            });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initProductGallery();
+        });
+
+
+        document.addEventListener('livewire:navigated', function() {
+            initProductGallery();
+        });
+    </script>
+@endpush
