@@ -138,7 +138,8 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="section-title mb-0"> Hot Deal </h4>
-                <a href="#" class="btn btn-success btn-sm"> View More </a>
+                <a href="{{ route('hot.dales.products') }}" wire:navigate class="btn btn-success btn-sm"> View More
+                </a>
             </div>
             <div class="row">
                 @foreach ($products as $product)

@@ -36,15 +36,13 @@ use App\Livewire\Customer\Profile as CustomerProfile;
 use App\Livewire\Frontend\Category\ProductCategory;
 use App\Livewire\Frontend\CheckoutPage;
 use App\Livewire\Frontend\Home;
+use App\Livewire\Frontend\Offer\HotDalesProduct;
 use App\Livewire\Frontend\OrderSuccess;
 use App\Livewire\Frontend\OrderTrack;
 use App\Livewire\Frontend\ProductDetails;
-
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-
-use Illuminate\Support\Facades\Artisan;
 
 Route::middleware('auth')->get('/create-storage-link', function () {
 
@@ -69,9 +67,11 @@ Route::get('/order-track', OrderTrack::class)
     ->name('order.track');
 
 
-
 Route::get('/category/{slug}', ProductCategory::class)
     ->name('category.products');
+
+Route::get('/hot-dales', HotDalesProduct::class)
+    ->name('hot.dales.products');
 
 
 Route::middleware('guest')->group(function () {
@@ -183,18 +183,6 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
         ->middleware('permission:orders.view')
         ->name('admin.orders');
 
-    Route::get('/orders/pending', OrderIndex::class)
-        ->middleware('permission:orders.view')
-        ->name('admin.orders.pending');
-
-    Route::get('/orders/cancelled', OrderIndex::class)
-        ->middleware('permission:orders.view')
-        ->name('admin.orders.cancelled');
-
-    Route::get('/orders/completed', OrderIndex::class)
-        ->middleware('permission:orders.view')
-        ->name('admin.orders.completed');
-
     Route::get('/orders/payments', PaymentIndex::class)
         ->middleware('permission:payments.view')
         ->name('admin.payment');
@@ -230,18 +218,20 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
 
     // API Int setting
     Route::get('/courier-setting', CourierSetting::class)
+        ->middleware('permission:couriers.view')
         ->name('admin.courier.setting');
 
     Route::get('/smtp-settings', SmtpSetting::class)
+        ->middleware('permission:smtp.view')
         ->name('admin.smtp.settings');
 
     // banner And Ads
     Route::get('/banner/categories', BannerCategory::class)
-        ->middleware('permission:customers.view')
+        ->middleware('permission:banners_categories.view')
         ->name('admin.banner.categories');
 
     Route::get('/banner', BannerIndex::class)
-        ->middleware('permission:customers.view')
+        ->middleware('permission:banners.view')
         ->name('admin.banner');
 
     // media

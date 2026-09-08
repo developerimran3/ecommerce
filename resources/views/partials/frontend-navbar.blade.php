@@ -97,7 +97,7 @@
                                         <li><a href="{{ route('home') }}" wire:navigate>Home</a></li>
                                     </div>
                                     <div>
-                                        <li><a href="#" wire:navigate>Offers</a></li>
+                                        <li><a href="{{ route('hot.dales.products') }}" wire:navigate>Offers</a></li>
                                     </div>
 
                                     <div class="contact__menu">

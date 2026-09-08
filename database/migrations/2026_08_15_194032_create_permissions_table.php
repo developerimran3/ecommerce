@@ -47,6 +47,46 @@ return new class extends Migration
             ['name' => 'tags.delete', 'module' => 'tags', 'action' => 'delete'],
             ['name' => 'tags.status', 'module' => 'tags', 'action' => 'status'],
 
+            // colors
+            ['name' => 'colors.view',   'module' => 'colors', 'action' => 'view'],
+            ['name' => 'colors.create', 'module' => 'colors', 'action' => 'create'],
+            ['name' => 'colors.edit',   'module' => 'colors', 'action' => 'edit'],
+            ['name' => 'colors.delete', 'module' => 'colors', 'action' => 'delete'],
+            ['name' => 'colors.status', 'module' => 'colors', 'action' => 'status'],
+
+            // sizes
+            ['name' => 'sizes.view',   'module' => 'sizes', 'action' => 'view'],
+            ['name' => 'sizes.create', 'module' => 'sizes', 'action' => 'create'],
+            ['name' => 'sizes.edit',   'module' => 'sizes', 'action' => 'edit'],
+            ['name' => 'sizes.delete', 'module' => 'sizes', 'action' => 'delete'],
+            ['name' => 'sizes.status', 'module' => 'sizes', 'action' => 'status'],
+
+            // couriers
+            ['name' => 'couriers.view',   'module' => 'couriers', 'action' => 'view'],
+            ['name' => 'couriers.create', 'module' => 'couriers', 'action' => 'create'],
+            ['name' => 'couriers.edit',   'module' => 'couriers', 'action' => 'edit'],
+            ['name' => 'couriers.delete', 'module' => 'couriers', 'action' => 'delete'],
+            ['name' => 'couriers.status', 'module' => 'couriers', 'action' => 'status'],
+
+            // banners
+            ['name' => 'banners.view',   'module' => 'banners', 'action' => 'view'],
+            ['name' => 'banners.create', 'module' => 'banners', 'action' => 'create'],
+            ['name' => 'banners.edit',   'module' => 'banners', 'action' => 'edit'],
+            ['name' => 'banners.delete', 'module' => 'banners', 'action' => 'delete'],
+            ['name' => 'banners.status', 'module' => 'banners', 'action' => 'status'],
+
+            // banners_categories
+            ['name' => 'banners_categories.view',   'module' => 'banners_categories', 'action' => 'view'],
+            ['name' => 'banners_categories.create', 'module' => 'banners_categories', 'action' => 'create'],
+            ['name' => 'banners_categories.edit',   'module' => 'banners_categories', 'action' => 'edit'],
+            ['name' => 'banners_categories.delete', 'module' => 'banners_categories', 'action' => 'delete'],
+            ['name' => 'banners_categories.status', 'module' => 'banners_categories', 'action' => 'status'],
+
+            //smtp
+            ['name' => 'smtp.view',   'module' => 'smtp', 'action' => 'view'],
+            ['name' => 'smtp.create', 'module' => 'smtp', 'action' => 'create'],
+            ['name' => 'smtp.edit',   'module' => 'smtp', 'action' => 'edit'],
+
             // orders
             ['name' => 'orders.create',   'module' => 'orders', 'action' => 'create'],
             ['name' => 'orders.view',     'module' => 'orders', 'action' => 'view'],
@@ -61,12 +101,12 @@ return new class extends Migration
             ['name' => 'shipping.delete', 'module' => 'shipping', 'action' => 'delete'],
             ['name' => 'shipping.status', 'module' => 'shipping', 'action' => 'status'],
 
-            // User
-            ['name' => 'user.view',   'module' => 'user', 'action' => 'view'],
-            ['name' => 'user.create', 'module' => 'user', 'action' => 'create'],
-            ['name' => 'user.edit',   'module' => 'user', 'action' => 'edit'],
-            ['name' => 'user.delete', 'module' => 'user', 'action' => 'delete'],
-            ['name' => 'user.status', 'module' => 'user', 'action' => 'status'],
+            // Users
+            ['name' => 'users.view',   'module' => 'users', 'action' => 'view'],
+            ['name' => 'users.create', 'module' => 'users', 'action' => 'create'],
+            ['name' => 'users.edit',   'module' => 'users', 'action' => 'edit'],
+            ['name' => 'users.delete', 'module' => 'users', 'action' => 'delete'],
+            ['name' => 'users.status', 'module' => 'users', 'action' => 'status'],
 
             // Coupons
             ['name' => 'coupons.view',   'module' => 'coupons', 'action' => 'view'],
@@ -81,6 +121,19 @@ return new class extends Migration
             ['name' => 'payments.edit',   'module' => 'payments', 'action' => 'edit'],
             ['name' => 'payments.delete', 'module' => 'payments', 'action' => 'delete'],
             ['name' => 'payments.status', 'module' => 'payments', 'action' => 'status'],
+
+            // Payments_gateway
+            ['name' => 'payments_gateway.view',   'module' => 'payments_gateway', 'action' => 'view'],
+            ['name' => 'payments_gateway.create', 'module' => 'payments_gateway', 'action' => 'create'],
+            ['name' => 'payments_gateway.edit',   'module' => 'payments_gateway', 'action' => 'edit'],
+            ['name' => 'payments_gateway.delete', 'module' => 'payments_gateway', 'action' => 'delete'],
+            ['name' => 'payments_gateway.status', 'module' => 'payments_gateway', 'action' => 'status'],
+            // sms_gateway
+            ['name' => 'sms_gateway.view',   'module' => 'sms_gateway', 'action' => 'view'],
+            ['name' => 'sms_gateway.create', 'module' => 'sms_gateway', 'action' => 'create'],
+            ['name' => 'sms_gateway.edit',   'module' => 'sms_gateway', 'action' => 'edit'],
+            ['name' => 'sms_gateway.delete', 'module' => 'sms_gateway', 'action' => 'delete'],
+            ['name' => 'sms_gateway.status', 'module' => 'sms_gateway', 'action' => 'status'],
 
             // reviews
             ['name' => 'reviews.view',   'module' => 'reviews', 'action' => 'view'],
@@ -97,6 +150,39 @@ return new class extends Migration
 
             // site Setting
             ['name' => 'setting.view',    'module' => 'setting', 'action' => 'view'],
+            ['name' => 'setting.create',  'module' => 'setting', 'action' => 'create'],
+            ['name' => 'setting.edit',    'module' => 'setting', 'action' => 'edit'],
+            ['name' => 'setting.delete',  'module' => 'setting', 'action' => 'delete'],
+
+            // Page Create
+            ['name' => 'page.view',    'module' => 'page', 'action' => 'view'],
+            ['name' => 'page.create',  'module' => 'page', 'action' => 'create'],
+            ['name' => 'page.edit',    'module' => 'page', 'action' => 'edit'],
+            ['name' => 'page.delete',  'module' => 'page', 'action' => 'delete'],
+
+            //stocks_report
+            ['name' => 'stocks_report.view',    'module' => 'stocks_report', 'action' => 'view'],
+            ['name' => 'stocks_report.create',  'module' => 'stocks_report', 'action' => 'create'],
+            ['name' => 'stocks_report.edit',    'module' => 'stocks_report', 'action' => 'edit'],
+            ['name' => 'stocks_report.delete',  'module' => 'stocks_report', 'action' => 'delete'],
+
+            //sales_report
+            ['name' => 'sales_report.view',    'module' => 'sales_report', 'action' => 'view'],
+            ['name' => 'sales_report.create',  'module' => 'sales_report', 'action' => 'create'],
+            ['name' => 'sales_report.edit',    'module' => 'sales_report', 'action' => 'edit'],
+            ['name' => 'sales_report.delete',  'module' => 'sales_report', 'action' => 'delete'],
+
+            //orders_report
+            ['name' => 'orders_report.view',    'module' => 'orders_report', 'action' => 'view'],
+            ['name' => 'orders_report.create',  'module' => 'orders_report', 'action' => 'create'],
+            ['name' => 'orders_report.edit',    'module' => 'orders_report', 'action' => 'edit'],
+            ['name' => 'orders_report.delete',  'module' => 'orders_report', 'action' => 'delete'],
+
+            //ip
+            ['name' => 'ip.view',    'module' => 'ip', 'action' => 'view'],
+            ['name' => 'ip.create',  'module' => 'ip', 'action' => 'create'],
+            ['name' => 'ip.edit',    'module' => 'ip', 'action' => 'edit'],
+            ['name' => 'ip.delete',  'module' => 'ip', 'action' => 'delete'],
 
             //Invoice
             ['name' => 'invoices.view',    'module' => 'invoices', 'action' => 'view'],

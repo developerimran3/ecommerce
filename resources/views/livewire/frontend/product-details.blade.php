@@ -52,7 +52,9 @@
                                         <ul>
                                             <li><a href="/">Home</a></li>
                                             <li><span>/</span></li>
-                                            <li><a href="">{{ $product->category->name }}</a>
+                                            <li><a href="{{ route('category.products', $product->category->slug) }}">
+                                                    {{ $product->category->name }}
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
