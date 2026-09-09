@@ -69,9 +69,9 @@ class Index extends Component
             'size_id' => 'nullable|array',
             'size_id.*' => 'exists:sizes,id',
 
-            'thumbnail' => 'nullable|image|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
 
-            'gallery.*' => 'nullable|image|max:2048',
+            'gallery.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
 
             'price' => 'required|numeric|min:0',
 

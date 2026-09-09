@@ -146,8 +146,7 @@
                         </div>
                         <div class="form-group">
                             <label>Profile Picture</label>
-                            <input type="file" class="form-control" wire:model="image"
-                                accept=".jpg,.jpeg,.png,.webp">
+                            <input type="file" class="form-control" wire:model="image">
                             @error('image')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror

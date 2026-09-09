@@ -181,13 +181,13 @@
                                         <label>Stock</label>
                                         <input type="number" name="stock" class="form-control" wire:model="stock">
                                     </div>
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <label>Stock Status</label>
                                         <select id="stock_status" class="form-control" wire:model="stock_status">
                                             <option value="1">In Stock</option>
                                             <option value="0">Out of Stock</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
@@ -266,7 +266,8 @@
                         <div class="col-lg-4">
                             <div class="wc-card mb-4">
                                 <h5 class="section-title"> Product Thumbnail </h5>
-                                <input type="file" class="form-control" wire:model="thumbnail">
+                                <input type="file" class="form-control" wire:model="thumbnail"
+                                    accept="image/jpeg,image/png,image/webp">
                                 @if ($thumbnail)
                                     <img src="{{ $thumbnail->temporaryUrl() }}" class="preview-image mt-3">
                                 @endif
@@ -277,7 +278,8 @@
 
                             <div class="wc-card mb-4">
                                 <h5 class="section-title"> Gallery </h5>
-                                <input type="file" multiple class="form-control" wire:model="gallery">
+                                <input type="file" multiple class="form-control" wire:model="gallery"
+                                    accept="image/jpeg,image/png,image/webp">
                                 <div class="row mt-3">
 
                                     {{-- পুরোনো image --}}
@@ -339,11 +341,6 @@
 
                             <div class="wc-card">
                                 <h5 class="section-title"> Options </h5>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="featured"
-                                        wire:model="featured">
-                                    <label class="custom-control-label" for="featured"> Featured Product </label>
-                                </div>
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="active"
                                         wire:model="status">
