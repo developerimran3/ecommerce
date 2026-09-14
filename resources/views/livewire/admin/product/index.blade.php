@@ -169,17 +169,28 @@
                                 <h5 class="section-title"> Product Information </h5>
                                 <div class="form-group">
                                     <label>Product Name</label>
-                                    <input type="text" name="product_name" class="form-control"
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         wire:model.live="name">
+                                    @error('name')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-4">
                                         <label>Product Code (SKU)</label>
                                         <input type="text" name="sku" class="form-control" wire:model="sku">
+                                        @error('sku')
+                                            <small class="text-danger"> {{ $message }} </small>
+                                        @enderror
                                     </div>
                                     <div class="col-md-4">
                                         <label>Stock</label>
-                                        <input type="number" name="stock" class="form-control" wire:model="stock">
+                                        <input type="number" name="stock"
+                                            class="form-control @error('stock') is-invalid @enderror"
+                                            wire:model="stock">
+                                        @error('stock')
+                                            <small class="text-danger"> {{ $message }} </small>
+                                        @enderror
                                     </div>
                                     {{-- <div class="col-md-4">
                                         <label>Stock Status</label>
@@ -196,18 +207,25 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Regular Price</label>
-                                        <input type="number" name="price" class="form-control" wire:model="price">
+                                        <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                            wire:model="price">
+                                        @error('price')
+                                            <small class="text-danger"> {{ $message }} </small>
+                                        @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label>Sale Price</label>
-                                        <input type="number" name="price" class="form-control"
+                                        <input type="number"
+                                            class="form-control @error('discount_price') is-invalid @enderror"
                                             wire:model="discount_price">
+                                        @error('discount_price')
+                                            <small class="text-danger"> {{ $message }} </small>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="wc-card mb-4">
                                 <div class="row">
-
                                     {{-- Size --}}
                                     <div class="col-md-6">
                                         <label class="font-weight-bold"> Size </label>
@@ -222,10 +240,6 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                        @error('size_id')
-                                            <small class="text-danger"> {{ $message }} </small>
-                                        @enderror
-
                                     </div>
                                     {{-- Color --}}
                                     <div class="col-md-6">
@@ -241,9 +255,6 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                        @error('color_id')
-                                            <small class="text-danger"> {{ $message }} </small>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -289,7 +300,6 @@
                                             <button type="button" class="gallery-remove-btn"
                                                 wire:click="removeImage({{ $image->id }})">
                                                 <i class="fas fa-times"></i>
-
                                             </button>
                                         </div>
                                     @endforeach
@@ -303,28 +313,30 @@
                                 </div>
                             </div>
                             <div class="wc-card mb-4">
-                                <div class="form-group mb-0" wire:ignore>
+                                <div class="form-group mb-0">
                                     <label for="category_id">Category</label>
-                                    <select id="category_id" class="form-control">
-                                        <option value="">Select..</option>
+                                    <div wire:ignore>
+                                        <select id="category_id" class="form-control">
+                                            <option value="">Select..</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">
-                                                {{ $category->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    @error('category_id')
+                                        <small class="text-danger d-block mt-1"> {{ $message }} </small>
+                                    @enderror
+
                                 </div>
-
-
                                 <div class="form-group mb-0" wire:ignore>
                                     <label for="brand_id">Brand</label>
-
                                     <select id="brand_id" class="form-control">
-                                        <option value="">Select Brand..</option>
-
+                                        <option value=""> Select Brand.. </option>
                                         @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}" @selected($brand_id == $brand->id)>
+                                            <option value="{{ $brand->id }}">
                                                 {{ $brand->name }}
                                             </option>
                                         @endforeach
@@ -374,6 +386,12 @@
     <script>
         document.addEventListener('livewire:init', function() {
 
+            /*
+            |--------------------------------------------------------------------------
+            | Get Livewire Component
+            |--------------------------------------------------------------------------
+            */
+
             function getLivewireComponent(element) {
 
                 const componentElement = element.closest('[wire\\:id]');
@@ -387,6 +405,12 @@
                 );
             }
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | Initialize Select2
+            |--------------------------------------------------------------------------
+            */
 
             function initSelect2() {
 
@@ -417,6 +441,7 @@
                         const component = getLivewireComponent(this);
 
                         if (component) {
+
                             component.set(
                                 'category_id',
                                 $(this).val()
@@ -453,6 +478,7 @@
                         const component = getLivewireComponent(this);
 
                         if (component) {
+
                             component.set(
                                 'brand_id',
                                 $(this).val()
@@ -460,7 +486,6 @@
                         }
                     });
                 }
-
             }
 
 
@@ -475,11 +500,65 @@
 
             /*
             |--------------------------------------------------------------------------
+            | Edit Product
+            |--------------------------------------------------------------------------
+            | Livewire থেকে category_id এবং brand_id আসার পরে
+            | Select2-তে selected value বসাবে
+            |--------------------------------------------------------------------------
+            */
+
+            Livewire.on('set-product-selects', function(event) {
+
+                setTimeout(function() {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Category
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $('#category_id')
+                        .val(event.category)
+                        .trigger('change.select2');
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Brand
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $('#brand_id')
+                        .val(event.brand)
+                        .trigger('change.select2');
+
+                }, 100);
+            });
+
+            Livewire.on('reset-product-selects', function() {
+
+                setTimeout(function() {
+
+                    $('#category_id')
+                        .val('')
+                        .trigger('change.select2');
+
+                    $('#brand_id')
+                        .val('')
+                        .trigger('change.select2');
+
+                }, 100);
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
             | Livewire DOM Update
             |--------------------------------------------------------------------------
             */
 
-            Livewire.hook('morph.updated', () => {
+            Livewire.hook('morph.updated', function() {
 
                 setTimeout(function() {
                     initSelect2();
