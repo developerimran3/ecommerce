@@ -3,7 +3,7 @@
 
 <head>
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('assets/img/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('assets/img/favicon.jpg') }}" type="image/png">
     <!-- Site Title -->
     <title>{{ $title ?? 'Dashboard' }} - Genius Shop</title>
     <!-- SEO Description / Tagline -->

@@ -7,7 +7,7 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/home-logo.jpg') }}"
+                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/logo.png') }}"
                         alt=""></a>
             </div>
             <div class="menu-bag">

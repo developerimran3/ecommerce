@@ -50,7 +50,7 @@
 
             <div class="col-md-3">
 
-                <img src="{{ asset('assets/img/white_logo.png') }}" class="footer_image">
+                <img src="{{ asset('assets/img/logo.png') }}" class="footer_image">
 
                 <p class="mt-3">
                     8050 Goshairhat, Dhaka
