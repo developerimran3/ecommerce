@@ -42,7 +42,7 @@
                         <div class="logo-header">
                             <div class="main-logo">
                                 <a href="{{ route('home') }}" wire:navigate><img
-                                        src="{{ asset('assets/img/home-logo.jpg') }}" alt=""></a>
+                                        src="{{ asset('assets/img/logo.png') }}" alt=""></a>
                             </div>
                             <div class="main-search">
                                 <form action="#">
