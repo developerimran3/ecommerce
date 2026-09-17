@@ -74,15 +74,17 @@
                 @endforeach
             </div>
             {{-- Save --}}
-            <div class="text-right mt-3">
-                <button type="button" wire:click="save" wire:loading.attr="disabled" class="btn btn-purple px-4"
-                    @disabled($selectedRole === 'Administrator')>
-                    <span wire:loading.remove wire:target="save">
-                        <i class="fas fa-save mr-1"></i> Save Permissions </span>
-                    <span wire:loading wire:target="save">
-                        <i class="fas fa-spinner fa-spin mr-1"></i> Saving... </span>
-                </button>
-            </div>
+            @if (auth()->user()->hasPermission('permission.view'))
+                <div class="text-right mt-3">
+                    <button type="button" wire:click="save" wire:loading.attr="disabled" class="btn btn-purple px-4"
+                        @disabled($selectedRole === 'Administrator')>
+                        <span wire:loading.remove wire:target="save">
+                            <i class="fas fa-save mr-1"></i> Save Permissions </span>
+                        <span wire:loading wire:target="save">
+                            <i class="fas fa-spinner fa-spin mr-1"></i> Saving... </span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 </div>

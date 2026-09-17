@@ -83,6 +83,11 @@ class Index extends Component
 
     public function edit($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('coupons.edit'),
+            403
+        );
+
         $coupon = CouponModel::findOrFail($id);
         $this->couponId = $coupon->id;
         $this->code = $coupon->code;

@@ -86,6 +86,11 @@ class Index extends Component
 
     public function edit($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('users.edit'),
+            403
+        );
+
         $user           = User::findOrFail($id);
         $this->user_id  = $user->id;
         $this->name     = $user->name;

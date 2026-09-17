@@ -1,7 +1,6 @@
 <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="page-title">Products</h4>
-
         @if (auth()->user()->hasPermission('products.create'))
             <button class="btn btn-purple" wire:click="create"> <i class="fas fa-shopping-cart"></i> Add Product </button>
         @endif
@@ -110,21 +109,24 @@
                                     </td>
                                     <td> {{ $product->created_at->format('d M Y') }}</td>
                                     <td>
-                                        <button wire:click="edit({{ $product->id }})" class="btn btn-sm btn-info">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-
-                                        <button wire:click="delete({{ $product->id }})"
-                                            wire:confirm="Are you sure you want to delete this Product?"
-                                            class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-
-                                        <button wire:click="toggleStatus({{ $product->id }})"
-                                            class="btn btn-sm btn-warning">
-                                            <i class="fas fa-power-off"></i>
-                                        </button>
-
+                                        @if (auth()->user()->hasPermission('products.edit'))
+                                            <button wire:click="edit({{ $product->id }})" class="btn btn-sm btn-info">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        @endif
+                                        @if (auth()->user()->hasPermission('products.delete'))
+                                            <button wire:click="delete({{ $product->id }})"
+                                                wire:confirm="Are you sure you want to delete this Product?"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
+                                        @if (auth()->user()->hasPermission('products.status'))
+                                            <button wire:click="toggleStatus({{ $product->id }})"
+                                                class="btn btn-sm btn-warning">
+                                                <i class="fas fa-power-off"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

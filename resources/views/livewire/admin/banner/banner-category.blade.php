@@ -2,7 +2,7 @@
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="page-title mb-0">Category List</h4>
-        @if (auth()->user()->hasPermission('categories.create'))
+        @if (auth()->user()->hasPermission('banners_categories.create'))
             <button class="btn btn-purple" wire:click="create">
                 <i class="fas fa-th-list mr-1"></i> Add Category </button>
         @endif
@@ -59,19 +59,19 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if (auth()->user()->hasPermission('categories.edit'))
+                                        @if (auth()->user()->hasPermission('banners_categories.edit'))
                                             <button wire:click="edit({{ $category->id }})" class="btn btn-sm btn-info">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                         @endif
-                                        @if (auth()->user()->hasPermission('categories.delete'))
+                                        @if (auth()->user()->hasPermission('banners_categories.delete'))
                                             <button wire:click="delete({{ $category->id }})"
                                                 wire:confirm="Are you sure you want to delete this Category?"
                                                 class="btn btn-sm btn-danger">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         @endif
-                                        @if (auth()->user()->hasPermission('categories.status'))
+                                        @if (auth()->user()->hasPermission('banners_categories.status'))
                                             <button wire:click="toggleStatus({{ $category->id }})"
                                                 class="btn btn-sm btn-warning">
                                                 <i class="fas fa-power-off"></i>

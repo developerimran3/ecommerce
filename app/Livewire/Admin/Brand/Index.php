@@ -49,7 +49,7 @@ class Index extends Component
     public function store()
     {
         abort_unless(
-            auth()->user()->hasPermission('brand.create'),
+            auth()->user()->hasPermission('brands.create'),
             403
         );
 
@@ -85,6 +85,11 @@ class Index extends Component
 
     public function edit($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('brands.edit'),
+            403
+        );
+
         $brand = Brand::findOrFail($id);
         $this->brand_id = $brand->id;
         $this->oldLogo = $brand->logo;
@@ -96,7 +101,7 @@ class Index extends Component
     public function update()
     {
         abort_unless(
-            auth()->user()->hasPermission('brand.edit'),
+            auth()->user()->hasPermission('brands.edit'),
             403
         );
 
@@ -139,7 +144,7 @@ class Index extends Component
     public function delete($id)
     {
         abort_unless(
-            auth()->user()->hasPermission('brand.delete'),
+            auth()->user()->hasPermission('brands.delete'),
             403
         );
 

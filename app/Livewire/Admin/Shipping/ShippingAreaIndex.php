@@ -70,6 +70,11 @@ class ShippingAreaIndex extends Component
 
     public function edit($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('shipping.edit'),
+            403
+        );
+
         $shipping = ShippingArea::findOrFail($id);
 
         $this->editId = $shipping->id;

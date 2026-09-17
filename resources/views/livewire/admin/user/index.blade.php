@@ -78,7 +78,7 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 @endif
-                                @if (auth()->user()->hasPermission('users.delete'))
+                                @if (auth()->user()->hasPermission('users.status'))
                                     <button wire:click="toggleStatus({{ $user->id }})"
                                         class="btn btn-sm btn-warning">
                                         <i class="fas fa-power-off"></i>

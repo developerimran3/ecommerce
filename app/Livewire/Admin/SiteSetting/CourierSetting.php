@@ -96,28 +96,17 @@ class CourierSetting extends Component
         $this->dispatch('open-modal');
     }
 
-    //Open Edit 
-    public function edit($id)
-    {
-        $courier = CourierSettingModel::findOrFail($id);
-        $this->courierId = $courier->id;
-        $this->courier_name = $courier->courier_name;
-        $this->base_url = $courier->base_url;
-        $this->api_url = $courier->api_url;
-        $this->api_key = $courier->api_key;
-        $this->secret_key = $courier->secret_key;
-        $this->username = $courier->username;
-        $this->password = $courier->password;
-        $this->account_id = $courier->account_id;
-        $this->store_id = $courier->store_id;
-        $this->sandbox = $courier->sandbox;
-        $this->status = $courier->status;
-        $this->dispatch('open-modal');
-    }
+
 
     //Save Courier
     public function save()
     {
+
+        abort_unless(
+            auth()->user()->hasPermission('couriers.create'),
+            403
+        );
+
         $this->validate();
 
         //UPDATE
@@ -168,6 +157,49 @@ class CourierSetting extends Component
         );
     }
 
+    //Open Edit 
+    public function edit($id)
+    {
+        abort_unless(
+            auth()->user()->hasPermission('couriers.edit'),
+            403
+        );
+
+        $courier = CourierSettingModel::findOrFail($id);
+        $this->courierId = $courier->id;
+        $this->courier_name = $courier->courier_name;
+        $this->base_url = $courier->base_url;
+        $this->api_url = $courier->api_url;
+        $this->api_key = $courier->api_key;
+        $this->secret_key = $courier->secret_key;
+        $this->username = $courier->username;
+        $this->password = $courier->password;
+        $this->account_id = $courier->account_id;
+        $this->store_id = $courier->store_id;
+        $this->sandbox = $courier->sandbox;
+        $this->status = $courier->status;
+        $this->dispatch('open-modal');
+    }
+
+
+    // Delete Courier
+
+    public function delete($id)
+    {
+        abort_unless(
+            auth()->user()->hasPermission('couriers.delete'),
+            403
+        );
+
+        $courier = CourierSettingModel::findOrFail($id);
+        $courier->delete();
+        $this->dispatch(
+            'success',
+            message: 'Courier deleted successfully.'
+        );
+    }
+
+
     public function toggleStatus($id)
     {
         abort_unless(
@@ -182,18 +214,6 @@ class CourierSetting extends Component
         $this->dispatch(
             'success',
             message: 'courier status updated.'
-        );
-    }
-
-    // Delete Courier
-
-    public function delete($id)
-    {
-        $courier = CourierSettingModel::findOrFail($id);
-        $courier->delete();
-        $this->dispatch(
-            'success',
-            message: 'Courier deleted successfully.'
         );
     }
 

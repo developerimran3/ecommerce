@@ -84,7 +84,6 @@ return new class extends Migration
 
             //smtp
             ['name' => 'smtp.view',   'module' => 'smtp', 'action' => 'view'],
-            ['name' => 'smtp.create', 'module' => 'smtp', 'action' => 'create'],
             ['name' => 'smtp.edit',   'module' => 'smtp', 'action' => 'edit'],
 
             // orders
@@ -107,6 +106,10 @@ return new class extends Migration
             ['name' => 'users.edit',   'module' => 'users', 'action' => 'edit'],
             ['name' => 'users.delete', 'module' => 'users', 'action' => 'delete'],
             ['name' => 'users.status', 'module' => 'users', 'action' => 'status'],
+            //customers
+            ['name' => 'customers.view',   'module' => 'customers', 'action' => 'view'],
+            ['name' => 'customers.delete', 'module' => 'customers', 'action' => 'delete'],
+            ['name' => 'customers.status', 'module' => 'customers', 'action' => 'status'],
 
             // Coupons
             ['name' => 'coupons.view',   'module' => 'coupons', 'action' => 'view'],
@@ -185,12 +188,11 @@ return new class extends Migration
             ['name' => 'ip.delete',  'module' => 'ip', 'action' => 'delete'],
 
             //Invoice
-            ['name' => 'invoices.view',    'module' => 'invoices', 'action' => 'view'],
-            ['name' => 'invoices.download', 'module' => 'invoices', 'action' => 'download'],
+            ['name' => 'invoices.view',     'module' => 'invoices', 'action' => 'view'],
+            ['name' => 'invoices.download',  'module' => 'invoices', 'action' => 'download'],
 
             //permission
-            ['name' => 'permission.view',     'module' => 'permission', 'action' => 'view'],
-
+            ['name' => 'permission.view',  'module' => 'permission', 'action' => 'view'],
         ];
 
         DB::table('permissions')->insert($permissions);

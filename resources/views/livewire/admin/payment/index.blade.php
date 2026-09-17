@@ -47,18 +47,21 @@
                                     <td> {{ $payment->trx_id ?? '-' }} </td>
                                     <td> ৳ {{ number_format($payment->amount, 2) }} </td>
                                     <td>
-                                        <select class="form-control form-control-sm"
-                                            wire:change="updateStatus({{ $payment->id }},$event.target.value)">
-                                            <option value="pending" @selected($payment->status === 'pending')> Pending </option>
-                                            <option value="paid" @selected($payment->status === 'paid')> Paid </option>
-                                            <option value="failed" @selected($payment->status === 'failed')> Failed </option>
-                                        </select>
+                                        @if (auth()->user()->hasPermission('payments.status'))
+                                            <select class="form-control form-control-sm d-inline" style="width:120px"
+                                                wire:change="updateStatus({{ $payment->id }},$event.target.value)">
+                                                <option value="pending" @selected($payment->status === 'pending')> Pending </option>
+                                                <option value="paid" @selected($payment->status === 'paid')> Paid </option>
+                                                <option value="failed" @selected($payment->status === 'failed')> Failed </option>
+                                            </select>
+                                        @endif
                                     </td>
+
                                     <td> {{ $payment->created_at->format('d M Y h:i A') }} </td>
                                     <td>
                                         @if (auth()->user()->hasPermission('payments.delete'))
                                             <button wire:click="delete({{ $payment->id }})"
-                                                wire:confirm="Are you sure you want to delete this Order?"
+                                                wire:confirm="Are you sure you want to delete this Payment?"
                                                 class="btn btn-sm btn-danger">
                                                 <i class="fas fa-trash"></i>
                                             </button>

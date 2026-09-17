@@ -4,8 +4,10 @@
         <div>
             <h4 class="mb-1"> Coupons </h4>
         </div>
-        <button wire:click="create" class="btn btn-purple">
-            <i class="fas fa-plus"></i> Add Courier </button>
+        @if (auth()->user()->hasPermission('couriers.create'))
+            <button wire:click="create" class="btn btn-purple">
+                <i class="fas fa-plus"></i> Add Courier </button>
+        @endif
     </div>
 
 

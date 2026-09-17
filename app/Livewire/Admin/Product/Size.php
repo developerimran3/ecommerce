@@ -36,18 +36,16 @@ class Size extends Component
         $this->dispatch('open-modal');
     }
 
-    public function edit($id)
-    {
-        $size = Sizes::findOrFail($id);
 
-        $this->sizeId = $size->id;
-        $this->name = $size->name;
-        $this->status = $size->status;
-        $this->dispatch('open-modal');
-    }
+
 
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('sizes.create'),
+            403
+        );
+
         $this->validate();
         Sizes::updateOrCreate(
             ['id'        => $this->sizeId],
@@ -67,8 +65,30 @@ class Size extends Component
         $this->dispatch('close-modal');
     }
 
+
+    public function edit($id)
+    {
+        abort_unless(
+            auth()->user()->hasPermission('sizes.edit'),
+            403
+        );
+
+        $size = Sizes::findOrFail($id);
+
+        $this->sizeId = $size->id;
+        $this->name = $size->name;
+        $this->status = $size->status;
+        $this->dispatch('open-modal');
+    }
+
+
     public function toggleStatus($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('sizes.status'),
+            403
+        );
+
         $size = Sizes::findOrFail($id);
         $size->update([
             'status' => !$size->status,
@@ -82,6 +102,11 @@ class Size extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('sizes.delete'),
+            403
+        );
+
         $size = Sizes::findOrFail($id);
         $size->delete();
         $this->dispatch(

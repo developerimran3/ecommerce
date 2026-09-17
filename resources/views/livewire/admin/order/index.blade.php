@@ -82,7 +82,7 @@
                                         {{ $order->created_at->format('d M Y h:i A') }}
                                     </td>
                                     <td>
-                                        @if (auth()->user()->hasPermission('order.status'))
+                                        @if (auth()->user()->hasPermission('orders.status'))
                                             <select class="form-control form-control-sm d-inline" style="width:120px"
                                                 wire:change="updateStatus({{ $order->id }}, $event.target.value)">
                                                 <option value="pending" @selected($order->order_status == 'pending')>

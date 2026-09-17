@@ -42,19 +42,15 @@ class Color extends Component
         $this->dispatch('open-modal');
     }
 
-    public function edit($id)
-    {
-        $color = Colors::findOrFail($id);
 
-        $this->colorId    = $color->id;
-        $this->name       = $color->name;
-        $this->color_code = $color->color_code;
-        $this->status     = $color->status;
-        $this->dispatch('open-modal');
-    }
 
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('colors.create'),
+            403
+        );
+
         $this->validate();
 
         Colors::updateOrCreate(
@@ -77,21 +73,49 @@ class Color extends Component
         $this->dispatch('close-modal');
     }
 
-    public function toggleStatus($id)
+    public function edit($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('colors.edit'),
+            403
+        );
+
         $color = Colors::findOrFail($id);
-        $color->update([
-            'status' => !$color->status,
-        ]);
+
+        $this->colorId    = $color->id;
+        $this->name       = $color->name;
+        $this->color_code = $color->color_code;
+        $this->status     = $color->status;
+        $this->dispatch('open-modal');
     }
+
+
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('colors.delete'),
+            403
+        );
+
         Colors::findOrFail($id)->delete();
         $this->dispatch(
             'success',
             message: 'Color deleted successfully.'
         );
+    }
+
+    public function toggleStatus($id)
+    {
+        abort_unless(
+            auth()->user()->hasPermission('colors.status'),
+            403
+        );
+
+        $color = Colors::findOrFail($id);
+        $color->update([
+            'status' => !$color->status,
+        ]);
     }
 
     public function resetInput()

@@ -73,7 +73,7 @@ class BannerIndex extends Component
     public function store()
     {
         abort_unless(
-            auth()->user()->hasPermission('banner.create'),
+            auth()->user()->hasPermission('banners.create'),
             403
         );
 
@@ -113,7 +113,7 @@ class BannerIndex extends Component
     public function edit($id)
     {
         abort_unless(
-            auth()->user()->hasPermission('banner.edit'),
+            auth()->user()->hasPermission('banners.edit'),
             403
         );
 
@@ -144,7 +144,7 @@ class BannerIndex extends Component
     public function update()
     {
         abort_unless(
-            auth()->user()->hasPermission('banner.edit'),
+            auth()->user()->hasPermission('banners.edit'),
             403
         );
 
@@ -202,7 +202,7 @@ class BannerIndex extends Component
     public function delete($id)
     {
         abort_unless(
-            auth()->user()->hasPermission('banner.delete'),
+            auth()->user()->hasPermission('banners.delete'),
             403
         );
 
@@ -236,7 +236,7 @@ class BannerIndex extends Component
     public function toggleStatus($id)
     {
         abort_unless(
-            auth()->user()->hasPermission('banner.status'),
+            auth()->user()->hasPermission('banners.status'),
             403
         );
 

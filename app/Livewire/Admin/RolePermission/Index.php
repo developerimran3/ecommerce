@@ -39,6 +39,11 @@ class Index extends Component
 
     public function save()
     {
+        abort_unless(
+            auth()->user()->hasPermission('permission.edit'),
+            403
+        );
+
         if ($this->selectedRole === 'Administrator') {
             $this->dispatch(
                 'show-toast',
@@ -79,13 +84,6 @@ class Index extends Component
         }
         $this->selectedPermissions = [];
     }
-
-
-
-
-
-
-
 
 
     public function render()

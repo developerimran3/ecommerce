@@ -116,7 +116,7 @@ class Index extends Component
     public function store()
     {
         abort_unless(
-            auth()->user()->hasPermission('product.create'),
+            auth()->user()->hasPermission('products.create'),
             403
         );
 
@@ -210,6 +210,11 @@ class Index extends Component
     public function edit($id)
     {
 
+        abort_unless(
+            auth()->user()->hasPermission('products.edit'),
+            403
+        );
+
         $product = Product::with([
             'images',
             'colors',
@@ -271,7 +276,7 @@ class Index extends Component
     public function update()
     {
         abort_unless(
-            auth()->user()->hasPermission('product.edit'),
+            auth()->user()->hasPermission('products.edit'),
             403
         );
 

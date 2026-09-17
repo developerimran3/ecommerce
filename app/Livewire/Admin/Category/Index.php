@@ -90,6 +90,12 @@ class Index extends Component
 
     public function edit($id)
     {
+
+        abort_unless(
+            auth()->user()->hasPermission('categories.edit'),
+            403
+        );
+
         $category = Category::findOrFail($id);
 
         $this->category_id = $category->id;

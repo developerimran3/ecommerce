@@ -36,6 +36,11 @@ class BannerCategory extends Component
 
     public function store()
     {
+        abort_unless(
+            auth()->user()->hasPermission('banners_categories.create'),
+            403
+        );
+
         $this->validate([
             'name'      => 'required|string|max:255|unique:banner_categories,name',
             'placement' => 'required|in:main_slider,promo_banner,footer_banner',
@@ -64,6 +69,11 @@ class BannerCategory extends Component
 
     public function edit($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('banners_categories.edit'),
+            403
+        );
+
         $category = BannerCategories::findOrFail($id);
         $this->category_id = $category->id;
         $this->name = $category->name;
@@ -81,6 +91,11 @@ class BannerCategory extends Component
 
     public function update()
     {
+        abort_unless(
+            auth()->user()->hasPermission('banners_categories.edit'),
+            403
+        );
+
         $this->validate(
             [
                 'name' => 'required|string|max:255|unique:banner_categories,name,' . $this->category_id,
@@ -121,6 +136,11 @@ class BannerCategory extends Component
 
     public function delete($id)
     {
+        abort_unless(
+            auth()->user()->hasPermission('banners_categories.delete'),
+            403
+        );
+
         $category = BannerCategories::findOrFail($id);
         $category->delete();
         session()->flash(

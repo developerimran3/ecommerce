@@ -4,11 +4,9 @@
         <div>
             <h4 class="mb-1 font-weight-bold">Brand List</h4>
         </div>
-
-        @if (auth()->user()->hasPermission('brand.create'))
+        @if (auth()->user()->hasPermission('brands.create'))
             <button class="btn btn-purple px-3" wire:click="create">
-                <i class="fa fa-plus mr-1"></i>
-                Add Brand
+                <i class="fa fa-plus mr-1"></i> Add Brand
             </button>
         @endif
     </div>

@@ -3,8 +3,10 @@
         <div>
             <h4 class="mb-1"> Shipping Areas </h4>
         </div>
-        <button class="btn btn-purple" wire:click="create">
-            <i class="fa fa-plus"></i> Add Shipping Area </button>
+        @if (auth()->user()->hasPermission('shipping.create'))
+            <button class="btn btn-purple" wire:click="create">
+                <i class="fa fa-plus"></i> Add Shipping Area </button>
+        @endif
     </div>
 
     <div class="row">
@@ -44,21 +46,24 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button wire:click="edit({{ $shipping->id }})" class="btn btn-sm btn-info">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-
-                                        <button wire:click="delete({{ $shipping->id }})"
-                                            wire:confirm="Are you sure you want to delete this shipping?"
-                                            class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-
-                                        <button wire:click="toggleStatus({{ $shipping->id }})"
-                                            class="btn btn-sm btn-warning">
-                                            <i class="fas fa-power-off"></i>
-                                        </button>
-
+                                        @if (auth()->user()->hasPermission('shipping.edit'))
+                                            <button wire:click="edit({{ $shipping->id }})" class="btn btn-sm btn-info">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        @endif
+                                        @if (auth()->user()->hasPermission('shipping.delete'))
+                                            <button wire:click="delete({{ $shipping->id }})"
+                                                wire:confirm="Are you sure you want to delete this shipping?"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
+                                        @if (auth()->user()->hasPermission('shipping.status'))
+                                            <button wire:click="toggleStatus({{ $shipping->id }})"
+                                                class="btn btn-sm btn-warning">
+                                                <i class="fas fa-power-off"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

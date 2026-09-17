@@ -108,17 +108,20 @@
                 </div>
             </div>
 
+
             {{-- Save --}}
-            <div class="mt-2">
-                <button type="button" class="btn btn-purple" wire:click="save" wire:loading.attr="disabled">
-                    <span wire:loading.remove wire:target="save">
-                        <i class="fas fa-save mr-1"></i> Save Settings
-                    </span>
-                    <span wire:loading wire:target="save">
-                        Saving...
-                    </span>
-                </button>
-            </div>
+            @if (auth()->user()->hasPermission('smtp.edit'))
+                <div class="mt-2">
+                    <button type="button" class="btn btn-purple" wire:click="save" wire:loading.attr="disabled">
+                        <span wire:loading.remove wire:target="save">
+                            <i class="fas fa-save mr-1"></i> Save Settings
+                        </span>
+                        <span wire:loading wire:target="save">
+                            Saving...
+                        </span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 </div>

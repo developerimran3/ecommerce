@@ -48,6 +48,13 @@ class SmtpSetting extends Component
 
     public function save()
     {
+
+        abort_unless(
+            auth()->user()->hasPermission('smtp.create'),
+            403
+        );
+
+
         $this->validate();
 
         $smtp = SmtpSettingModel::first();

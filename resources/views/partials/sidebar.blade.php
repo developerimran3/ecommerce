@@ -190,13 +190,15 @@
                     @endif
 
                     {{-- All Reviews --}}
-                    <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.reviews') ? 'active' : '' }}">
-                            <i class="fas fa-comments"></i>
-                            <span>All Reviews</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->hasPermission('reviews.view'))
+                        <li>
+                            <a href="#" wire:navigate.hover
+                                class="{{ request()->routeIs('admin.reviews') ? 'active' : '' }}">
+                                <i class="fas fa-comments"></i>
+                                <span>All Reviews</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
 
@@ -359,7 +361,6 @@
             {{-- API Integration --}}
             @php
                 $apiActive =
-                    request()->routeIs('admin.api*') ||
                     request()->routeIs('admin.courier.setting') ||
                     request()->routeIs('admin.smtp.settings') ||
                     request()->routeIs('admin.gateway*') ||
@@ -435,7 +436,7 @@
 
                 <ul class="submenu {{ $bannerActive ? 'open' : '' }}">
                     {{-- Banner Categories --}}
-                    @if (auth()->user()->hasPermission('banner_categories.view'))
+                    @if (auth()->user()->hasPermission('banners_categories.view'))
                         <li>
                             <a href="{{ route('admin.banner.categories') }}" wire:navigate.hover
                                 class="{{ request()->routeIs('admin.banner.categories') ? 'active' : '' }}">
