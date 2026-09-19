@@ -15,34 +15,91 @@ class Home extends Component
 {
     public function addToCart($productId)
     {
-        $product = Product::select('id', 'price', 'discount_price')
+        $product = Product::with(['sizes', 'colors'])
+            ->select(
+                'id',
+                'slug',
+                'price',
+                'discount_price',
+                'stock'
+            )
             ->findOrFail($productId);
+
+        // Stock 0 হলে
+        if ($product->stock <= 0) {
+            $this->dispatch(
+                'error',
+                message: 'This product is out of stock.'
+            );
+
+            return;
+        }
+
+        // Size অথবা Color থাকলে Product Details page-এ যাবে
+        if ($product->sizes->count() > 0 || $product->colors->count() > 0) {
+
+            // Slug না থাকলে error দেখাবে
+            if (empty($product->slug)) {
+                $this->dispatch(
+                    'error',
+                    message: 'Product slug not found.'
+                );
+
+                return;
+            }
+
+            return redirect()->route('product.details', [
+                'slug' => $product->slug,
+            ]);
+        }
+
+        // Size/Color না থাকলে সরাসরি Cart-এ add হবে
         $cart = Cart::firstOrCreate([
             'session_id' => session()->getId(),
         ]);
 
         $item = CartItem::where('cart_id', $cart->id)
             ->where('product_id', $product->id)
+            ->whereNull('size_id')
+            ->whereNull('color_id')
             ->first();
 
         if ($item) {
+
+            // Stock check
+            if (($item->qty + 1) > $product->stock) {
+                $this->dispatch(
+                    'error',
+                    message: 'Only ' . $product->stock . ' item(s) available in stock.'
+                );
+
+                return;
+            }
+
             $item->qty++;
             $item->subtotal = $item->qty * $item->price;
             $item->save();
         } else {
+
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $product->id,
+                'size_id' => null,
+                'color_id' => null,
                 'qty' => 1,
                 'price' => $product->final_price,
                 'subtotal' => $product->final_price,
             ]);
         }
+
         $this->dispatch('cartUpdated');
+
         $this->dispatch(
             'success',
             message: 'Product added to cart.'
         );
+
+        return redirect()->route('checkout');
     }
 
 

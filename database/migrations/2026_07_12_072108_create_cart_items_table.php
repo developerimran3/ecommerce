@@ -12,22 +12,44 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cart_items', function (Blueprint $table) {
+
             $table->engine = 'InnoDB';
+
             $table->id();
+
             $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('product_id');
+
+            // Product Options
+            $table->unsignedBigInteger('size_id')->nullable();
+            $table->unsignedBigInteger('color_id')->nullable();
+
             $table->integer('qty')->default(1);
-            $table->decimal('price', 12, 2);
-            $table->decimal('subtotal', 12, 2);
+
+            $table->decimal('price');
+            $table->decimal('subtotal');
+
             $table->timestamps();
+
             $table->foreign('cart_id')
                 ->references('id')
                 ->on('carts')
                 ->onDelete('cascade');
+
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
                 ->onDelete('cascade');
+
+            $table->foreign('size_id')
+                ->references('id')
+                ->on('sizes')
+                ->onDelete('set null');
+
+            $table->foreign('color_id')
+                ->references('id')
+                ->on('colors')
+                ->onDelete('set null');
         });
     }
 
@@ -36,6 +58,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+
         Schema::dropIfExists('cart_items');
     }
 };

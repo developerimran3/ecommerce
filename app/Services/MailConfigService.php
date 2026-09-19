@@ -31,6 +31,11 @@ class MailConfigService
         Config::set('mail.default', 'smtp');
 
         Config::set(
+            'mail.mailers.smtp.transport',
+            'smtp'
+        );
+
+        Config::set(
             'mail.mailers.smtp.host',
             $smtp->host
         );
@@ -65,6 +70,14 @@ class MailConfigService
             $smtp->from_name
         );
 
+        /*
+        |--------------------------------------------------------------------------
+        | Reset SMTP mailer
+        |--------------------------------------------------------------------------
+        */
+
+        app('mail.manager')->purge('smtp');
+
         return true;
     }
 
@@ -75,7 +88,6 @@ class MailConfigService
         string $email,
         Mailable $mailable
     ): void {
-
         if (!$this->configure()) {
             throw new \Exception(
                 'SMTP settings are not configured.'

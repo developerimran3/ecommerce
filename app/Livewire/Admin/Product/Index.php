@@ -518,6 +518,7 @@ class Index extends Component
         $products = Product::with([
             'category',
             'brand',
+
         ])
             ->when($this->search, function ($query) {
 

@@ -1,8 +1,6 @@
 <div class="container mt-3">
 
-    {{-- =========================================================
-        HEADER
-    ========================================================== --}}
+    {{-- HEADER --}}
 
     <div class="category-header">
 
@@ -56,123 +54,13 @@
                 <option value="price_high">
                     Price: High to Low
                 </option>
-
             </select>
-
         </div>
-
     </div>
 
 
-    {{-- =========================================================
-        MAIN ROW
-    ========================================================== --}}
-
     <div class="row">
-
-        {{-- =====================================================
-            SIDEBAR
-        ====================================================== --}}
-
-        <div class="col-lg-3 col-md-4">
-
-            {{-- =================================================
-                HOT DEALS
-            ================================================== --}}
-
-            <div class="filter-box">
-
-                <div class="filter-title">
-
-                    <span>
-                        HOT DEALS
-                    </span>
-
-                    <i class="fas fa-chevron-up"></i>
-
-                </div>
-
-
-                <div class="filter-content">
-
-                    <div class="subcategory">
-
-                        {{ $products->total() }}
-                        Products
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            {{-- =================================================
-                PRICE
-            ================================================== --}}
-
-            <div class="filter-box">
-                <div class="filter-title">
-                    <span> PRICE </span>
-                    <i class="fas fa-chevron-up"></i>
-                </div>
-
-                <div class="filter-content price-filter">
-                    <div class="price-values">
-                        <span>
-                            ৳{{ number_format($minPrice) }}
-                        </span>
-                        <span>
-                            ৳{{ number_format($price) }}
-                        </span>
-                    </div>
-                    <input type="range" min="{{ $minPrice }}" max="{{ $maxPrice }}" wire:model.live="price"
-                        class="price-slider">
-                </div>
-            </div>
-
-
-            {{-- =================================================
-                FILTER
-            ================================================== --}}
-
-            <div class="filter-box">
-
-                <div class="filter-title">
-
-                    <span>
-                        FILTER
-                    </span>
-
-                    <i class="fas fa-chevron-up"></i>
-
-                </div>
-
-
-                <div class="filter-content">
-
-                    <label class="custom-checkbox">
-
-                        <input type="checkbox" wire:model.live="religious">
-
-                        <span class="checkmark"></span>
-
-                        <span class="checkbox-label">
-                            Religious Items
-                        </span>
-
-                    </label>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        {{-- =====================================================
-            PRODUCTS
-        ====================================================== --}}
+        {{--  PRODUCTS --}}
         @forelse ($products as $product)
             <div class="col-lg-2-5 p-1">
                 <div class="product-card">
@@ -219,9 +107,4 @@
             </div>
         @endforelse
     </div>
-</div>
-
-
-</div>
-
 </div>

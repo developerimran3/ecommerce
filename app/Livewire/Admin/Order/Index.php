@@ -87,6 +87,9 @@ class Index extends Component
     {
         $orders = Order::with([
             'user',
+            'items.product',
+            'items.size',
+            'items.color',
         ])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
@@ -115,6 +118,8 @@ class Index extends Component
                     $this->status
                 );
             })
+
+
             ->latest()
             ->paginate(10);
 

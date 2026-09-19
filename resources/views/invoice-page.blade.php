@@ -2,7 +2,7 @@
     <style>
         table thead tr th {
             color: white !important;
-            background-color: #6d28d9 !important;
+            background-color: #008e74 !important;
             font-weight: bold;
             font-size: 18px;
         }
@@ -10,8 +10,8 @@
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td width="55%" valign="top">
-                <div style="color:#6d28d9;padding:20px;text-align:right;font-size:35px;font-weight:bold;">
-                    GENIUS.SHOP
+                <div style="color:#008e74;padding:20px;text-align:right;font-size:35px;font-weight:bold;">
+                    RONGINI SHOP
                 </div>
                 <br>
                 <div class="payment" style="margin-top:50px;">
@@ -27,9 +27,9 @@
                     </p>
 
                     <p>
-                        GENIUS.SHOP<br>
+                        RONGINI SHOP<br>
                         +8801756041512<br>
-                        geniusfashion.ptk@gmail.com<br>
+                        info@ronginishop.com<br>
                         Chittagong, Bangladesh
                     </p>
                 </div>
@@ -39,7 +39,7 @@
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td
-                            style="background:#6d28d9; color:#ffffff; padding:10px; text-align:right;font-size:25px;font-weight:bold;">
+                            style="background:#008e74; color:#ffffff; padding:10px; text-align:right;font-size:25px;font-weight:bold;">
                             INVOICE
                         </td>
                     </tr>
@@ -70,9 +70,11 @@
     <table width="100%" cellpadding="8" cellspacing="0"
         style="margin-top:30px;font-size:15px; border-collapse:collapse;">
         <thead class="invoice_thead">
-            <tr style="background:#6d28d9;color:white;">
+            <tr style="background:#008e74;color:white;">
                 <th style="border:1px solid #ddd;"> SL </th>
                 <th style="border:1px solid #ddd;"> Product </th>
+                <th style="border:1px solid #ddd;"> Size </th>
+                <th style="border:1px solid #ddd;"> Color </th>
                 <th style="border:1px solid #ddd;"> Price </th>
                 <th style="border:1px solid #ddd;"> Qty </th>
                 <th style="border:1px solid #ddd;"> Total </th>
@@ -84,6 +86,8 @@
                 <tr>
                     <td style="border:1px solid #ddd;"> {{ $key + 1 }} </td>
                     <td style="border:1px solid #ddd;"> {{ $item->product?->name }} </td>
+                    <td style="border:1px solid #ddd;"> {{ $item->size?->name }} </td>
+                    <td style="border:1px solid #ddd;"> {{ $item->color?->name }} </td>
                     <td style="border:1px solid #ddd;text-align:right;"> ৳ {{ number_format($item->price, 2) }} </td>
                     <td style="border:1px solid #ddd;"> {{ $item->qty }} </td>
                     <td style="border:1px solid #ddd;text-align:right;"> ৳ {{ number_format($item->subtotal, 2) }}
@@ -109,7 +113,7 @@
             </tr>
         @endif
 
-        <tr style="background:#6d28d9;">
+        <tr style="background:#008e74;">
             <td style="color:#ffffff !important;">
                 <strong style="color:#ffffff !important;font-weight:bold;">
                     Final Total

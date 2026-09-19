@@ -158,6 +158,11 @@
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}"
                                     loading="lazy">
                             </a>
+                            @if ($product->stock <= 0)
+                                <div class="out-of-stock">
+                                    <span>Out of Stock</span>
+                                </div>
+                            @endif
 
                             {{-- Product Body --}}
                             <div class="product-body">
@@ -178,10 +183,10 @@
                                 <div class="price">
 
                                     @if ($product->discount_price > 0 && $product->discount_price < $product->price)
-                                        <del> ৳ {{ number_format($product->price, 2) }} </del>
-                                        <span> ৳ {{ number_format($product->discount_price, 2) }} </span>
+                                        <del> ৳ {{ $product->price }} </del>
+                                        <span> ৳ {{ $product->discount_price }} </span>
                                     @else
-                                        <span> ৳ {{ number_format($product->price, 2) }} </span>
+                                        <span> ৳ {{ $product->price }} </span>
                                     @endif
                                 </div>
 
@@ -226,6 +231,12 @@
                                         alt="{{ $product->name }}" loading="lazy">
                                 </a>
 
+                                @if ($product->stock <= 0)
+                                    <div class="out-of-stock">
+                                        <span>Out of Stock</span>
+                                    </div>
+                                @endif
+
                                 <div class="product-body">
                                     <a href="{{ route('product.details', $product->slug) }}" wire:navigate.hover>
                                         {{ Str::limit($product->name, 25) }}
@@ -242,15 +253,15 @@
                                     <div class="price">
                                         @if ($product->discount_price > 0 && $product->discount_price < $product->price)
                                             <del>
-                                                ৳ {{ number_format($product->price, 2) }}
+                                                ৳ {{ $product->price }}
                                             </del>
 
                                             <span>
-                                                ৳ {{ number_format($product->discount_price, 2) }}
+                                                ৳ {{ $product->discount_price }}
                                             </span>
                                         @else
                                             <span>
-                                                ৳ {{ number_format($product->price, 2) }}
+                                                ৳ {{ $product->price }}
                                             </span>
                                         @endif
                                     </div>

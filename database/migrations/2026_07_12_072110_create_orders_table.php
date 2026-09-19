@@ -29,15 +29,15 @@ return new class extends Migration
                 ->constrained('shipping_areas')
                 ->nullOnDelete();
 
-            $table->decimal('subtotal', 12, 2);
+            $table->decimal('subtotal');
 
-            $table->decimal('shipping', 12, 2)
+            $table->decimal('shipping')
                 ->default(0);
 
-            $table->decimal('discount', 12, 2)
+            $table->decimal('discount')
                 ->default(0);
 
-            $table->decimal('grand_total', 12, 2);
+            $table->decimal('grand_total');
 
             $table->enum('payment_method', [
                 'cod',

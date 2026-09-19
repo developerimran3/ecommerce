@@ -23,7 +23,7 @@ return new class extends Migration
                 'nagad',
                 'sslcommerz',
             ]);
-            $table->decimal('amount', 12, 2);
+            $table->decimal('amount');
             $table->enum('status', [
                 'pending',
                 'paid',

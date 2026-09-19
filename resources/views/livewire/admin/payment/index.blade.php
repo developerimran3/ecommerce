@@ -28,6 +28,7 @@
                                 <th>Customer Name</th>
                                 <th>Phone</th>
                                 <th>Method</th>
+                                <th>Payment Status</th>
                                 <th>Transaction ID</th>
                                 <th>Amount</th>
                                 <th>Status</th>
@@ -44,6 +45,15 @@
                                     <td> {{ $payment->order?->name }} </td>
                                     <td> {{ $payment->order?->phone }} </td>
                                     <td> {{ strtoupper($payment->method) }} </td>
+                                    <td>
+                                        @if ($payment->status == 'pending')
+                                            <span class="badge-warning"> Pending </span>
+                                        @elseif($payment->status == 'paid')
+                                            <span class="badge-primary"> Paid </span>
+                                        @else
+                                            <span class="badge-inactive"> Failed </span>
+                                        @endif
+                                    </td>
                                     <td> {{ $payment->trx_id ?? '-' }} </td>
                                     <td> ৳ {{ number_format($payment->amount, 2) }} </td>
                                     <td>

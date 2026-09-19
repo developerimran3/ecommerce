@@ -13,6 +13,8 @@ class InvoiceController extends Controller
     {
         $order = Order::with([
             'items.product',
+            'items.size',
+            'items.color',
             'shippingArea',
         ])->findOrFail($id);
 

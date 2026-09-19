@@ -11,7 +11,18 @@ class OrderSuccess extends Component
 
     public function mount(Order $order)
     {
-        $this->order = $order;
+        // শুধু নিজের Order দেখতে পারবে
+        abort_unless(
+            auth()->check() && $order->user_id === auth()->id(),
+            403
+        );
+
+        // Order-এর প্রয়োজনীয় relationship load
+        $this->order = $order->load([
+            'items.product',
+            'items.size',
+            'items.color',
+        ]);
     }
 
     public function render()

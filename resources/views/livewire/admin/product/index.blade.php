@@ -66,6 +66,8 @@
                                 <th>Name</th>
                                 <th>Category</th>
                                 <th>Brand</th>
+                                <th>Size</th>
+                                <th>Color</th>
                                 <th>SKU</th>
                                 <th>R.Price</th>
                                 <th>Sale Price</th>
@@ -92,6 +94,18 @@
                                     <td>{{ str($product->name)->limit(30) }}</td>
                                     <td>{{ $product->category?->name }}</td>
                                     <td>{{ $product->brand?->name }}</td>
+
+                                    <td>
+                                        @foreach ($product->sizes as $size)
+                                            {{ $size->name }} <br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($product->colors as $color)
+                                            {{ $color->name }} <br>
+                                        @endforeach
+                                    </td>
+
                                     <td>{{ $product->sku }}</td>
 
                                     <td>৳ {{ number_format($product->price, 2) }}</td>
@@ -171,8 +185,8 @@
                                 <h5 class="section-title"> Product Information </h5>
                                 <div class="form-group">
                                     <label>Product Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        wire:model.live="name">
+                                    <input type="text" name="product_name"
+                                        class="form-control @error('name') is-invalid @enderror" wire:model.live="name">
                                     @error('name')
                                         <small class="text-danger"> {{ $message }} </small>
                                     @enderror
@@ -209,7 +223,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Regular Price</label>
-                                        <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                        <input type="number" name="price"
+                                            class="form-control @error('price') is-invalid @enderror"
                                             wire:model="price">
                                         @error('price')
                                             <small class="text-danger"> {{ $message }} </small>
@@ -217,7 +232,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label>Sale Price</label>
-                                        <input type="number"
+                                        <input type="number" name="discount_price"
                                             class="form-control @error('discount_price') is-invalid @enderror"
                                             wire:model="discount_price">
                                         @error('discount_price')

@@ -30,7 +30,7 @@
                     </td>
 
                     <td> Total <br>
-                        <b>৳ {{ number_format($order->grand_total, 2) }}</b>
+                        <b>৳ {{ $order->grand_total }}</b>
                     </td>
                 </tr>
                 <tr>
@@ -48,12 +48,8 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>
-                            Product
-                        </th>
-                        <th>
-                            Total
-                        </th>
+                        <th> Product </th>
+                        <th> Total </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,11 +57,17 @@
                         <tr>
                             <td>
                                 {{ $item->product->name }}
-                                × {{ $item->qty }}
+                                , Qty: {{ $item->qty }}
+                                <br>
+                                @if ($item->color)
+                                    Color: {{ $item->color?->name }}
+                                @endif
+                                <br>
+                                @if ($item->size)
+                                    Size: {{ $item->size?->name }}
+                                @endif
                             </td>
-                            <td>
-                                ৳ {{ number_format($item->subtotal, 2) }}
-                            </td>
+                            <td> ৳ {{ $item->subtotal }} </td>
                         </tr>
                     @endforeach
                     <tr>
@@ -73,7 +75,7 @@
                             Net Total
                         </td>
                         <td>
-                            <b style="color: #008e74"> ৳ {{ number_format($order->subtotal, 2) }}</b>
+                            <b style="color: #008e74"> ৳ {{ $order->subtotal }}</b>
                         </td>
                     </tr>
                     @if ($order->discount > 0)
@@ -82,7 +84,7 @@
                                 Discount
                             </td>
                             <td>
-                                ৳ {{ number_format($order->discount) }}
+                                ৳ {{ $order->discount }}
                             </td>
                         </tr>
                     @endif
@@ -91,7 +93,7 @@
                             Shipping Cost
                         </td>
                         <td>
-                            ৳ {{ number_format($order->shipping) }}
+                            ৳ {{ $order->shipping }}
                         </td>
                     </tr>
                     <tr>
@@ -99,7 +101,7 @@
                             <b>Grand Total</b>
                         </td>
                         <td>
-                            <b>৳ {{ number_format($order->grand_total, 2) }}</b>
+                            <b>৳ {{ $order->grand_total }}</b>
                         </td>
                     </tr>
                 </tbody>

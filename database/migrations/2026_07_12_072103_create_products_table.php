@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('sku')->unique();
             $table->string('thumbnail')->nullable();
-            $table->decimal('price', 12, 2);
-            $table->decimal('discount_price', 12, 2)->nullable();
+            $table->decimal('price');
+            $table->decimal('discount_price')->nullable();
             $table->integer('stock')->default(0);
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();

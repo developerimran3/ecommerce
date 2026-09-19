@@ -2,15 +2,15 @@
 
 namespace App\Livewire\Frontend;
 
+use App\Jobs\SendOrderConfirmationEmail;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
-use App\Models\User;
-use App\Models\Coupon;
-use Carbon\Carbon;
 use App\Models\ShippingArea;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -261,22 +261,20 @@ class CheckoutPage extends Component
             $order = Order::create([
                 'user_id'        => $userId,
                 'invoice_no'     => $this->generateInvoice(),
-
                 'name'           => $this->name,
                 'phone'          => $this->phone,
                 'email'          => $this->email,
                 'address'        => $this->address,
-
                 'subtotal'       => $subtotal,
                 'shipping'       => $shipping,
                 'discount'       => $discount,
                 'grand_total'    => $grandTotal,
                 'shipping_area_id' => $this->area,
-
                 'payment_method' => $this->payment_method,
                 'payment_status' => 'pending',
                 'order_status'   => 'pending',
             ]);
+
 
             /*
     |--------------------------------------------------------------------------
@@ -287,11 +285,15 @@ class CheckoutPage extends Component
             foreach ($cart->items as $item) {
 
                 OrderItem::create([
-                    'order_id'   => $order->id,
+                    'order_id' => $order->id,
                     'product_id' => $item->product_id,
-                    'qty'        => $item->qty,
-                    'price'      => $item->price,
-                    'subtotal'   => $item->subtotal,
+
+                    'size_id' => $item->size_id,
+                    'color_id' => $item->color_id,
+
+                    'qty' => $item->qty,
+                    'price' => $item->price,
+                    'subtotal' => $item->subtotal,
                 ]);
 
                 $item->product->decrement(
@@ -343,6 +345,12 @@ class CheckoutPage extends Component
             return $order;
         });
 
+
+
+        SendOrderConfirmationEmail::dispatch(
+            $order->id
+        );
+
         /*
     |--------------------------------------------------------------------------
     | Redirect
@@ -353,21 +361,17 @@ class CheckoutPage extends Component
             $order->id
         );
     }
-
-
     /**
-     * generate Invoice
-     *
-     * @return void
+     * Invoice 
      */
     private function generateInvoice()
     {
-        return 'INV-' . str_pad(
-            Order::count() + 1,
-            10,
-            '0',
-            STR_PAD_LEFT
-        );
+
+        do {
+            $invoice = 'INV-' . now()->format('Ymd-His');
+        } while (Order::where('invoice_no', $invoice)->exists());
+
+        return $invoice;
     }
 
     /**

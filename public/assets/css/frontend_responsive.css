@@ -11,6 +11,28 @@
 ========================================== */
 
 @media (max-width: 767px) {
+    .img-fluid {
+        height: auto !important;
+    }
+    .out-of-stock {
+        background: #fff000;
+        color: #008e74;
+        position: absolute;
+        font-weight: bold;
+        padding: 0 10px;
+        border-radius: 0 10px 10px 0;
+        bottom: 218px;
+        left: 8px;
+    }
+    .out-of-stock-signal {
+        background: #fff000;
+        color: #008e74;
+        width: 30%;
+        font-weight: bold;
+        padding: 0 10px;
+        border-radius: 0 10px 10px 0;
+    }
+
     .mobile-bottom-nav {
         position: fixed;
         left: 0;

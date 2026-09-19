@@ -216,7 +216,6 @@ footer {
 .main-logo img {
     width: auto;
     height: 60px;
-    padding: 0 20px;
     object-fit: contain;
 }
 
@@ -892,9 +891,9 @@ button.order_place:hover {
     top: 10px;
     background: #009970;
     color: #fff;
-    padding: 5px 10px;
+    padding: 5px 13px;
     border-radius: 50%;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 600;
     font-family: "Lato", sans-serif;
 }
@@ -2786,4 +2785,196 @@ table.table.table-bordered.tracktable {
     height: 50px !important;
     object-fit: contain;
     margin-bottom: 20px;
+}
+
+/* =========================================
+   COMMON TITLE size and color
+========================================= */
+
+.product-option-title b {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* =========================================
+   SIZE
+========================================= */
+
+.product-size-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.product-size-item {
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.product-size-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.product-size-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 50px;
+    height: 38px;
+
+    padding: 0 14px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+
+    background: #fff;
+    color: #333;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.product-size-label:hover {
+    border-color: #008e74;
+    color: #008e74;
+}
+
+/* Selected Size */
+
+.product-size-radio:checked + .product-size-label {
+    background: #008e74;
+    border-color: #008e74;
+    color: #fff;
+}
+
+.out-of-stock {
+    background: #fff000;
+    color: #008e74;
+    position: absolute;
+    font-weight: bold;
+    padding: 0 10px;
+    border-radius: 0 10px 10px 0;
+    bottom: 170px;
+    left: 10px;
+}
+.out-of-stock-signal {
+    background: #fff000;
+    color: #008e74;
+    width: 20%;
+    font-weight: bold;
+    padding: 0 10px;
+    border-radius: 0 10px 10px 0;
+}
+
+/* =========================================
+   COLOR
+========================================= */
+
+.product-color-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.product-color-item {
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.product-color-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.product-color-label {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 40px;
+
+    padding: 5px 10px;
+
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    background: #fff;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.product-color-label:hover {
+    border-color: #008e74;
+}
+
+.product-color-circle {
+    width: 25px;
+    height: 25px;
+
+    min-width: 25px;
+
+    display: inline-block;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    border: 2px solid #eee;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.product-color-name {
+    font-size: 14px;
+    line-height: 1;
+    color: #333;
+}
+
+/* Selected Color */
+
+.product-color-radio:checked + .product-color-label {
+    border: 2px solid #008e74;
+    background: #f0fffb;
+}
+
+.product-color-radio:checked + .product-color-label .product-color-circle {
+    border-color: #008e74;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 575.98px) {
+    .product-size-label {
+        min-width: 45px;
+        height: 36px;
+        padding: 0 12px;
+        font-size: 13px;
+    }
+
+    .product-color-label {
+        min-height: 36px;
+        padding: 4px 8px;
+    }
+
+    .product-color-circle {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+    }
+
+    .product-color-name {
+        font-size: 13px;
+    }
 }

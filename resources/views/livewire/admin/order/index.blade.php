@@ -44,6 +44,7 @@
                                 <th> Customer </th>
                                 <th> Phone </th>
                                 <th> Total </th>
+                                <th> Payment </th>
                                 <th> Status </th>
                                 <th> Date </th>
                                 <th> Update Status </th>
@@ -64,6 +65,15 @@
                                         ৳ {{ number_format($order->grand_total, 2) }}
                                     </td>
                                     <td>
+                                        @if ($order->payment->status == 'pending')
+                                            <span class="badge-warning"> Pending </span>
+                                        @elseif($order->payment->status == 'paid')
+                                            <span class="badge-primary"> Paid </span>
+                                        @else
+                                            <span class="badge-inactive"> Failed </span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @if ($order->order_status == 'pending')
                                             <span class="badge-status"> Pending </span>
                                         @elseif($order->order_status == 'confirmed')
@@ -78,6 +88,7 @@
                                             <span class="badge-inactive"> Cancelled </span>
                                         @endif
                                     </td>
+
                                     <td>
                                         {{ $order->created_at->format('d M Y h:i A') }}
                                     </td>
@@ -220,7 +231,8 @@
                                     <tr>
                                         <th> Image </th>
                                         <th> Product </th>
-                                        <th> Price </th>
+                                        <th> Size </th>
+                                        <th> Color </th>
                                         <th> Qty </th>
                                         <th> Subtotal </th>
                                     </tr>
@@ -240,8 +252,20 @@
                                                 <strong> {{ $item->product?->name }} </strong>
                                             </td>
                                             <td>
-                                                ৳ {{ number_format($item->price, 2) }}
+                                                @if ($item->size?->name)
+                                                    {{ $item->size->name }}
+                                                @else
+                                                    <span class="text-muted">N/A</span>
+                                                @endif
                                             </td>
+                                            <td>
+                                                @if ($item->color?->name)
+                                                    {{ $item->color->name }}
+                                                @else
+                                                    <span class="text-muted">N/A</span>
+                                                @endif
+                                            </td>
+
                                             <td>
                                                 {{ $item->qty }}
                                             </td>

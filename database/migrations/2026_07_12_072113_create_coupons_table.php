@@ -18,8 +18,8 @@ return new class extends Migration
                 'fixed',
                 'percent',
             ]);
-            $table->decimal('value', 10, 2);
-            $table->decimal('minimum_amount', 10, 2)->default(0);
+            $table->decimal('value', 10);
+            $table->decimal('minimum_amount', 10)->default(0);
 
             $table->date('start_date');
             $table->date('end_date');

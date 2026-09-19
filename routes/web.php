@@ -123,11 +123,12 @@ Route::prefix('customer')->middleware(['auth', 'active', 'customer',])->group(fu
     Route::get('/change-password', PasswordChange::class)
         ->name('customer.password');
 
+    Route::get('/order-success/{order}', OrderSuccess::class)
+        ->name('order.success');
+
     Route::get('/invoice/download/{id}', [InvoiceController::class, 'download'])
         ->name('customer.invoice.download');
 
-    Route::get('/order-success/{order}', OrderSuccess::class)
-        ->name('order.success');
 
     Route::get('/logout', function () {
         Auth::logout();
