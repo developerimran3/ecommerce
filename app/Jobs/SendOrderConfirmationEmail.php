@@ -13,20 +13,17 @@ use Illuminate\Queue\SerializesModels;
 
 class SendOrderConfirmationEmail implements ShouldQueue
 {
-    use Dispatchable;
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Number of attempts
+     * Number of attempts.
      */
-    public int $tries = 5;
+    public $tries = 5;
 
     /**
-     * Retry delay in seconds
+     * Retry delays.
      */
-    public array $backoff = [
+    public $backoff = [
         30,
         60,
         120,
@@ -34,12 +31,12 @@ class SendOrderConfirmationEmail implements ShouldQueue
     ];
 
     /**
-     * Order ID
+     * Order ID.
      */
-    public int $orderId;
+    public $orderId;
 
     /**
-     * Create a new job instance.
+     * Create job.
      */
     public function __construct(int $orderId)
     {
@@ -47,7 +44,7 @@ class SendOrderConfirmationEmail implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Execute job.
      */
     public function handle(
         MailConfigService $mailConfigService
@@ -57,11 +54,12 @@ class SendOrderConfirmationEmail implements ShouldQueue
             'items.product',
             'items.size',
             'items.color',
+            'shippingArea',
         ])->find($this->orderId);
 
         /*
         |--------------------------------------------------------------------------
-        | Order deleted হলে
+        | Order not found
         |--------------------------------------------------------------------------
         */
 
@@ -71,7 +69,7 @@ class SendOrderConfirmationEmail implements ShouldQueue
 
         /*
         |--------------------------------------------------------------------------
-        | Email না থাকলে
+        | Customer email missing
         |--------------------------------------------------------------------------
         */
 
@@ -81,7 +79,7 @@ class SendOrderConfirmationEmail implements ShouldQueue
 
         /*
         |--------------------------------------------------------------------------
-        | Send Email
+        | Send email
         |--------------------------------------------------------------------------
         */
 

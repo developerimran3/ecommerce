@@ -21,6 +21,7 @@ class OrderConfirmMail extends Mailable
             'items.product',
             'items.size',
             'items.color',
+            'shippingArea',
         ]);
     }
 
@@ -28,14 +29,14 @@ class OrderConfirmMail extends Mailable
     {
         return new Envelope(
             subject: 'Order Confirmation - ' .
-                $this->order->invoice_no,
+                $this->order->invoice_no
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'mail.customer.order-confirm',
+            view: 'mail.customer.order-confirm'
         );
     }
 

@@ -19,7 +19,8 @@ class SmtpSetting extends Model
     ];
 
     protected $casts = [
-        'port'   => 'integer',
-        'status' => 'boolean',
+        'password' => 'encrypted',
+        'port'     => 'integer',
+        'status'   => 'boolean',
     ];
 }
