@@ -68,6 +68,8 @@ class Index extends Component
         if ($this->logo) {
             $logo = $this->logo->store('brands', 'public');
         }
+
+
         Brand::create([
             'name' => $this->name,
             'slug' => Str::slug($this->name),

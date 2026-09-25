@@ -321,8 +321,8 @@
                 <ul class="submenu {{ $settingsActive ? 'open' : '' }}">
                     {{-- General Setting --}}
                     <li>
-                        <a href="#" wire:navigate.hover
-                            class="{{ request()->routeIs('admin.settings.general*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.settings') }}" wire:navigate.hover
+                            class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                             <i class="fas fa-sliders-h"></i>
                             <span>General Setting</span>
                         </a>

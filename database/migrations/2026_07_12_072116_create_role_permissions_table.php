@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->enum('role', [
                 'Administrator',
+                'Sub Admin',
                 'Shop Manager',
                 'Editor',
                 'Contributor',

@@ -17,6 +17,7 @@ use App\Livewire\Admin\Profile\Index as ProfileIndex;
 use App\Livewire\Admin\RolePermission\Index as Permission;
 use App\Livewire\Admin\Shipping\ShippingAreaIndex;
 use App\Livewire\Admin\SiteSetting\CourierSetting;
+use App\Livewire\Admin\SiteSetting\Setting;
 use App\Livewire\Admin\SiteSetting\SmtpSetting;
 use App\Livewire\Admin\User\CustomerManage;
 use App\Livewire\Admin\User\CustomerView;
@@ -212,6 +213,9 @@ Route::prefix('admin')->middleware(['auth', 'active', 'admin',])->group(function
         ->middleware('role:Administrator')
         ->name('admin.role-permissions');
 
+    Route::get('/setting/manage', Setting::class)
+        ->middleware('permission:settings.view')
+        ->name('admin.settings');
     // review
     Route::get('/reviews', UserIndex::class)
         ->middleware('permission:reviews.view')
