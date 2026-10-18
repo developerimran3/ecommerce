@@ -7,8 +7,13 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('storage/' . $setting->white_logo) }}"
-                        alt=""></a>
+                <a href="{{ route('home') }}" wire:navigate>
+                    @if ($setting->white_logo)
+                        <img src="{{ asset('storage/' . $setting->white_logo) }}" alt="">
+                    @else
+                        <i class="fa fa-user"></i>
+                    @endif
+                </a>
             </div>
             <div class="menu-bag">
                 <p class="margin-shopping">
@@ -41,8 +46,13 @@
                     <div class="col-sm-12">
                         <div class="logo-header">
                             <div class="main-logo">
-                                <a href="{{ route('home') }}" wire:navigate><img
-                                        src="{{ asset('storage/' . $setting->white_logo) }}" alt=""></a>
+                                <a href="{{ route('home') }}" wire:navigate>
+                                    @if ($setting->white_logo)
+                                        <img src="{{ asset('storage/' . $setting->white_logo) }}" alt="">
+                                    @else
+                                        <i class="fa fa-user"></i>
+                                    @endif
+                                </a>
                             </div>
                             <div class="main-search">
                                 <form action="#">
