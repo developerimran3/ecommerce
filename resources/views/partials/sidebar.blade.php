@@ -2,11 +2,7 @@
     {{-- Logo --}}
     <div class="logo d-flex align-items-center">
         <div class="logo-icon">
-            @if ($setting->white_logo)
-                <img src="{{ asset('storage/' . $setting->white_logo) }}" alt="">
-            @else
-                <i class="fa fa-user"></i>
-            @endif
+            <img src="{{ asset('storage/' . $setting->white_logo) }}" alt="">
         </div>
     </div>
 

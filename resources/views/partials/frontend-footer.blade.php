@@ -49,11 +49,9 @@
         <div class="row">
 
             <div class="col-md-3">
-                @if ($setting->white_logo)
-                    <img src="{{ asset('storage/' . $setting->white_logo) }}"class="footer_image">
-                @else
-                    <i class="fa fa-user"></i>
-                @endif
+
+                <img src="{{ asset('storage/' . $setting->white_logo) }}" class="footer_image">
+
                 <p class="mt-3">
                     {{ $setting->address }}
                 </p>
@@ -159,4 +157,5 @@
             Login / Sign Up
         </a>
     @endif
+
 </div>

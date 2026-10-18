@@ -7,13 +7,8 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href="{{ route('home') }}" wire:navigate>
-                    @if ($setting->white_logo)
-                        <img src="{{ asset('storage/' . $setting->white_logo) }}" alt="">
-                    @else
-                        <i class="fa fa-user"></i>
-                    @endif
-                </a>
+                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('storage/' . $setting->white_logo) }}"
+                        alt=""></a>
             </div>
             <div class="menu-bag">
                 <p class="margin-shopping">
@@ -46,13 +41,8 @@
                     <div class="col-sm-12">
                         <div class="logo-header">
                             <div class="main-logo">
-                                <a href="{{ route('home') }}" wire:navigate>
-                                    @if ($setting->white_logo)
-                                        <img src="{{ asset('storage/' . $setting->white_logo) }}" alt="">
-                                    @else
-                                        <i class="fa fa-user"></i>
-                                    @endif
-                                </a>
+                                <a href="{{ route('home') }}" wire:navigate><img
+                                        src="{{ asset('storage/' . $setting->white_logo) }}" alt=""></a>
                             </div>
                             <div class="main-search">
                                 <form action="#">
@@ -102,6 +92,7 @@
                                         </li>
                                     </div>
 
+
                                     <div>
                                         <li><a href="{{ route('home') }}" wire:navigate>Home</a></li>
                                     </div>
@@ -146,6 +137,7 @@
 </header>
 <script>
     $(document).ready(function() {
+
         $('.toggle').click(function() {
             $('.mobile-menu').toggleClass('active');
         });

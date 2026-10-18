@@ -21,6 +21,7 @@
         <div class="dropdown admin-dropdown">
             <button class="btn p-0 bg-transparent admin-toggle d-flex align-items-center">
                 <div class="user-avatar d-flex align-items-center justify-content-center">
+
                     @if (Auth::user()->image)
                         <img src="{{ asset('storage/' . Auth::user()->image) }}">
                     @else
