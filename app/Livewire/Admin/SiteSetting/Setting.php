@@ -32,28 +32,28 @@ class Setting extends Component
         $this->setting = SiteSetting::first();
 
         if ($this->setting) {
-            $this->title = $this->setting->title;
-            $this->sub_title = $this->setting->sub_title;
-            $this->phone = $this->setting->phone;
-            $this->email = $this->setting->email;
-            $this->address = $this->setting->address;
+            $this->title        = $this->setting->title;
+            $this->sub_title    = $this->setting->sub_title;
+            $this->phone        = $this->setting->phone;
+            $this->email        = $this->setting->email;
+            $this->address      = $this->setting->address;
             $this->oldWhiteLogo = $this->setting->white_logo;
-            $this->oldDarkLogo = $this->setting->dark_logo;
-            $this->oldFavicon = $this->setting->favicon;
+            $this->oldDarkLogo  = $this->setting->dark_logo;
+            $this->oldFavicon   = $this->setting->favicon;
         }
     }
     /** * Validation */
     protected function rules()
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'sub_title' => ['nullable', 'string', 'max:255'],
-            'white_logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120',],
-            'dark_logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120',],
-            'favicon' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,ico', 'max:2048',],
-            'phone' => ['nullable', 'string', 'max:50'],
-            'email' => ['nullable', 'email', 'max:255'],
-            'address' => ['nullable', 'string', 'max:500'],
+            'title'         => ['required', 'string', 'max:255'],
+            'sub_title'     => ['nullable', 'string', 'max:255'],
+            'white_logo'    => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120',],
+            'dark_logo'     => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120',],
+            'favicon'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,ico', 'max:2048',],
+            'phone'         => ['nullable', 'string', 'max:50'],
+            'email'         => ['nullable', 'email', 'max:255'],
+            'address'       => ['nullable', 'string', 'max:500'],
         ];
     }
 
@@ -87,14 +87,14 @@ class Setting extends Component
             $faviconPath = $this->favicon->store('settings', 'public');
         } /* || Data |*/
         $data = [
-            'title' => $this->title,
-            'sub_title' => $this->sub_title,
-            'white_logo' => $whiteLogoPath,
-            'dark_logo' => $darkLogoPath,
-            'favicon' => $faviconPath,
-            'phone' => $this->phone,
-            'email' => $this->email,
-            'address' => $this->address,
+            'title'         => $this->title,
+            'sub_title'     => $this->sub_title,
+            'white_logo'    => $whiteLogoPath,
+            'dark_logo'     => $darkLogoPath,
+            'favicon'       => $faviconPath,
+            'phone'         => $this->phone,
+            'email'         => $this->email,
+            'address'       => $this->address,
         ];
         /* || Create ONLY ONCE / Update Existing |*/
         if ($setting) {
@@ -103,13 +103,13 @@ class Setting extends Component
             $setting = SiteSetting::create($data);
         }
         /* || Update local state |*/
-        $this->setting = $setting;
+        $this->setting      = $setting;
         $this->oldWhiteLogo = $setting->white_logo;
-        $this->oldDarkLogo = $setting->dark_logo;
-        $this->oldFavicon = $setting->favicon;
-        $this->white_logo = null;
-        $this->dark_logo = null;
-        $this->favicon = null;
+        $this->oldDarkLogo  = $setting->dark_logo;
+        $this->oldFavicon   = $setting->favicon;
+        $this->white_logo   = null;
+        $this->dark_logo    = null;
+        $this->favicon      = null;
         $this->dispatch('success', message: 'Site settings saved successfully.');
     }
 

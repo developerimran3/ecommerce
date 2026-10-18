@@ -50,13 +50,13 @@
 
             <div class="col-md-3">
 
-                <img src="{{ asset('assets/img/logo.png') }}" class="footer_image">
+                <img src="{{ asset('storage/' . $setting->white_logo) }}" class="footer_image">
 
                 <p class="mt-3">
-                    8050 Goshairhat, Dhaka
+                    {{ $setting->address }}
                 </p>
 
-                <h6>+8801XXXXXXXXX</h6>
+                <h6>+88{{ $setting->phone ?? '+8801XXXXXXXXX' }}</h6>
 
             </div>
 
@@ -157,5 +157,4 @@
             Login / Sign Up
         </a>
     @endif
-
 </div>

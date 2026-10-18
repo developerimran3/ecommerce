@@ -73,7 +73,11 @@
                     <a href="{{ route('product.details', $product->slug) }}">
                         <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}">
                     </a>
-
+                    @if ($product->stock <= 0)
+                        <div class="out-of-stock">
+                            <span>Out of Stock</span>
+                        </div>
+                    @endif
                     <div class="product-body">
                         <a href="{{ route('product.details', $product->slug) }}">
                             {{ Str::limit($product->name, 25) }}

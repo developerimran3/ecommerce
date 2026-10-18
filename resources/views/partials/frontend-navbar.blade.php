@@ -7,7 +7,7 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('assets/img/logo.png') }}"
+                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('storage/' . $setting->white_logo) }}"
                         alt=""></a>
             </div>
             <div class="menu-bag">
@@ -42,7 +42,7 @@
                         <div class="logo-header">
                             <div class="main-logo">
                                 <a href="{{ route('home') }}" wire:navigate><img
-                                        src="{{ asset('assets/img/logo.png') }}" alt=""></a>
+                                        src="{{ asset('storage/' . $setting->white_logo) }}" alt=""></a>
                             </div>
                             <div class="main-search">
                                 <form action="#">
@@ -92,7 +92,6 @@
                                         </li>
                                     </div>
 
-
                                     <div>
                                         <li><a href="{{ route('home') }}" wire:navigate>Home</a></li>
                                     </div>
@@ -137,13 +136,8 @@
 </header>
 <script>
     $(document).ready(function() {
-
         $('.toggle').click(function() {
-
             $('.mobile-menu').toggleClass('active');
-
         });
-
-
     });
 </script>

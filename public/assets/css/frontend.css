@@ -217,6 +217,7 @@ footer {
     width: auto;
     height: 60px;
     object-fit: contain;
+    margin-left: -16px;
 }
 
 /* ==============================
@@ -2784,7 +2785,7 @@ table.table.table-bordered.tracktable {
 .footer_image {
     height: 50px !important;
     object-fit: contain;
-    margin-bottom: 20px;
+    margin-left: -20px;
 }
 
 /* =========================================
@@ -2856,7 +2857,7 @@ table.table.table-bordered.tracktable {
 }
 
 .out-of-stock {
-    background: #fff000;
+    background: #ffc107;
     color: #008e74;
     position: absolute;
     font-weight: bold;
@@ -2866,7 +2867,7 @@ table.table.table-bordered.tracktable {
     left: 10px;
 }
 .out-of-stock-signal {
-    background: #fff000;
+    background: #ffc107;
     color: #008e74;
     width: 20%;
     font-weight: bold;

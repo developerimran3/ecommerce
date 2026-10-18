@@ -11,7 +11,7 @@
         <tr>
             <td width="55%" valign="top">
                 <div style="color:#008e74;padding:20px;text-align:right;font-size:35px;font-weight:bold;">
-                    RONGINI SHOP
+                    {{ strtoupper($setting->shop_name ?? 'RONGINI SHOP') }}
                 </div>
                 <br>
                 <div class="payment" style="margin-top:50px;">
@@ -27,10 +27,10 @@
                     </p>
 
                     <p>
-                        RONGINI SHOP<br>
-                        +8801756041512<br>
-                        info@ronginishop.com<br>
-                        Chittagong, Bangladesh
+                        {{ strtoupper($setting->shop_name ?? 'RONGINI SHOP') }}<br>
+                        +88{{ $setting->phone ?? '+8801XXXXXXXXX' }}<br>
+                        {{ $setting->email ?? 'info@ronginishop.com' }}<br>
+                        {{ $setting->address }}
                     </p>
                 </div>
             </td>
