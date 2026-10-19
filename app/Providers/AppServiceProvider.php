@@ -22,9 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $setting = Setting::query()->first();
-
-            $view->with('setting', $setting);
+            $view->with(
+                'setting',
+                Setting::query()->first()
+            );
         });
     }
 }

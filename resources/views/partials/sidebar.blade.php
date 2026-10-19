@@ -2,7 +2,8 @@
     {{-- Logo --}}
     <div class="logo d-flex align-items-center">
         <div class="logo-icon">
-            <img src="{{ asset('storage/' . $setting->white_logo) }}" alt="">
+            <img src="{{ !empty($setting?->white_logo) ? asset('storage/' . $setting->white_logo) : asset('assets/img/logo.png') }}"
+                alt="Logo">
         </div>
     </div>
 

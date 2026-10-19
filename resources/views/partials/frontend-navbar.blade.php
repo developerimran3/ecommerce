@@ -7,8 +7,11 @@
                 </a>
             </div>
             <div class="menu-logo">
-                <a href="{{ route('home') }}" wire:navigate><img src="{{ asset('storage/' . $setting->white_logo) }}"
-                        alt=""></a>
+                <a href="{{ route('home') }}" wire:navigate>
+
+                    <img src="{{ !empty($setting?->white_logo) ? asset('storage/' . $setting->white_logo) : asset('assets/img/logo.png') }}"
+                        alt="Logo">
+                </a>
             </div>
             <div class="menu-bag">
                 <p class="margin-shopping">
@@ -41,8 +44,10 @@
                     <div class="col-sm-12">
                         <div class="logo-header">
                             <div class="main-logo">
-                                <a href="{{ route('home') }}" wire:navigate><img
-                                        src="{{ asset('storage/' . $setting->white_logo) }}" alt=""></a>
+                                <a href="{{ route('home') }}" wire:navigate>
+                                    <img src="{{ !empty($setting?->white_logo) ? asset('storage/' . $setting->white_logo) : asset('assets/img/logo.png') }}"
+                                        alt="Logo">
+                                </a>
                             </div>
                             <div class="main-search">
                                 <form action="#">

@@ -43,71 +43,40 @@
     FOOTER
     ========================== -->
 <footer>
-
     <div class="container">
-
         <div class="row">
-
             <div class="col-md-3">
-
-                <img src="{{ asset('storage/' . $setting->white_logo) }}" class="footer_image">
-
+                <img src="{{ !empty($setting?->white_logo) ? asset('storage/' . $setting->white_logo) : asset('assets/img/logo.png') }}"
+                    alt="image" class="footer_image">
                 <p class="mt-3">
-                    {{ $setting->address }}
+                    {{ $setting->address ?? '' }}
                 </p>
-
-                <h6>+88{{ $setting->phone ?? '+8801XXXXXXXXX' }}</h6>
-
+                <h6>+88{{ $setting->phone ?? '' }}</h6>
             </div>
-
             <div class="col-md-3">
-
                 <h5>Useful Links</h5>
-
                 <ul>
-
                     <li><a href="#">Contact</a></li>
-
                     <li><a href="#">Order Procedure</a></li>
-
                     <li><a href="#">Privacy Policy</a></li>
-
                     <li><a href="#">Return Policy</a></li>
-
                 </ul>
-
             </div>
-
             <div class="col-md-3">
-
                 <h5>Customer Care</h5>
-
                 <ul>
-
                     <li><a href="#">My Account</a></li>
-
                     <li><a href="#">Wishlist</a></li>
-
                     <li><a href="#">Track Order</a></li>
-
                     <li><a href="#">Support</a></li>
-
                 </ul>
-
             </div>
-
             <div class="col-md-3">
-
                 {{-- <h5>Download App</h5>
-
                 <img src="images/google-play.png" width="160"> --}}
-
             </div>
-
         </div>
-
     </div>
-
 </footer>
 
 <!-- Mobile Bottom Navigation -->
