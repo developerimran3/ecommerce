@@ -2875,6 +2875,44 @@ table.table.table-bordered.tracktable {
     border-radius: 0 10px 10px 0;
 }
 
+.product-body button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* Cart icon from bottom */
+.product-body button::after {
+    content: "\f07a";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    font-size: 16px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Hover animation */
+.product-body button:hover::after {
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    opacity: 1;
+}
+
+/* Hide button text on hover */
+.product-body button:hover {
+    color: transparent;
+}
+
+/* Keep icon visible */
+.product-body button:hover::after {
+    color: #fff;
+}
+
 /* =========================================
    COLOR
 ========================================= */
